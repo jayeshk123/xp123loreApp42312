@@ -162,6 +162,7 @@ class experienceInnerTableViewController: UITableViewController {
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let newViewController = storyBoard.instantiateViewController(withIdentifier: "experienceTableTableViewController")
                 self.present(newViewController, animated: true, completion: nil)
+                print("TEST")
             }
         } catch {
             print(error.localizedDescription)
