@@ -1,0 +1,40 @@
+<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.js"></script><!-- For Itnorary dragdrop-->
+<script type="text/javascript" charset="utf-8" src="js/jquery-scrollto/lib/jquery-scrollto.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<!-- <script type="text/javascript" src="js/plugins.js"></script>  --><!-- Image Slider Script --> 
+<!-- <script type="text/javascript" src="js/sly.min.js"></script>  --><!-- Image Slider Script -->
+
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-switch.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/jquery.tinytooltip.css"/>
+<script type="text/javascript" src="js/jquery.tokenize.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.tokenize.css" />
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCgFaImUo6xWBC9qizp25fe9IWxDjFVHdM&libraries=places" />
+<script type="text/javascript" charset="utf-8" src="js/mapwithmarker.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/New_index.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/bootstrap-slider.js"></script>
+<script type="text/javascript" src="js/jquery.tinytooltip.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css"/>
+<link href="css/font-awesome.css" rel="stylesheet">
+<!-- loader js -->
+<script type="text/javascript" charset="utf-8" src="js/loadingoverlay.min.js"></script>
+<!-- Prompt box js and css -->
+<script src="js/sweet-alert.min.js"></script>
+<link rel="stylesheet" href="css/sweet-alert.css">
+<!-- Panel for  -->
+<script src="js/classie.js"></script>
+<link rel="stylesheet" type="text/css" href="css/component.css" />
+<!--.......................-->

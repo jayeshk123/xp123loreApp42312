@@ -1,0 +1,1338 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>XPlore App</title>
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/jquery-1.11.3.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/jquery-ui.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/bootstrap-switch.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/jquery.ui.touch-punch.js"></script><!-- For Itnorary dragdrop-->
+  <script type="text/javascript" charset="utf-8" src="js/jquery-scrollto/lib/jquery-scrollto.js"></script>
+  <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+  <script type="text/javascript" src="js/owl-carousel.js"></script>
+
+  <script type="text/javascript" src="js/jquery.tokenize.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCgFaImUo6xWBC9qizp25fe9IWxDjFVHdM&libraries=places" />
+  <script type="text/javascript" charset="utf-8" src="js/mapwithmarker.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/New_index.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/bootstrap-slider.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+     <!-- loader js -->
+  <script type="text/javascript" charset="utf-8" src="js/loadingoverlay.min.js"></script>
+   <!-- Prompt box js and css -->
+  <script src="js/sweet-alert.min.js"></script>
+    <!-- Panel for  -->
+  <script src="js/classie.js"></script>
+  <script type="text/javascript" src="js/jquery.tinytooltip.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css"/>
+  <link href="css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/jquery.tokenize.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css"/>
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-switch.min.css"/>
+  <link rel="stylesheet" href="css/sweet-alert.css">
+    </head>
+ <body>
+  <div data-role="page" id="mainCatagoryNew">
+   <div class="navbar-fixed-top common-header">
+    <div class="col-sm-12 col-xs-12 filter paddingzero paddingtop">
+     <!-- <p id="disp"></p> -->
+     <p class="mapaddressdetail" id="User_location_bar2">I am here...</p>
+     <div class="col-sm-12 col-xs-12 paddingzero discover-btns">
+      <div class="col-sm-6 col-xs-6 discover-btn1 ">
+       <div class ="col-sm-11 col-xs-11 location-btn" id="d1">
+        <a class="discover-btn">CHANGE LOCATION</a>
+       </div>
+      </div>
+      
+      <div class="col-sm-6 col-xs-6 discover-btn2">
+       <div class ="col-sm-11 col-xs-11 location-btn" id="d2">
+        <a class="discover-btn">SET UP DISTANCE</a>
+       </div>
+      </div>
+      
+     </div>
+    </div>
+   </div>
+   
+   <div class="mainCatagory container-fluid paddingzero" id="mainCatagoryUi">
+    <div class="data1 starting_location center " role="presentation">
+     <div class="expgetloc">
+      <a class="get-loc-btn" role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">GET CURRENT LOCATION</a>
+     </div>
+     <div class="line2"></div>
+     <div class="col-sm-12 col-xs-12 enterMsg paddingzero" data-enhance="false">
+      <img class="loc-img" src="./assets/experiences/location_pin_icon.svg">
+       <input data-role="none" type="text" name="starting_location3" id="starting_location2" name="starting_location2" class="experience_starting_location2 input_location" placeholder='Set Location here..'/>
+       </div>
+     
+     <div><button data-role="none" type="button" class="close-position1 paddingtop" id="close_choose_your_position"><i class="fa fa-angle-up" aria-hidden="true"></i></button></div>
+    </div>
+    
+    
+    <div class="data2 distance " id="distanceMeasure" role="presentation">
+     <div class="col-sm-12 col-xs-12 catSelectDistance paddingzero ">
+      <p style="color:#FFF;text-align:center;">How far do you want to go?</p>
+      <div class="col-sm-1 col-xs-1 paddingzero"></div>
+      <div class="col-sm-10 col-xs-10 paddingzero">
+       <div class='slider-example'>
+        <input data-role="none" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0.1" data-slider-max="10" data-slider-step=".1" data-slider-value="5"/>
+       </div>
+       <div class="col-sm-12 col-xs-12 paddingzero">
+        <div class="col-sm-2 col-xs-2 paddingzero white">
+         0.1 mi
+        </div>
+        <div class="col-sm-8 col-xs-8 paddingzero"></div>
+        <div class="col-sm-2 col-xs-2 paddingzero white miles">
+         <input data-role="none" id="dis_text" type="text" readonly/>mi
+        </div>
+       </div>
+      </div>
+      <div class="col-sm-1 col-xs-1 paddingzero"></div>
+     </div>
+     <button type="button" class="close-position2" id="How_far_do_you_want_to_go"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+    </div>
+    
+    <div class="discover-middle-section">
+     <div class="col-sm-12 col-xs-12 paddingzero center cattitle">
+      BROWSE CATEGORIES
+     </div>
+     
+     <div class="col-sm-12 col-xs-12 list1">
+      <div class="col-sm-4 col-xs-4 " onclick="showSubCatagory('Cat1')">
+       <div class="catpadingicon
+        ">
+        <img  src="image/food.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">Eat</span>
+      </div>
+      
+      <div class="col-sm-4 col-xs-4 " onclick="showSubCatagory('Cat2')">
+       <div class="catpadingicon
+        ">
+        <img  src="image/martini-alcoholic-drink-glass.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">Drink And Go Out</span>
+      </div>
+      <div class="col-sm-4 col-xs-4 " onclick="showSubCatagory('Cat3')">
+       <div class="catpadingicon
+        ">
+        <img  src="image/drum.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">Listen</span>
+      </div>
+     </div>
+     
+     <div class="col-sm-12 col-xs-12 list2">
+      <div class="col-sm-4 col-xs-4 " onclick="showSubCatagory('Cat4')">
+       <div class="catpadingicon
+        ">
+        <img src="image/ticket.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">Watch</span>
+      </div>
+      
+      <div class="col-sm-4 col-xs-4 " onclick="showSubCatagory('Cat5')">
+       <div class="catpadingicon
+        ">
+        <img  src="image/sunny-park.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">Do</span>
+      </div>
+      <div class="col-sm-4 col-xs-4"  onclick="SeeAll_Experience_details('Experiance')">
+        
+       <div class="catpadingicon
+        ">
+        <img  src="image/symbols.svg" class="img-responsive catCenter">
+         </div>
+       <span class="catInfo">View Experience</span>
+    
+      </div>
+     </div>
+     
+     <div class="col-sm-12 col-xs-12 paddingtb clrCat">
+      <div class="col-sm-10 col-sm-offset-1 col-xs-offset-1 col-xs-10 paddingzero reset_tab paddingtb" id="resetCategory" onClick="javascript:Reset(this); return false;">CLEAR ALL CATEGORY SELECTION</div>
+      <div class="col-sm-10 col-xs-10 col-sm-offset-1 col-xs-offset-1 paddingzero reset_tab paddingtb" id="resetCategory" onClick="javascript:getGuideList(); return false;">GUIDE</div>
+     </div>
+    </div>
+   </div>
+   <!--FOOTER START-->
+  
+
+   <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+    
+    <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="showHome()">
+      
+      <span class="save" ><img src="assets/categories/home_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Home</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_map()">
+      
+      <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Map</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_place_list()">
+      
+      <span class="save"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>List</div>
+      
+     </div>
+     <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_tour_list()" data-target="#myModal">
+      
+      <span class="share"><img src="assets/categories/experience_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Experience</div>
+      
+     </div>
+     
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+    
+   </div>
+ <div class="clear"></div>
+
+   
+   
+   <!-- Catagory List End here -->
+   
+   <!-- Sub Catagory one start from here -->
+   <div class="subCatagory container-fluid panel-group paddingzero" id="Cat1" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/eat_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     
+     <div class="catName col-sm-8 col-xs-8">Eat</div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="hotandnew"> Hot and New
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="fastcasual"> Fast Casual
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="chicagostaples"> Chicago Staples
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="diner"> Diner
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="chicagopizza"> Chicago Pizza
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="upscaletraditional"> Upscale Traditional
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="chic"> Chic
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="cafe"> Cafe
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="triedandtrue"> Tried and True
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="michelinrated"> Michelin Rated
+        </div>
+     </div>
+    </div>
+   </div>
+   <!-- Sub Catagory one end here -->
+   
+   <!-- Sub Catagory two start from here -->
+   <div class="subCatagory panel-group" id="Cat2" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/drink_go_out_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     <div class="catName col-sm-8 col-xs-8">Drink And Go Out</div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="rooftops"> Rooftops
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="mixology"> Mixology
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="wine"> Wine
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="whiskey"> Whiskey
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="distilleries"> Distilleries
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="breweries"> Breweries
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="craftbeers"> Craft Beers
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="clubs"> Clubs
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="mingling"> Mingling
+        </div>
+     </div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="lounge"> Lounge
+        </div>
+     </div>
+    </div>
+    
+   </div>
+   <!-- Sub Catagory two end here -->
+   
+   <!-- Sub Catagory three start from here -->
+   <div class="subCatagory panel-group" id="Cat3" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/listen_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     <div class="catName col-sm-8 col-xs-8">Listen</div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="outdoors"> Outdoors
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="concerts"> Concerts
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="jazz"> Jazz
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="smallvenue"> Small Venue
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="teststore"> Test Store
+        </div>
+     </div>
+    </div>
+   </div>
+   <!-- Sub Catagory three end here -->
+   
+   <!-- Sub Catagory four start from here -->
+   <div class="subCatagory panel-group" id="Cat4" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/watch_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     <div class="catName col-sm-8 col-xs-8">Watch</div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="indie"> Indie
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="theatre"> Theatre
+        </div>
+     </div>
+    </div>
+    
+   </div>
+   <!-- Sub Catagory four end here -->
+   
+   <!-- Sub Catagory five start from here -->
+   <div class="subCatagory panel-group" id="Cat5" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/do_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     <div class="catName col-sm-8 col-xs-8">Do</div>
+    </div>
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="seasonal"> Seasonal
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="artsy"> Artsy
+        </div>
+     </div>
+    </div>
+    
+    <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+     <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+      <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+       <input type="checkbox" class="check" name="catagorylist" value="parks"> Parks
+        </div>
+     </div>
+    </div>
+    
+   </div>
+   <!-- Sub Catagory five end here -->
+   
+   <!-- Sub Catagory six start from here -->
+   <div class="subCatagory panel-group" id="Cat6" style="display:none;">
+    <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+     <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+      " onclick="closeTab();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+      <img src="assets/category_list/spec_events_small_icon.svg" class="img-responsive catCenter">
+       </div>
+     <div class="catName col-sm-8 col-xs-8 ">Health & Beauty</div>
+      </div>
+      </div>
+      <!-- Sub Catagory six end here -->
+      
+      <!-- Sub Catagory seven start from here -->
+      <div class="subCatagory panel-group" id="Cat7" style="display:none;">
+      <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+       <div class="nextCatNav col-sm-2 col-xs-2 tourTitle paddingzero
+        " onclick="closeTab();">
+        <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+       </div>
+       <div class="nextCatNav col-sm-2 col-xs-2 cat-icon" onclick="closeTab();">
+        <img src="assets/category_list/spec_events_small_icon.svg" class="img-responsive catCenter">
+         </div>
+       <div class="catName col-sm-8 col-xs-8 ">Special Events</div>
+      </div>
+      
+      <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+       <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+        <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+         <input type="checkbox" class="check" name="catagorylist" value="event1"> Event-1
+          </div>
+       </div>
+      </div>
+      
+      <div class="btn-group col-xs-12 borderbottom" data-toggle="buttons">
+       <div class="btn btn-default col-sm-12 col-xs-12 paddingleft paddingtb catborderbottom">
+        <div class="col-sm-12 col-xs-12 paddingzero txtleft">
+         <input type="checkbox" class="check" name="catagorylist" value="event2"> Event-2
+          </div>
+       </div>
+      </div>    
+    </div>
+    <!--Map canvas Start here-->
+    <div data-role="page" id="mapCanvas" style="width:100%!important;">
+
+     <div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+      <div class="col-sm-12 col-xs-12 paddingzero" id="mapcanvasHeader_id">
+       <div class="col-sm-12 col-xs-12 paddingtop" id="mapAddressHeader">
+        <div class="backbutton" onclick='show_tour_list();'><i class="fa fa-angle-left fa-2x" aria-hidden="true">  Back
+        </i>
+        </div>
+        <div class="mapaddressdetail" id="User_location_bar1">I am here...</div>
+       </div>
+       <ul class="nav getLocation"  role="navigation">
+        <li class="dropdown "> <a href="#" id="drop2" role="button" class="dropdown-toggle catInfo" data-toggle="dropdown">Set Your Location<b class="caret"></b></a>
+         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+          <li role="presentation"><a class="map-getloc" role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">Get Current Location</a>
+          </li>
+          <li role="presentation" > <img class="loc-img" src="./assets/experiences/location_pin_icon.svg">   <input class=" experience_starting_location2 "  type="text" name="starting_location1" id="starting_location1" onfocus="testrun();" onfocusout="out_focus_();" placeholder="Enter an address or location to start" />
+           </li>
+         </ul>
+        </li>
+       </ul>
+       <div class="clear"></div>
+      </div>
+      
+     </div>
+     
+     <div class="container-fluid paddingzero" id="uio" style="width:100%!important;" >
+            <div id="map"></div>
+     </div>
+     <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+      
+          <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="" data-target="#myModal">
+          <span class="share"><img src="assets/general/information-button.svg" style="Height: 25px; width: 25px;"></span>
+          <div>Help</div>
+          </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_category_slide('category');">
+        <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>Discover</div>
+       </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_place_list()" data-target="#myModal">
+        <span class="share"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>List</div>
+       </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_tour_list()" data-target="#myModal">
+        
+        <span class="share"><img src="assets/categories/experience_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>Experience</div>
+        
+       </div>
+      </div>
+      
+      <div class="clear"></div>
+      
+     </div>
+    </div>
+    <!--Map canvas ends here-->
+    
+    <!--Place list Start here-->
+    <div data-role="page" id="Place_list_new" class="list-categories">
+     <!-- Listing Catagory start here -->
+     <div class="navbar-fixed-top common-header">
+      <div class="col-sm-12 col-xs-12 filter paddingzero">
+       <div class="mapaddressdetail" id="User_location_bar3">I am here...</div>
+      </div>
+      
+     </div>
+     <div class="col-sm-12 col-xs-12" style="padding-left:7px!important;">
+      <div class="Listing" id="myNewListing">
+       <div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtop center">
+        <div class=" col-sm-1 col-xs-1 close-list paddingzero" onclick="closeListing();">
+         <i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+        </div>
+       </div>
+       <div class="col-sm-12 col-xs-12 paddingbottom paddingzero" id="nearByPlaceMainDiv">
+        <div class="container-fluid paddingzero" id="map_item1">
+         <div id="selected_site_list1"></div>
+         <div class="clear"></div>
+        </div>
+       </div>
+      </div>
+      
+     </div>
+
+     
+
+   <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+    
+    <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="showHome()">
+      
+      <span class="save" ><img src="assets/categories/home_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Home</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_map()">
+      
+      <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Map</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_place_list()">
+      
+      <span class="save"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>List</div>
+      
+     </div>
+     <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_tour_list()" data-target="#myModal">
+      
+      <span class="share"><img src="assets/categories/experience_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Experience</div>
+      
+     </div>
+     
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+    
+   </div>
+    </div>
+    <!--Place list end here-->
+    
+    <!--Place Tour Start here-->
+    <div data-role="page" id="Place_Tour_new">
+     <div data-role="header" class="homeHeader mapcanvasHeader expheader">
+      <div class="navbar-fixed-top common-header">
+       <div class="col-sm-12 col-xs-12 maintitleList paddingzero">
+        <div class="head-section col-sm-12 col-xs-12">
+         <div class="menu col-sm-4 col-xs-4">
+          <img align="left" src="assets/general/hamburger_menu.png">
+           </div>
+         <div class="logo col-sm-4 col-xs-4">
+          <img align="middle" src="assets/general/logo.png">
+           </div>
+         <div class="profile-photo col-sm-4 col-xs-4">
+          <img align="right" src="assets/general/user_head_avatar.png">
+           </div>
+        </div>
+       </div>
+       <div class="col-sm-12 col-xs-12 filter paddingzero">
+        <p class="mapaddressdetail" id="User_location_bar4">I am here...</p>
+        <div class="col-sm-12 col-xs-12 paddingzero discover-btns">
+         <div class="col-xs-offset-3 col-sm-11 col-xs-11 paddingzero">
+          <!-- <div class ="col-sm-5 col-xs-5 location-btn" id="experience-d2">
+           <a class="discover-btn" >CURRENT LOCATION</a>
+           </div> -->
+          <div class ="col-sm-6 col-xs-6 location-btn" id="experience-d1">
+           <a class="discover-btn">CHANGE LOCATION</a>
+          </div>
+          
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     
+     
+     <!-- Tour Catagory start here -->
+     <div class="Tour" id="myNewTour">
+      <div class="myNewTourInner">
+       <div class="navbar-fixed-top myexp-header">
+        <div class="col-sm-12 col-xs-12 explocationbtn" >
+         <div class="data3 starting_location ">
+          <div class="expgetloc">
+           <a class="get-loc-btn" role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">GET CURRENT LOCATION</a>
+          </div>
+          <div class="col-sm-12 col-xs-12 enterMsg">
+           <img class="loc-img" src="./assets/experiences/location_pin_icon.svg">
+            <input type="text" name="starting_location3" id="starting_location3"  class="experience_starting_location2" placeholder='Set Location here..'/>
+            </div>
+          <div>
+           <button type="button" class="close-position1 paddingtop" id="exp_close_choose_your_position"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+          </div>
+         </div>
+        </div>
+
+        <div class="col-sm-12 col-xs-12 paddingtop expcontent">
+         <div class="catHeading col-sm-12 col-xs-12 paddingzero">MY EXPERIENCE</div>
+         <div id="myexp-description" class="col-sm-12 col-xs-12 enterMsg P_details_t paddingzero"></div>
+        <div class="col-sm-6 col-xs-6 paddingzero paddingtb">  
+          <button class="opt-btn" data-toggle="modal" data-target="#optimiseModal">Optimize Route</button>
+        </div>
+        <!-- Modal -->
+         <div class="tourTitle col-sm-6 col-xs-6 center paddingzero paddingtb">
+
+          <div class="catName col-sm-7 col-xs-7 paddingzero">
+           <div class="paddingzero" id="Visittoggle" >
+            <div class="Unvisited col-sm-12 col-xs-12 center" style="display:none;padding-left:0px;" id="yet_to_visit_sites" onclick="Visited_Tab_toggle(this)" >
+             <!-- <img src="images/shooting-target.svg" height="42" width="42" class="img-responsive catCenter"> -->
+             UNVISITED
+            </div>
+            <div class="Visited paddingzero col-sm-12 col-xs-12 center" id="visited_sites" onclick="Visited_Tab_toggle(this)">
+             
+             SHOW VISITED
+            </div>
+           </div>
+          </div>
+          <div class="nextCatNav col-sm-5 col-xs-5 paddingzero" onclick="Tour_Clear('Clear')" style="padding-top: 5px;">
+           CLEAR
+          </div>
+         </div>
+        </div>
+        
+        <div class="locationVisitunvis">
+         <div class="col-sm-12 col-xs-12 enterMsg paddingzero">
+          <img class="loc-img" src="./assets/experiences/location_pin_icon.svg">
+           <input type="text" name="starting_location" id="ADD_New" placeholder='Add more places by name here'/>
+           </div>
+        </div>
+       </div>
+       <div class="col-sm-12 col-xs-12 paddingzero bottomspace" id="nearByPlaceMainDiv2">
+        <div class="container-fluid paddingzero" id="map_item2">
+         <div id="Itinerary" class="single_library_container"></div>
+         <div class="clear"></div>
+        </div>
+       </div>
+      </div>
+          <div class="modal fade-scale" id="optimiseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header center">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title" id="myModalLabel">Optimize Route</h3>
+                          </div>
+
+                      <div class="modal-body optimisemodal">
+                              <div class="col-sm-12 col-xs-12 center">
+                              <p>Locutus est tibi? Respondeo dicendum esset iustus?Quem populum  dicendum esset iustus?</p> 
+                              </div>
+                                <div class="col-sm-12 col-xs-12 center paddingtb">
+                                    <div class="col-sm-4 col-xs-4 paddingzero">
+                                      <img src="./assets/optimize/man-walking.svg">
+                                      <input type="radio" name="route">
+                                    </div>
+                                    <div class="col-sm-4 col-xs-4 paddingzero">
+                                      <img src="./assets/optimize/bicycle-rider.svg">
+                                      <input type="radio" name="route">
+                                    </div>
+                                    <div class="col-sm-4 col-xs-4 paddingzero">
+                                      <img src="./assets/optimize/car.svg">
+                                      <input type="radio" name="route">
+                                    </div>
+                                </div>
+
+                          <div class="col-sm-12 col-xs-12 paddingtb flex rtrip">
+                          <label>Roundtrip?</label>
+                          <p>Yes</p><input type="radio" name="roundtrip">
+                          <p style="margin-left:25px;">No</p><input type="radio" name="roundtrip">
+                          </div>
+                      </div>
+                      <div class="clear"></div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default modalclose" data-dismiss="modal">Close Window</button>
+                        </br></br>
+                      
+                        <button type="button" class="btn btn-primary modalsave">Save Tour</button>
+                      </div>
+                      </div>
+                </div>
+          </div>
+     </div>
+     <!-- Tour Catagory end here -->
+     <div data-role="footer container-fluid" class="footer Tour_Footer navbar-fixed-bottom">
+      <div class="col-sm-12 col-xs-12 itineraryfooter paddingzero">
+       <!--    <div class="col-sm-3 col-xs-3 paddingzero saveitinary paddingtb exphide" onclick="Save_Ui_function()"><span class="save"><img src="./assets/experience/save_icon.svg" style="Height: 25px; width: 25px;margin-right:5px"></span>SAVE</div> -->
+       <div class="col-sm-12 col-xs-12 paddingzero startexplorebtn" >
+        <div class=" col-sm-3 col-xs-3 paddingzero saveitinary paddingtb exphide" onclick="FbLogin('Save')"><span class="save"><img src="./assets/experience/save_icon.svg" style="Height: 25px; width: 25px;margin-right:5px"></span>SAVE</div>
+        <div class="startXploring col-sm-6 col-xs-6 paddingtb" data-toggle="collapse" data-target="#exp-options">START EXPLORING</div>
+  <!--    <div class="startXploring col-sm-6 col-xs-6 paddingtb" data-toggle="collapse" data-target="#">START EXPLORING</div> -->
+        <!-- <div class="startXploring col-sm-6 col-xs-6 paddingtb" onclick="showStartExplore">START EXPLORING</div> -->
+        
+        <div class="col-sm-3 col-xs-3 paddingzero shareitinary paddingtb exphide" onclick="FbLogin('Share')">Share<span class="share"><img src="./assets/experience/share_icon.svg" style="Height: 25px; width: 25px;margin-left:5px"></span></div>
+        
+       </div>
+       <div id="exp-options" class="collapse col-sm-12 col-xs-12">
+        
+      <div class="close-exp-options" onclick="hideStartExplore()"><i class="icon-remove-sign"></i>&nbsp;&nbsp; Close
+      </div>
+      
+    <!--   <div class="roundedTwo">
+      <input type="checkbox" value="None" id="roundedTwo" name="check"/>
+    </div> -->
+      <div class="col-sm-12 col-xs-12 paddingzero routeopt">
+     <!--    <div class="col-sm-12 col-xs-12 paddingzero center optimizebtn paddingtb">
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <button class="loc-btn" onclick="getPhoto();">Optimize Route</button>
+        </div> -->
+        <div class="col-sm-12 col-xs-12 paddingzero options-row1">
+         <div class="col-sm-6 col-xs-6 paddingzero">
+          <div onclick="Build('bicycling')" class="option1"><span class="exp-txt"><img src="./assets/experience/biking_icon.svg" style="Height: 80px; width: 80px;"></span><label>BIKING</label></div>
+         </div>
+         <div class="col-sm-6 col-xs-6 paddingzero">
+          <div onclick="Build('driving')" class="option2">
+           <span class="exp-txt"><img src="./assets/experience/driving_icon.svg" style="Height: 80px; width: 80px;"></span><label>DRIVING</label></div>
+         </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 paddingzero options-row1">
+         <div class="col-sm-4 col-xs-4 paddingzero">
+          <div onclick="Build('walking')" class="option3"><span class="exp-txt"><img src="./assets/experience/walking_icon.svg" style="Height: 80px; width: 80px;"></span><label>WALKING</label></div>
+         </div>
+         <div class="col-sm-4 col-xs-4 paddingtb paddingzero center ">SELECT A MODE OF TRANSPORT</div>
+         <div class="col-sm-4 col-xs-4 paddingzero option4">
+          <div onclick="Build('transit')"><span class="exp-txt"><img src="./assets/experience/public_tr_icon.svg" style="Height: 80px; width: 80px;"></span><label>PUBLIC TRANSIT</label></div>
+          
+         </div>
+        </div>
+      </div>
+       </div>
+      </div>
+      
+     </div>
+ 
+   <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+    
+    <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="showHome()">
+      
+      <span class="save" ><img src="assets/categories/home_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Home</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_map()">
+      
+      <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Map</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_place_list()">
+      
+      <span class="save"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>List</div>
+      
+     </div>
+      <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_category_slide('category');" data-target="#myModal">
+        <span class="share"><img src="assets/experiences/discover_toolbar_icon.svg" style="Height: 25px; width: 25px;"></span>
+        <div>Discover</div>
+       </div>
+     
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+    
+   </div>
+     <div class="clear"></div>
+     
+    </div>
+    <!--Place Tour End here-->
+    
+    <!-- Save UI Start here-->
+    <div data-role="page" id="Save_Ui">
+     <div data-role="header" class="homeHeader mapcanvasHeader">
+      <!-- <div class="col-sm-12 col-xs-12">
+       <div class="backButton col-sm-3 col-xs-3 paddingzero">
+       <div onclick="show_tour_list()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+       </div>
+       <div class="col-sm-6 col-xs-6 paddingzero center">
+       <div class="help">
+       <div onClick="help('save');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+       </div>
+       </div>
+       <div class="backButton col-sm-3 col-xs-3 paddingzero">
+       </div> -->
+     </div>
+     <div class="clear"></div>
+     <div class="container paddingzero" id="saveContentID">
+      <div class="col-sm-12 col-xs-12 paddingtb paddingzero" id="saveui">
+       <div class="col-sm-12 col-xs-12 add-place-heading">
+        <div class="form-group">
+         <label for="inputName1" class="control-label fontsize22">NEW EXPERIENCE</label>
+        </div>
+        <div class="form-group">
+         <label for="inputName" class="control-label">Please enter the title and description of the experience to save it on server.</label>
+        </div>
+       </div>
+       <input type="hidden" id="Tour_Owner_Status" value="false"/>
+       
+       <div class="col-sm-12 col-xs-12">
+        <div class="form-group center img-upload">
+         <button onclick="javascript:getImageCustomPlace(); return false;" class="btn btn-primary"><div class="select-img">Select Image</div>
+          <img style="display:none;width:100%;height:185px;z-index:2;position:relative;" id="smallImageCustomPlace" src="" /></button>
+        </div>
+        <div class="remove-upload-image center paddingbottom">
+         <button class='remove_image_experience loc-btn'>Remove Image</button>
+        </div>
+       </div>
+       <div class="col-sm-12 col-xs-12 location-details paddingzero">
+        <div class="line"></div>
+        <div class="form-group loc-name">
+         <input type="text" class="form-control loc-details" id="name_t" placeholder="Enter Title" required />
+         <div class="help-block with-errors"></div>
+        </div>
+        
+        <div class="line"></div>
+        <div class="Auto_height" >
+         <textarea id="desc_t" data-autoresize class="textAuto loc-details" placeholder="Enter Description" required></textarea>
+         <div class="help-block with-errors"></div>
+        </div>
+        
+        <div class="line"></div>
+        <div class="form-group">
+         <input type="text" class="form-control loc-details" id="Tag_t" placeholder="Tag" required/>
+         <div class="help-block with-errors"></div>
+        </div>
+        
+        <div class="line"></div>
+        <div class="form-group">
+         <input type="datetime-local" class="form-control loc-details" id="Date_t" placeholder="Date"/>
+         <div class="help-block with-errors"></div>
+        </div>
+        <div class="clear"></div>
+       </div>
+       
+       <!--    <div class="form-group">
+        <label for="inputName" class="control-label">Name</label>
+        <input type="text" class="form-control" id="name_t" placeholder="Name" required/>
+        <div class="help-block with-errors"></div>
+        </div> -->
+       
+       <!--   <div class="form-group">
+        <label for="inputDescription" class="control-label">Description</label>
+        <textarea class="form-control" rows="3" id="desc_t" placeholder="Description" required></textarea>
+        <div class="help-block with-errors"></div>
+        </div> -->
+       
+       <div class="form-group col-sm-12 col-xs-12 paddingzero paddingtb">
+        <div class="col-sm-6 col-xs-6">
+         <div class="control-label">Private Experience</div>
+        </div>
+        <!--  <div class="radio col-sm-6 col-xs-6">
+         <label>
+         <input type="radio" name="public" id="Public" checked="checked">
+         Public
+         </label>
+         </div>
+         <div class="radio col-sm-6 col-xs-6">
+         <label>
+         <input type="radio" name="public" id="Private">
+         Private
+         </label>
+         </div> -->
+        <div class="col-sm-6 col-xs-6">
+         <label class="expswitch">
+          <input type="checkbox">
+           <div class="slider round"></div>
+           </label>
+        </div>
+        <div class="clear"></div>
+        <div class="line"></div>
+       </div>
+       
+       
+       
+       <div class="form-group col-sm-12 col-xs-12">
+        <div class="AddMore col-sm-6 col-xs-6 paddingzero"><label>Add More Details</label></div>
+        <div class="col-sm-6 col-xs-6 txtright" id="addMoreDesc" onclick="Addmore_description()"><img src="images/plus.png"></div>
+       </div>
+       <div class="form-group col-sm-12 col-xs-12 paddingzero" id="add_tour_place_detail">
+       </div>
+       
+       <div class="col-sm-12 col-xs-12 paddingzero">
+        <div class="form-group paddingb30 center">
+         <button onclick="javascript:Save_Tour('false'); return false;" class="btn btn-primary loc-sbmit">SAVE NEW PLACE</button>
+        </div>
+       </div>
+       
+      </div>
+     </div>
+     <!--    <div data-role="footer container-fluid" class="footer">
+      <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+      <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+      <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick=""><span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span><div>Help</div></div>
+      <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()"><span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span><div>Tours</div></div>
+      <div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal" data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>
+      </div>
+      <div class="clear"></div>
+      </div> -->
+     
+     <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+      
+      <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+       <div class="col-sm-3 col-xs-3 paddingzero center" onclick="showHome()">
+        <span class="save" ><img src="assets/categories/home_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>Home</div>
+       </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_map()">
+        <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>Map</div>
+       </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="add_new_place()" data-target="#myModal">
+        <span class="share"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+        <div>List</div>
+       </div>
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_category_slide('category');" data-target="#myModal">
+        <span class="share"><img src="assets/experiences/discover_toolbar_icon.svg" style="Height: 25px; width: 25px;"></span>
+        <div>Discover</div>
+       </div>
+      </div>
+      
+      <div class="clear"></div>
+      
+     </div>
+    </div>
+    <!-- Save ui end here -->
+    
+    <!--Page profile List Detail view Start here-->
+    <div data-role="page" id="ListDetail">
+     <div class="clear"></div>
+     <div class="col-sm-3 col-xs-3 backbutton2 paddingzero">
+      <div class="col-sm-3 col-xs-3 paddingzero">
+       <div id="DetailBackButton5"><img src="./assets/subcategory_list/arrow_back.svg" style="height: 20px; width: 17px;margin-top:7px;"><span class="back"></span></div>
+      </div>
+     </div>
+     <div class="col-sm-12 col-xs-12" onClick="GoToItinerary()" id="Tour_Listings"></div>
+     
+     <div class="col-sm-3 col-xs-3 backbutton1 paddingzero">
+      <div class="col-sm-3 col-xs-3 paddingzero">
+       <div id="DetailBackButton"><img src="./assets/subcategory_list/arrow_back.svg" style="height: 20px; width: 17px;margin-top:7px;"><span class="back"></span></div>
+      </div>
+     </div>
+     <div class="listDetailsView" id="listDetailsMainDiv" data-dialog="true">
+      <div id="selected_site_Detail">
+      </div>
+     </div>
+     
+     
+     <!--     <div class="col-sm-12 col-xs-12 paddingzero detailListFooter">-->
+     <!--      <!--  <div class="col-sm-12 col-xs-12 itinerarymainfooter">-->
+     <!--       <div class="col-sm-12 col-xs-12 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>-->
+     <!--       </div> -->
+     <!--      <div class="col-sm-12 col-xs-12 paddingzero center paddingtb listDetailssocialCalls">-->
+     <!--       -->
+     <!--       <div class="col-sm-3 col-xs-3 paddingzero">-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero"><a href="#">-->
+     <!--         <img src="./assets/events/call_icon.png" height="21" width="21"/></a>-->
+     <!--        </div>-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero">-->
+     <!--         <a href="#">Call</a>-->
+     <!--        </div>-->
+     <!--       </div>-->
+     <!--       -->
+     <!--       <div class="col-sm-3 col-xs-3 paddingzero">-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero">-->
+     <!--         <a href="#"><img src="./assets/events/buy_now_icon.png" height="21" width="21"/></a>-->
+     <!--        </div>-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero">-->
+     <!--         <a href="#">Buy Now</a>-->
+     <!--        </div>-->
+     <!--       </div>-->
+     <!--       -->
+     <!--       <div class="col-sm-3 col-xs-3 paddingzero">-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero"><a href="#">-->
+     <!--         <img src="./assets/events/website_icon.png" height="21" width="21"/></a>-->
+     <!--        </div>-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero">-->
+     <!--         <a href="#">Website</a>-->
+     <!--        </div>-->
+     <!--       </div>-->
+     <!--       <div class="col-sm-3 col-xs-3 paddingzero">-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero"><a href="#">-->
+     <!--         <img src="./assets/events/add_to_tour_icon.png" height="21" width="21"/></a>-->
+     <!--        </div>-->
+     <!--        <div class="col-sm-12 col-xs-12 paddingzero">-->
+     <!--         <a href="#">Add to Tour</a>-->
+     <!--        </div>-->
+     <!--       </div>-->
+     <!--      </div>-->
+     <!--      -->
+     <!--     </div>-->
+     <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+      
+      <div class="col-sm-12 col-xs-12 paddingzero profilefooter">
+       
+       
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" >
+        
+        <span class="save" ><img src="./assets/events/call_icon.png" height="21" width="21"/></span>
+        
+        <div>Call</div>
+        
+       </div>
+       
+       
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" >
+        
+        <span class="save" ><img src="./assets/events/buy_now_icon.png" height="21" width="21"/></span>
+        
+        <div>Buy Now</div>
+        
+       </div>
+       
+       
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" >
+        
+        <span class="save"><img src="./assets/events/website_icon.png" height="21" width="21"/></span>
+        
+        <div>Website</div>
+        
+       </div>
+       
+       
+       
+       <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal"  data-target="#myModal">
+        
+        <span class="share"><img src="./assets/events/add_to_tour_icon.png" height="21" width="21"/></span>
+        
+        <div>Add To Tour</div>
+        
+       </div>
+       
+       
+       
+      </div>
+      
+      <div class="clear"></div>
+      
+     </div>
+     
+    </div>
+    <!--List Detail view End here-->
+
+
+
+ <!-- guide show page start -->
+  <div data-role="page" id="guideList">
+  <div class="col-sm-12 col-xs-12  paddingzero guidelistcontainer">
+    <div class="col-sm-12 col-xs-12 paddingtb">
+     <div class="nextCatNav col-sm-1 col-xs-1 tourTitle paddingzero
+      " onclick="show_category_slide();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="listname col-sm-11 col-xs-11 paddingzero">GUIDE LIST</div>
+    </div>
+
+    <div class="col-sm-12 col-xs-12 paddingzero " id="guide_container">
+    </div>
+  </div>
+  </div>
+  <div data-role="page" id="ExperianceAll">
+   <div class="col-sm-12 col-xs-12 all_experiences">
+      <label style="color:#FFF;" class="fontsize22">EXPERIENCES</label>
+     <!--  <select data-role="none" id="tokenize1" multiple="multiple" class="tokenize-sample">
+         <option value="1">Store</option>
+      </select> -->
+   </div>
+   <div class="col-sm-12 col-xs-12 paddingzero eventAllMiddleSection" id="experiance_container">
+   </div>
+
+   <div data-role="footer container-fluid" class="footer nearByPlaceFooter navbar-fixed-bottom">
+    
+    <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="showHome()">
+      
+      <span class="save" ><img src="assets/categories/home_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Home</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_map()">
+      
+      <span class="save" ><img src="assets/categories/map_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>Map</div>
+      
+     </div>
+     
+     
+     
+     <div class="col-sm-3 col-xs-3 paddingzero center" onclick="show_place_list()">
+      
+      <span class="save"><img src="assets/categories/list_toolbar_icon.png" style="Height: 25px; width: 25px;"></span>
+      
+      <div>List</div>
+      
+     </div>
+      <div class="col-sm-3 col-xs-3 paddingzero center" data-toggle="modal" onclick="show_category_slide('category');" data-target="#myModal">
+        <span class="share"><img src="assets/experiences/discover_toolbar_icon.svg" style="Height: 25px; width: 25px;"></span>
+        <div>Discover</div>
+       </div>
+     
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+    
+   </div>
+</div>
+  <!-- guide show page ends -->
+<div data-role="page" id="ExperianceAllGuideList">
+   <div class="col-sm-12 col-xs-12 all_experiences">
+   <div class="col-sm-12 col-xs-12 paddingzero paddingtb">
+     <div class="nextCatNav col-sm-1 col-xs-1 tourTitle paddingzero
+      " onclick="getGuideList();">
+      <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+     </div>
+     <div class="listname col-sm-11 col-xs-11 paddingzero">EXPERIANCES GUIDE LIST</div>
+  </div>
+  </div>
+   <div class="col-sm-12 col-xs-12 paddingzero eventAllMiddleSection" id="experiance_container_guide_list">
+   </div>
+  </div>
+ </body>
+ <script>
+   $(window).load(function() {
+     $('#loading').hide();
+     getAllExperiance();
+  });
+  $('#tokenize').tokenize({placeholder:"Enter your retail interests here..."});
+  $('#tokenize1').tokenize({placeholder:"Enter your retail interests here..."});
+  $('#tokenize2').tokenize({placeholder:"Enter your retail interests here..."});
+  var myGroup = $('#myGroup');
+  
+  $myGroup.on('show','.collapse', function() {
+              
+              $myGroup.find('.collapse.in').collapse('hide');
+              });
+              $(document).bind("mobileinit", function(){ $.mobile.touchOverflowEnabled = true; });
+  $(document).on("pageshow", "[data-role='none']", function () {
+ $('div.ui-loader').hide();
+})
+ </script>
+</html>
+

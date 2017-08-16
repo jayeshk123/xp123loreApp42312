@@ -1,0 +1,31 @@
+function latLngSetMarker(marker,fromLat,fromLng,toLat,toLng,index)
+{
+  alert('latLngSetMarker');
+    var curLat,curLng;
+        // store a LatLng for each step of the animation
+        frames = [];
+        // FORK // Increase percent * speed
+        for (var percent = 0; percent < 1; percent += (0.0025 * 0.001)) 
+        {
+            curLat = fromLat + percent * (toLat - fromLat);
+            curLng = fromLng + percent * (toLng - fromLng);
+            frames.push(new google.maps.LatLng(curLat, curLng));
+        }
+        alert(hi);
+        move = function(marker, latlngs, index1, wait, newDestination) {
+            marker.setPosition(latlngs[index1]);
+            if(index1 != latlngs.length-1) {
+              // call the next "frame" of the animation
+              setTimeout(function() { 
+                move(marker, latlngs, index1+1, wait, newDestination); 
+              }, wait);
+            }
+          }
+
+          // begin animation, send back to origin after completion
+          move(marker, frames, 0, 20, marker.position);
+
+        Markers[index]= marker;
+}
+
+latLngSetMarker(Markers[i],Markers[i].position.lat(),Markers[i].position.lng(),position.coords.latitude,position.coords.longitude,i)

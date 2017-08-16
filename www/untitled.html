@@ -1,0 +1,142 @@
+ var abc='';
+ var abc_='';
+ var abc_realted='';
+ var url = site_url+'site/Events_FeaturedRelated_places?';
+ $.ajax({
+        type: 'get',
+        async:false,
+        url: url,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        jsonp: 'callback',
+        data: {
+        id:id,
+        featured:feattured,
+        more:more,
+        related:related
+        },
+        beforeSend : function(){},
+        crossDomain: true,
+        success: function(res) {
+     //   console.log(res);
+        if(res[0] != "")
+        {
+        
+        abc=abc+'<div class="col-sm-12 col-xs-12 profletitle featured-events"><p class="ruler"><span>FEATURED</span></p>';
+        //abc=abc+'<div class="col-sm-12 col-xs-12 line3"></div>';
+        abc=abc+'<div class="owl-carousel" id="owl-carousel">';
+        for (var i=0; i < res[0].length; i++)
+        {
+        
+        
+        //console.log('hi');
+        var SrNumber = res[0][i].SrNumber;
+        var PlaceIds = res[0][i].PlaceIds;
+        var Venueid = res[0][i].Venueid;
+        var LatLng = res[0][i].LatLng;
+        var Foresquare_lat_lng = res[0][i].Foresquare_lat_lng;
+        var Category = res[0][i].Category;
+        
+        var Detail = JSON.parse(res[0][i].Detail);
+        var DateOfEstablishment = res[0][i].DateOfEstablishment;
+        
+        var Place_Type = res[0][i].Place_Type;
+        
+        var addr='';
+        var text = '';
+        
+        if(typeof Detail.address === 'string')
+        {
+        var arr_addr=Detail.address.split(",");
+        var index = '';  // Gets the first index where a space occours
+        var id = ''; // Gets the first part
+        var text = '';
+        if(arr_addr.length >= 4)
+        {
+        addr = arr_addr[0]; // Gets the first part
+        text = arr_addr[1];
+        }
+        else
+        {
+        index = Detail.address.lastIndexOf(',');  // Gets the first index where a space occours
+        if(index >= 0)
+        {
+        addr = Detail.address.substr(0, index); // Gets the first part
+        text = Detail.address.substr(index+1);
+        index = addr.lastIndexOf(',');
+        if(index >= 0)
+        {
+        addr = addr.substr(0, index);
+        text = addr.substr(index+1);
+        var temp = addr.indexOf(',');
+        if(temp >= 0)
+        {
+        addr = addr.substr(temp + 1);
+        }
+        }
+        }
+        else
+        {
+        addr = Detail.address;
+        }
+        }
+        }
+        
+        var activeclass="";
+        if(i==0)
+        {
+        activeclass="active";
+        }
+        
+        var detail_desc=atob(Detail.about);
+        cleanText = detail_desc.replace(/<\/?[^>]+(>|$)/g, "");
+        if(cleanText.length > 40)
+        {
+        str_desc = cleanText.substring(0,40);
+        }
+        else
+        {
+        str_desc=cleanText;
+        }
+        abc= abc + '<div class="paddingzero col-sm-11 col-xs-11 item profilepage '+activeclass+'" id="'+SrNumber+'">';
+        
+        //  console.log(Detail);
+        abc = abc + '<div class="single_library_container paddingzero col-sm-12 col-xs-12 '+PlaceIds+'" id="eve_'+ PlaceIds +'"><input type="hidden" name="Place_Id" value="'+PlaceIds+'"/><div id="Add_'+PlaceIds+'" style="display:none;">'+addr+'</div><textarea id="DetailLog_'+PlaceIds+'" style="display:none;">'+res[0][i].Detail+'</textarea>';
+        abc = abc + '<div class=" listDescription col-sm-12 col-xs-12" >';
+        
+        //console.log(Detail.profileimage);
+        abc = abc + '<div class="profile_content" id="'+ PlaceIds +'" onClick="EventPlaceFeaturedRelatedProfile(this,true)">';
+        abc = abc + '<div class="content-image" >';
+        if(Detail.profileimage != '' && Detail.profileimage != 'undefined')
+        {
+        abc=abc+'<img class="image" src=';
+        abc= abc + '"https://s3.amazonaws.com/retail-safari/'+Detail.profileimage+'">';
+        }
+        else
+        {
+        //console.log('bye');
+        //  abc=abc+'<img class="eventimage" src="images/default.jpg" >';
+        abc=abc+'<img class="eventimage"   src="images/default.jpg" />';
+        }
+        abc= abc +'</div>';
+        
+        abc= abc + '<div class="col-sm-12 col-xs-12 content paddingzero paddingtb">';
+        abc= abc + '<div class="title">'+Detail.name+'</div>';
+        abc= abc + '<div class="addressPlace">'+addr+'</div>';
+        //abc= abc + '<div class="address">'+str_desc+'</div>';
+        
+        abc= abc + '</div>';
+        abc= abc + '</div>';
+        abc= abc + '<div class="expplacelist addtoexp listImage col-sm-1 col-xs-1 paddingzero" onClick="itineraries(this);"><div class="readMore"><button type="button" class="btn btn-primary btn-xs" ></button></div></div>';
+        abc= abc + '</div>';
+        abc=abc+'</div>';
+        abc=abc+'</div>';
+        
+        }
+        abc=abc+'</div>';
+        abc= abc + '</div>';
+        }
+        else{
+        abc=abc+'<div style="display:none;" class="col-sm-12 col-xs-12 profletitle"><h3>FEATURED</h3></div>';
+        abc=abc+'<div style="display:none;" class="col-sm-12 col-xs-12 line3"></div>';
+        }

@@ -1,0 +1,1132 @@
+<!--Map canvas Start here-->
+<div data-role="page" id="mainCatagoryNew">
+	<div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 paddingzero" id="mapcanvasHeader_id">
+		  	<div class="col-sm-12 col-xs-12 paddingzero" id="mapAddressHeader">
+				<div class="mapaddressdetail" id="User_location_bar">I am here...</div>
+		  	</div>
+			<ul class="nav getLocation" role="navigation">
+				<li class="dropdown "> <a href="#" id="drop2" role="button" class="dropdown-toggle catInfo" data-toggle="dropdown">Set Your Location<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">Get Current Location</a>
+						</li>
+						 
+						<li role="presentation"> <input type="text" name="starting_location" id="starting_location" placeholder="Enter an address or location to start" />
+						</li>
+					</ul>
+				</li>
+			</ul>	
+			<div class="clear"></div>
+		</div>
+		
+		<div class="col-sm-12 col-xs-12 topMenu paddingzero paddingTB5">
+				<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+					<div class="col-sm-12 col-xs-12">
+						<img src="images/map.svg">
+					</div>
+					<div class="col-sm-12 col-xs-12">
+						<div class="menuName" onclick='showHome();'>Home</div>
+				    </div>
+				</div>
+				<!-- <div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+					<div class="col-sm-12 col-xs-12">
+						<img src="images/magnifier.svg">
+					 </div>
+					<div class="col-sm-12 col-xs-12">
+						<div class="menuName" onclick='show_cat()'>Catagory</div>
+				    </div>				  
+				</div> -->
+				<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+					<div class="col-sm-12 col-xs-12">
+						<img src="images/map.svg">
+					</div>
+					<div class="col-sm-12 col-xs-12">
+						<div class="menuName" onclick='show_map()'>Map</div>
+				    </div>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+					<div class="col-sm-12 col-xs-12">
+						<img src="images/trajectory.svg">
+					</div>
+					<div class="col-sm-12 col-xs-12">
+						<div class="menuName" onclick='show_list()'>List</div>
+				    </div>
+				</div>				
+				<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+					<div class="col-sm-12 col-xs-12">
+						<img src="images/opened-email-envelope.svg">
+					</div>
+					<div class="col-sm-12 col-xs-12">
+						<div class="menuName" onclick='show_tour()'>Experience</div>
+				    </div>
+				</div>
+			</div>
+	</div>
+	
+	<!-- Catagory List Start from here -->
+	<div class="mainCatagory container-fluid paddingzero" id="mainCatagoryUi">
+				
+				<div class="col-sm-12 col-xs-12 catSelectDistance ">
+					<div class="catInfo">How far do you want to go?</div>
+					<div class="col-sm-1 col-xs-1 paddingzero"></div>
+					<div class="col-sm-10 col-xs-10 paddingzero">
+						<div class='slider-example'>
+							<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0.1" data-slider-max="10" data-slider-step=".1" data-slider-value="10"/>
+						</div>
+						<div class="col-sm-12 col-xs-12 paddingzero">
+							<div class="col-sm-2 col-xs-2 paddingzero white">
+								0.1 mi
+							</div>
+							<div class="col-sm-8 col-xs-8 paddingzero"></div>
+							<div class="col-sm-2 col-xs-2 paddingzero white miles">
+								<input id="dis_text" type="text" readonly/>mi
+							</div>
+						</div>
+					</div> 
+					<div class="col-sm-1 col-xs-1 paddingzero"></div>
+			    </div>
+				
+				<div class="col-sm-12 col-xs-12 paddingzero center catInfo">
+					  Browse Categories
+				</div>
+
+				<div class="col-sm-12 col-xs-12 paddingzero">
+					<div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat1')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img  src="images/food.svg" class="img-responsive catCenter">
+							<span class="catInfo">Eat</span>
+						</div>
+					</div>
+					<div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat2')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img  src="images/martini-alcoholic-drink-glass.svg" class="img-responsive catCenter">
+							<span class="catInfo">Drink And Go Out</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-xs-12 paddingzero"> 
+					<div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat3')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img  src="images/drum.svg" class="img-responsive catCenter">
+							<span class="catInfo">Listen</span>
+						</div>
+					 </div>
+					 
+					 <div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat4')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img src="images/ticket.svg" class="img-responsive catCenter">
+							<span class="catInfo">Watch</span>
+						</div>
+					 </div>
+				</div>
+				
+				<div class="col-sm-12 col-xs-12 paddingzero">
+					<div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat5')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img  src="images/sunny-park.svg" class="img-responsive catCenter">
+							<span class="catInfo">Do</span>
+						</div>
+					 </div>	
+					 <div class="btn btn-default col-sm-6 col-xs-6 paddingleft paddingright catborderleftright paddingtb" onclick="showSubCatagory('Cat7')">
+						<div class="col-sm-12 col-xs-12 catpadingicon"> 
+						 	<img  src="images/symbols.svg" class="img-responsive catCenter">
+							<span class="catInfo">Special Events</span>
+						</div>
+					 </div>	
+				</div>
+				
+				<div class="col-sm-12 col-xs-12 paddingtb clrCat">
+				  	<div class="col-sm-1 col-xs-1 paddingzero"></div>
+				  	<div class="col-sm-10 col-xs-10 paddingzero reset_tab paddingtb GrayBar" id="resetCategory" onClick="javascript:Reset(this); return false;">Clear all category selections</div>
+				  	<div class="col-sm-1 col-xs-1 paddingzero"></div>
+				</div>
+	</div>
+	<!-- Catagory List End here -->		
+
+	<!-- Sub Catagory one start from here -->
+	<div class="subCatagory container-fluid panel-group paddingzero" id="Cat1" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Eat</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="hotandnew"> Hot and New
+				</div>
+		   	</div>
+		</div>
+						
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="fastcasual"> Fast Casual
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+				<input type="checkbox" class="check" name="catagorylist" value="chicagostaples"> Chicago Staples
+				</div>
+			</div>
+		</div>
+						
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="diner"> Diner
+				</div>
+			</div>
+		</div>
+						
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="chicagopizza"> Chicago Pizza
+		   		</div>
+			</div>
+	   	</div>
+
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="upscaletraditional"> Upscale Traditional
+		   		</div>
+			</div>
+	   	</div>
+
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="chic"> Chic
+		   		</div>
+			</div>
+	   	</div>
+
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="cafe"> Cafe
+		   		</div>
+			</div>
+	   	</div>
+
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="triedandtrue"> Tried and True
+		   		</div>
+			</div>
+	   	</div>
+
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="michelinrated"> Michelin Rated
+		   		</div>
+			</div>
+	   	</div>
+	</div>
+	<!-- Sub Catagory one end here -->
+
+	<!-- Sub Catagory two start from here -->
+	<div class="subCatagory panel-group" id="Cat2" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Drink And Go Out</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb"> 
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="rooftops"> Rooftops
+				</div>
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="mixology"> Mixology
+				</div>
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="wine"> Wine
+				</div>
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">	
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="whiskey"> Whiskey
+				</div>
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		  		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="distilleries"> Distilleries
+				</div>
+		 	</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		  		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="breweries"> Breweries
+				</div>
+		 	</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		  		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="craftbeers"> Craft Beers
+				</div>
+		 	</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="clubs"> Clubs
+				</div>
+		 	</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		  		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="mingling"> Mingling
+				</div>
+		 	</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+		 	<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		  		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		   			<input type="checkbox" class="check" name="catagorylist" value="lounge"> Lounge
+				</div>
+		 	</div>
+		</div>
+		
+	</div>
+	<!-- Sub Catagory two end here -->
+
+	<!-- Sub Catagory three start from here -->
+	<div class="subCatagory panel-group" id="Cat3" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Listen</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+		
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+				    <input type="checkbox" class="check" name="catagorylist" value="outdoors"> Outdoors
+			   	</div>
+			</div>
+	   	</div>
+	   
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+			 	<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+			 		<input type="checkbox" class="check" name="catagorylist" value="concerts"> Concerts
+			    </div>
+			</div>
+	   	</div>
+	   
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+			 	<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+			  		<input type="checkbox" class="check" name="catagorylist" value="jazz"> Jazz
+			    </div>
+			</div>
+	   	</div>
+	   
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+			  		<input type="checkbox" class="check" name="catagorylist" value="smallvenue"> Small Venue
+			   	</div>
+			</div>
+	   	</div>
+	   
+	   	<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+		 		<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+		  			<input type="checkbox" class="check" name="catagorylist" value="teststore"> Test Store
+		   		</div>
+			</div>
+	   	</div>
+	</div>
+	<!-- Sub Catagory three end here -->	
+
+	<!-- Sub Catagory four start from here -->
+	<div class="subCatagory panel-group" id="Cat4" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Watch</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="indie"> Indie
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="theatre"> Theatre
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!-- Sub Catagory four end here -->
+		
+	<!-- Sub Catagory five start from here -->
+	<div class="subCatagory panel-group" id="Cat5" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Do</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="parks"> Seasonal
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="artsy"> Artsy
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="seasonal"> Parks
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!-- Sub Catagory five end here -->
+		
+	<!-- Sub Catagory six start from here -->
+	<div class="subCatagory panel-group" id="Cat6" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Health & Beauty</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+	</div>
+	<!-- Sub Catagory six end here -->
+
+	<!-- Sub Catagory seven start from here -->
+	<div class="subCatagory panel-group" id="Cat7" style="display:none;">
+	   	<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb">
+			<div class="catName col-sm-9 col-xs-9 newListHeading">Special Events</div>
+			<div class="nextCatNav col-sm-3 col-xs-3 tourTitle" onclick="closeTab();"> 
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+				Close
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="event1"> Event-1
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-group col-xs-12 paddingzero borderbottom" data-toggle="buttons">
+			<div class="btn btn-default col-sm-12 col-xs-12 paddingleft catborderleftright paddingtb">
+				<div class="col-sm-12 col-xs-12 paddingzero txtleft">
+					<input type="checkbox" class="check" name="catagorylist" value="event2"> Event-2
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- Sub Catagory seven end here -->
+		
+		
+	<div data-role="footer container-fluid" class="footer nearByPlaceFooter">
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')">
+	 			<span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span>
+	 			<div>News</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBack()">
+		 		<span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Help</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()">
+		 		<span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Tours</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal">
+		 		<span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Profile</div>
+		 	</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<!--Place list Start here-->
+<div data-role="page" id="Place_list_new">
+	<div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 paddingzero" id="mapcanvasHeader_id">
+			<div class="col-sm-12 col-xs-12 paddingzero" id="mapAddressHeader">
+				<div class="mapaddressdetail" id="User_location_bar">I am here...</div>
+			</div>
+			<ul class="nav getLocation" role="navigation">
+				<li class="dropdown "> <a href="#" id="drop2" role="button" class="dropdown-toggle catInfo" data-toggle="dropdown">Set Your Location<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">Get Current Location</a>
+						</li>
+						 
+						<li role="presentation"> <input type="text" name="starting_location" id="starting_location" placeholder="Enter an address or location to start" />
+						</li>
+					</ul>
+				</li>
+			</ul>	
+			<div class="clear"></div>
+		</div>
+		<div class="col-sm-12 col-xs-12 topMenu paddingzero paddingTB5">
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/map.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='showHome();'>Home</div>
+			    </div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/magnifier.svg">
+				 </div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_cat()'>Category</div>
+			    </div>				  
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/map.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_map()'>Map</div>
+			    </div>
+			</div>
+			<!-- <div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/trajectory.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_list()'>List</div>
+			    </div>
+			</div>	 -->			
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/opened-email-envelope.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_tour()'>Experience</div>
+			    </div>
+			</div>
+		</div>
+
+	</div>
+	<!-- Listing Catagory start here -->
+	<div class="Listing" id="myNewListing">
+		<div class="col-sm-12 col-xs-12 catHeading paddingzero paddingtb center">
+			<div class="catName col-sm-4 col-xs-4 bold newListHeading">Listings</div>
+			<div class="nextCatNav col-sm-4 col-xs-4 tourTitle" onclick="List_Clear('Clear')">
+				<img src="images/remove-button.svg" class="img-responsive catCenter">
+					Clear
+			</div>
+			<!-- <div class="nextCatNav col-sm-4 col-xs-4 tourTitle" onclick="closeTab();"> 
+				<img src="images/browser.svg" class="img-responsive catCenter">
+				Close
+			</div> -->
+		</div>
+		<div class="col-sm-12 col-xs-12 paddingtb paddingzero bottomspace" id="nearByPlaceMainDiv2">
+			<div class="container-fluid paddingzero" id="map_item1">
+				 <div id="selected_site_list1"></div>
+				 <div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Listing Catagory end here -->
+	<div data-role="footer container-fluid" class="footer nearByPlaceFooter">
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')">
+	 			<span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span>
+	 			<div>News</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBack()">
+		 		<span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Help</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()">
+		 		<span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Tours</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal">
+		 		<span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Profile</div>
+		 	</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--Place list Start here-->
+
+<!--Place Tour Start here-->
+<div data-role="page" id="Place_Tour_new">
+	<div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 paddingzero" id="mapcanvasHeader_id">
+		  	<div class="col-sm-12 col-xs-12 paddingzero" id="mapAddressHeader">
+				<div class="mapaddressdetail" id="User_location_bar">I am here...</div>
+		  	</div>
+			<ul class="nav getLocation" role="navigation">
+				<li class="dropdown "> <a href="#" id="drop2" role="button" class="dropdown-toggle catInfo" data-toggle="dropdown">Set Your Location<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#create_route" onclick="warning_before_map();">Get Current Location</a>
+						</li>
+						 
+						<li role="presentation"> <input type="text" name="starting_location" id="starting_location" placeholder="Enter an address or location to start" />
+						</li>
+					</ul>
+				</li>
+			</ul>	
+			<div class="clear"></div>
+		</div>
+		<div class="col-sm-12 col-xs-12 topMenu paddingzero paddingTB5">
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/magnifier.svg">
+				 </div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='showHome();'>Home</div>
+			    </div>				  
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/map.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_map()'>Map</div>
+			    </div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/trajectory.svg">
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_list()'>List</div>
+			    </div>
+			</div>				
+			<div class="col-md-3 col-sm-3 col-xs-3 paddingzero center">
+				<div class="col-sm-12 col-xs-12">
+					<img src="images/magnifier.svg">
+				 </div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="menuName" onclick='show_cat()'>Category</div>
+			    </div>				  
+			</div>
+		</div>
+	</div>
+	<!-- Tour Catagory start here -->
+	<div class="Tour" id="myNewTour">
+	 	<div class="myNewTourInner">
+			<div class="col-sm-12 col-xs-12 catHeading paddingzero">
+				<div class="catName tourMainTitle col-sm-4 col-xs-4 paddingtop newListHeading">My Tour</div>
+				<div class="catName tourTitle col-sm-8 col-xs-8 center paddingzero paddingtb">
+					<div class="catName col-sm-4 col-xs-4 paddingzero">
+						<div class="paddingzero" id="Visittoggle" >
+							<div class="Unvisited col-sm-12 col-xs-12 center" style="display:none;" id="yet_to_visit_sites" onclick="Visited_Tab_toggle(this)" >
+								<img src="images/shooting-target.svg" height="42" width="42" class="img-responsive catCenter">
+								Unvisited
+							</div>
+							<div class="Visited col-sm-12 col-xs-12 center" id="visited_sites" onclick="Visited_Tab_toggle(this)">
+								<img src="images/circle1.svg" height="42" width="42" class="img-responsive catCenter">
+								Visited
+							</div>
+						</div>
+					</div>
+					<div class="catName col-sm-4 col-xs-4 paddingzero">
+						<img src="images/pen-on-square-of-paper-interface-symbol.svg" height="42" width="42"  class="img-responsive catCenter" onclick="Edit(this)" id="EDIT_a">
+						Edit
+					</div>
+					<div class="nextCatNav col-sm-4 col-xs-4 paddingzero" >
+						<img src="images/remove-button.svg" class="img-responsive catCenter" height="42" width="42" onclick="Tour_Clear('Clear')">
+						Clear
+					</div>
+				</div>
+			</div>
+			<div class="locationVisitunvis">
+				<div class="col-sm-12 col-xs-12 enterMsg">
+				  <input type="text" name="starting_location" id="ADD_New" placeholder='Add more places by name here'/>
+				</div>
+			</div>
+			<div class="col-sm-12 col-xs-12 paddingtb paddingzero bottomspace" id="nearByPlaceMainDiv2">
+				<div class="container-fluid paddingzero" id="map_item2">
+					 <div id="Itinerary" class="single_library_container"></div>
+					 <div class="clear"></div>
+				</div>
+			</div>
+	  	</div>  
+	</div>
+	<!-- Tour Catagory end here -->
+	<div data-role="footer container-fluid" class="footer Tour_Footer">
+		<div class="col-sm-12 col-xs-12 itineraryfooter">
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Save')">Save <span class="save"><img src="images/save.svg" style="Height: 25px; width: 25px;"></span></div>
+			<div class="col-sm-6 col-xs-6 paddingzero" >
+				<div class="dropup">
+				<div class="dropdown-toggle startXploring" data-toggle="dropdown" onclick="trial();"> Start Exploring <span class="caret"></span></div>
+					<ul class="dropdown-menu col-sm-12 col-xs-12">
+						<li onclick="Build('walking')"><span class="paddingright"><img src="images/walking.svg" style="Height: 45px; width: 45px;"></span>Walking</li>
+						<li onclick="Build('bicycling')"><span class="paddingright"><img src="images/biking.svg" style="Height: 45px; width: 45px;"></span>Biking</li>
+				 		<li onclick="Build('driving')"><span class="paddingright"><img src="images/driving.svg" style="Height: 45px; width: 45px;"></span>Driving</li>
+						<li onclick="Build('transit')"><span class="paddingright"><img src="images/train.svg" style="Height: 45px; width: 45px;"></span>Public Transit</li>
+					</ul>
+			  	</div>
+		 	</div> 
+			<div class="col-sm-3 col-xs-3 paddingzero shareitinary" onclick="FbLogin('Share')"><span class="share"><img src="images/share.svg" style="Height: 25px; width: 25px;"></span>Share</div>
+		</div>	
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')">
+	 			<span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span>
+	 			<div>News</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBack()">
+		 		<span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Help</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()">
+		 		<span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Tours</div>
+		 	</div>
+		 	<div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal">
+		 		<span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span>
+		 		<div>Profile</div>
+		 	</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+</div>
+<!--Place Tour Start here-->
+
+<!--Map Near By Place Start here-->
+<div data-role="page" id="nearByPlace">
+	<div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 paddingzero">
+			<div class="col-sm-3 col-xs-3 paddingzero">
+				<div class="backButton">
+					<div onclick="goToBackCat()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-xs-6 center">
+				<div class="help">
+					<div onClick="help('Listing');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+				</div> 
+			</div>
+			<div class="col-sm-3 col-xs-3 paddingzero">
+			<div class="nextButton">
+				<div onclick="GoToItinerary()"><span class="next">Next</span><img src="images/next.svg" style="Height: 25px; width: 25px;"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+   		<div class="col-sm-12 col-xs-12 paddingzero paddingtb btn btn-default" id="resetList" onClick="javascript:Tour_Clear('Clear_list'); return false;">Clear all listing selections</div>
+		</div>	
+	</div> 
+	<div class="col-sm-12 col-xs-12 paddingtb freezTopSpace paddingzero bottomspace" id="nearByPlaceMainDiv">
+		<div class="container-fluid paddingzero" id="map_item">
+			 <div id="selected_site_list"></div>
+			 <div class="clear"></div>
+		</div>
+	</div>
+	<div data-role="footer container-fluid" class="footer nearByPlaceFooter">
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">	
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')"><span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span><div>News</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick=""><span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span><div>Help</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()"><span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span><div>Tours</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--Map Near By Place End here-->
+ 
+<!--List Detail view Start here-->
+<div data-role="page" id="ListDetail">
+    <div data-role="header" class="detailsHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 addToTour" onClick="GoToItinerary()" id="Tour_Listings">You have added 0 Listing <img src="images/eye.svg" style="Height: 25px; width: 25px;"></div>
+		<div class="col-sm-12 col-xs-12">
+			<div class="backButton col-sm-3 col-xs-3 paddingzero">
+	            <div id="DetailBackButton"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+	        </div>
+	        <div class="col-sm-6 col-xs-6 paddingzero center">
+	            <div class="help">
+	                <div onClick="help('Detail');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+	            </div>
+	        </div>
+			<div class="backButton col-sm-3 col-xs-3 paddingzero">
+	        </div>
+		</div>	
+    </div>
+    <div class="listDetailsView" id="listDetailsMainDiv">
+        <div id="selected_site_Detail"></div>
+    </div>
+    
+	<div class="col-sm-12 col-xs-12 paddingzero detailListFooter">
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter">
+		<!-- <div class="col-sm-2 col-xs-2 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+		 <div class="col-sm-8 col-xs-8 paddingzero saveitinary" onclick="goToBack()"><span class="save"><img src="images/home1.svg" style="Height: 25px; width: 25px;"></span><div>My location</div></div>
+		--> 
+			<div class="col-sm-12 col-xs-12 paddingzero shareitinary" data-toggle="modal"  data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>
+		</div>
+	</div>
+</div>
+<!--List Detail view End here-->
+
+<!-- Itinerary UI Start here-->
+<div data-role="page" id="itinerary_Ui">
+    <div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+		<div class="col-sm-12 col-xs-12 paddingzero">
+			<div class="col-sm-4 col-xs-4 paddingzero">
+				<div class="backButton" id="thread_">
+					<div onclick="goToNearByPlace()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-4 paddingzero">
+		       <div class="help center">
+		            <div onClick="help('Tour');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+		       </div>
+   			</div>
+			<div class="col-sm-4 col-xs-4 paddingzero">
+				<div class="nextButton">
+					<div class="edit" onclick="Edit(this)" id="EDIT_a"><img src="images/edit.png" style="padding-right: 10px;">EDIT</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>	
+    </div>
+    <div class="container-fluid paddingzero freezTopSpace" id="uio">
+        <div class="col-sm-12 col-xs-12 paddingzero" >
+            <div class="btn-group  btn-group-justified col-sm-12 col-xs-12 paddingzero" role="group" data-toggle="buttons" aria-label="...">
+	            <div class="btn T_Tab btn-default visitedButton col-sm-4 col-xs-4" id="yet_to_visit_sites" onclick="Visited_Tab_toggle(this)"><input type="radio" id="yettovisited" name="visittour" value="YetToVisit" checked>Unvisited</div>
+	            <div class="btn T_Tab btn-default visitedButton col-sm-4 col-xs-4" id="visited_sites" onclick="Visited_Tab_toggle(this)"><input type="radio" id="visited" name="visittour" value="Visit">Visited</div>
+	            <div class="btn T_Tab T_Tab_Right btn-default reset_tab col-sm-4 col-xs-4" onclick="Tour_Clear('Clear')">Clear Tour</div>
+            </div> 
+        </div>
+    	<div class="locationVisitunvis">
+			<div class="col-sm-12 col-xs-12 enterMsg">
+		      <input type="text" name="starting_location" id="ADD_New" placeholder='Add more places by name here'/>
+			</div>
+		</div>
+		<div id="Tour_List" class="single_library_container"></div>
+	</div>
+    <div data-role="footer container-fluid" class="footer">
+		<div class="col-sm-12 col-xs-12 itineraryfooter">
+	 		<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Save')">Save <span class="save"><img src="images/save.svg" style="Height: 25px; width: 25px;"></span></div>
+	 		<div class="col-sm-6 col-xs-6 paddingzero" >
+				<div class="dropup">
+					<div class="dropdown-toggle startXploring" data-toggle="dropdown" onclick="trial();"> Start Xploring <span class="caret"></span></div>
+					<ul class="dropdown-menu col-sm-12 col-xs-12">
+					  	<li onclick="Build('walking')"><span class="paddingright"><img src="images/walking.svg" style="Height: 45px; width: 45px;"></span>Walking</li>
+					  	<li onclick="Build('bicycling')"><span class="paddingright"><img src="images/biking.svg" style="Height: 45px; width: 45px;"></span>Biking</li>
+		     			<li onclick="Build('driving')"><span class="paddingright"><img src="images/driving.svg" style="Height: 45px; width: 45px;"></span>Driving</li>
+					  	<li onclick="Build('transit')"><span class="paddingright"><img src="images/train.svg" style="Height: 45px; width: 45px;"></span>Public Transit</li>
+					</ul>
+				</div>
+	 		</div> 
+	 		<div class="col-sm-3 col-xs-3 paddingzero shareitinary" onclick="FbLogin('Share')"><span class="share"><img src="images/share.svg" style="Height: 25px; width: 25px;"></span>Share</div>
+		</div>
+		<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">	
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')"><span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span><div>News</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick=""><span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span><div>Help</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+			 <div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal" data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!-- Itinerary UI End here-->
+
+<!-- Save UI Start here-->
+<div data-role="page" id="Save_Ui">
+    <div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+        <div class="col-sm-12 col-xs-12">
+            <div class="backButton col-sm-3 col-xs-3 paddingzero">
+                 <div onclick="GoToItinerary()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+            </div>
+            <div class="col-sm-6 col-xs-6 paddingzero center">
+                <div class="help">
+                    <div onClick="help('save');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+                </div>
+            </div>
+            <div class="backButton col-sm-3 col-xs-3 paddingzero">
+            </div>
+        </div>
+       <div class="clear"></div>
+    </div>
+    <div class="container paddingzero freezTopSpace" id="saveContentID"> 
+		<div class="col-sm-12 col-xs-12 paddingtb" id="saveui">	
+			<div class="form-group">
+				<label for="inputName1" class="control-label">Please enter the name and description of the tour to save your tour on server.</label>
+			</div>
+			<input type="hidden" id="Tour_Owner_Status" value="false"/>
+			<div class="form-group">
+				<label for="inputName" class="control-label">Name</label>
+				<input type="text" class="form-control" id="name_t" placeholder="Name" required/>
+				<div class="help-block with-errors"></div>
+			</div>
+			
+			<div class="form-group">
+				<label for="inputDescription" class="control-label">Description</label>
+				<textarea class="form-control" rows="3" id="desc_t" placeholder="Description" required></textarea>
+				<div class="help-block with-errors"></div>
+			</div>
+			
+            <div class="form-group">
+                <label for="inputTag" class="control-label">Tag</label>
+                <input type="text" class="form-control" id="Tag_t" placeholder="Tag" required/>
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputDate_t" class="control-label">Date</label>
+                <input type="datetime-local" class="form-control" id="Date_t" />
+                <div class="help-block with-errors"></div>
+            </div>
+			<div class="form-group col-sm-12 col-xs-12 paddingzero">
+				<div class="control-label">Tour Profile</div>
+				<div class="radio col-sm-6 col-xs-6">
+					<label>  
+                        <input type="radio" name="public" id="Public" checked="checked">
+						Public
+					</label>
+				</div>
+				<div class="radio col-sm-6 col-xs-6">
+					<label>
+                        <input type="radio" name="public" id="Private">
+						Private
+					</label>
+				</div> 
+			</div>
+			<div class="form-group col-sm-12 col-xs-12 paddingzero" id="add_tour_place_detail">
+			</div>
+			<div class="form-group col-sm-12 col-xs-12 paddingzero">
+				<div class="AddMore col-sm-6 col-xs-6 paddingzero"><label>Add More Details</label></div>
+				<div class="col-sm-6 col-xs-6 txtright" id="addMoreDesc" onclick="Addmore_description()"><img src="images/plus.png"></div>
+			</div>
+			<div class="form-group center paddingb30">
+                   <button onclick="javascript:Save_Tour('false'); return false;" class="btn btn-primary">Submit</button>
+			</div>
+		</div>   
+    </div>
+    <div data-role="footer container-fluid" class="footer">
+        <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick=""><span class="save"><img src="images/information-button.svg" style="Height: 25px; width: 25px;"></span><div>Help</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()"><span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span><div>Tours</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal" data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div></div>
+		</div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-- Save ui end here -->
+
+<!-- Mytrips UI Start here-->
+<div data-role="page" id="MyTrips">
+    <div data-role="header" class="homeHeader mapcanvasHeader navbar-fixed-top">
+        <div class="col-sm-12 col-xs-12">  
+            <div class="backButton col-sm-3 col-xs-3 paddingzero">
+               <div onclick="GoToItinerary()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+            </div>
+            <div class="col-sm-6 col-xs-6 paddingzero center">
+                <div class="help">
+                    <div onClick="help('Mytrips');"><img src="images/info.svg" style="Height: 25px; width: 25px;"></div>
+                </div>
+            </div>
+            <div class="nextButton col-sm-3 col-xs-3 paddingzero"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+	<div class="container-fluid paddingzero freezTopSpace" id="uio">
+		<div class="headingtitle">My Tours</div>
+		<div id="MyTripList"></div>
+	</div>
+    <div data-role="footer container-fluid" class="footer">
+        <div class="col-sm-12 col-xs-12 itineraryfooter">
+        </div>
+        <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="FbLogin('Notification')"><span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span><div>News</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero startexploring" onclick="" ><img src="images/information-button.svg" style="Height: 25px; width: 25px;"><div>Help</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+			<div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()"><span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span><div>Tours</div></div>
+		</div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-- My trips ui end here -->
+
+<!-- Modal start -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      	<div class="modal-content">
+	        <div class="modal-header">
+	          	<button type="button" id="PopUpClose" class="close" data-dismiss="modal">&times;</button>
+	          	<h4 class="modal-title">User Profile</h4>
+	        </div>
+	        <div class="modal-body">
+	         	<button type="button" onclick="FbLogin('MyTrips')" class="btn btn-primary">My Tours</button>
+	        </div>
+      	</div>
+    </div>
+</div>
+<!-- Modal End-->
+  
+<!--Map canvas for tour Start here-->
+<div data-role="page" id="TourMapCanvas">
+    <div data-role="header" class="homeHeader mapcanvasHeader">
+        <div class="backButton">
+            <div onclick="GoToItinerary()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+        </div>
+        <div class="nextButton">
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="content mapCanvasFull" id="Tour_map_item">
+        <div id="Tour_map_canvas"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<!--Map canvas End here-->
+
+<!--notifivcation ui for fb Start here-->
+<div data-role="page" id="NotificationUi">
+    <div data-role="header" class="homeHeader navbar-fixed-top ">
+        <div class="backButton">
+            <div href="#" onclick="goToBackCat()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+        </div>
+        <div class="nextButton">
+        </div>
+    </div>
+    <div class="Notification1 freezTopSpace" id="Notification_Ui">
+        <div id="Fb_Posts"></div>
+    </div>
+    <div data-role="footer container-fluid" class="footer">
+        <div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+            <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div>
+            </div>
+            <div class="col-sm-3 col-xs-3 paddingzero startexploring" onclick="" ><img src="images/information-button.svg" style="Height: 25px; width: 25px;"><div>Help</div>
+            </div>
+            <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="Build_SearchTours()"><span class="save"><img src="images/tour.svg" style="Height: 25px; width: 25px;"></span><div>Tours</div>
+            </div>
+            <div class="col-sm-3 col-xs-3 paddingzero shareitinary" data-toggle="modal" data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--notification ui End here-->
+
+<!--Build abd search tour Start here-->
+<div data-role="page" id="BuildSearchUi">
+    <div data-role="header" class="homeHeader navbar-fixed-top">
+        <div class="backButton">
+            <div  onclick="goToBackCat()"><img src="images/back.svg" style="Height: 25px; width: 25px;"><span class="back">Back</span></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="Build_search freezTopSpace" id="Build_Search_Ui">
+        <div class="tabss visitedorNot1">
+            <div class="col-sm-12 col-xs-12 paddingzero">
+                <div class="btn-group" data-toggle="buttons" style="display: initial!important;">
+                    <div class="col-sm-6 col-xs-6 btn  visitedButton1" style="display:none;" onclick="Tour_Clear('Build')" id="visitedButton1"><input type="radio"  name="visittour" value="YetToVisit" checked>Build Tours</div>
+                    <div class="col-sm-12 col-xs-12 btn  visitedButton2 active"  onclick="PublicTours()" id="visitedButton2"><input type="radio" id="visited" name="visittour" value="Visit">Search Tours</div>
+				</div>
+            </div> 
+        </div>
+        
+        <div id="Search_ui">
+            <div class="locationVisitunvis">
+                <div class="col-sm-12 col-xs-12 enterMsg paddingzero">
+                    <label>
+						<input type="text" name="browser" onkeyup="autocompleteBox(this)" placeholder="Enter tags here..">
+                        <img class="searchIcon" src="images/search.png" width="15" />
+					</label>
+                </div>
+            </div>
+            
+        </div>
+		<div id="Search_ui_Data"></div>
+    </div>
+    
+	<div data-role="footer container-fluid" class="footer">
+     	<div class="col-sm-12 col-xs-12 itinerarymainfooter paddingzero">
+		 	<div class="col-sm-4 col-xs-4 paddingzero saveitinary" onclick="FbLogin('Notification')"><span class="save"><img src="images/news.svg" style="Height: 25px; width: 25px;"></span><div>News</div></div>
+		 	<div class="col-sm-4 col-xs-4 paddingzero startexploring" onclick="" ><img src="images/information-button.svg" style="Height: 25px; width: 25px;"><div>Help</div></div>
+	<!--	 <div class="col-sm-3 col-xs-3 paddingzero saveitinary" onclick="goToBackCat()"><span class="save"><img src="images/catagory.svg" style="Height: 25px; width: 25px;"></span><div>Category</div></div>
+	-->	 	<div class="col-sm-4 col-xs-4 paddingzero shareitinary" data-toggle="modal" data-target="#myModal"><span class="share"><img src="images/profile.svg" style="Height: 25px; width: 25px;"></span><div>Profile</div>
+			</div>
+        	<div class="clear"></div>
+    	</div>
+	</div> 
+</div>
+
+
+<!--	function show_cat()-->
+<!--	{-->
+<!--		$('#homepage').hide(); -->
+<!--		$('#mapCanvas').hide();-->
+<!--		$('#mainCatagoryNew').show();-->
+<!--		$('#Place_list_new').hide();-->
+<!--		$('#Place_Tour_new').hide();-->
+<!--	}-->
+<!---->
+<!--	function show_list()-->
+<!--	{-->
+<!--		$('#homepage').hide(); -->
+<!--		$('#mapCanvas').hide();-->
+<!--		$('#mainCatagoryNew').hide();-->
+<!--		$('#Place_list_new').show();-->
+<!--		$('#Place_Tour_new').hide();-->
+<!--		Places();-->
+<!--	}-->
+<!---->
+<!--	function show_tour()-->
+<!--	{-->
+<!--		$('#homepage').hide(); -->
+<!--		$('#mapCanvas').hide();-->
+<!--		$('#mainCatagoryNew').hide();-->
+<!--		$('#Place_list_new').hide();-->
+<!--		$('#Place_Tour_new').show();-->
+<!--	}-->

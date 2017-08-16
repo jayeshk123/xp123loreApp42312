@@ -1,0 +1,18 @@
+<svg width="17.53" height="33.093" xmlns="http://www.w3.org/2000/svg">
+ <metadata>
+ </metadata>
+ <defs>
+  <style>.cls-1 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }</style>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path transform="rotate(-180 8.733721733093263,16.531007766723633) " d="m0.270029,15.824006a0.994,0.994 0 0 1 1.41,0l15.56,15.556a1,1 0 0 1 -1.42,1.414l-15.55,-15.556a1,1 0 0 1 0,-1.414zm0,0l15.55,-15.556a1,1 0 0 1 1.42,1.414l-15.56,15.556a1,1 0 1 1 -1.41,-1.414z" class="cls-1" id="arrow_back"/>
+ </g>
+</svg>

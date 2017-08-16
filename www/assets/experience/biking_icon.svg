@@ -1,0 +1,69 @@
+<svg id="biking_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="155" height="155" viewBox="0 0 155 155">
+  <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about=""/>
+   </rdf:RDF>
+</x:xmpmeta>
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                           
+<?xpacket end="w"?></metadata>
+<defs>
+    <style>
+      .cls-1 {
+        fill: #d22734;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        filter: url(#filter-2);
+      }
+    </style>
+    <filter id="filter" x="5718" y="7100" width="155" height="155" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="2.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#d12734" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="5756" y="7152" width="79" height="51" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="2.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#fff" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="Ellipse_2_copy_8" data-name="Ellipse 2 copy 8" class="cls-1" d="M5795,7247a70,70,0,1,1,70-70A70,70,0,0,1,5795,7247Zm0-137a67,67,0,1,0,67,67A67,67,0,0,0,5795,7110Z" transform="translate(-5718 -7100)"/>
+  <path id="Forma_1" data-name="Forma 1" class="cls-2" d="M5813.37,7167.66a13.572,13.572,0,0,0-5.26,1.06l-3.86-7.53h5.4a1.07,1.07,0,0,1,0,2.14h-1.15a1.1,1.1,0,0,0,0,2.2h1.15a3.27,3.27,0,0,0,0-6.54h-7.21a1.1,1.1,0,0,0-.97,1.61l1.92,3.74h-15.86l-1.6-3.15h2.53a1.1,1.1,0,0,0,0-2.2h-7.21a1.1,1.1,0,0,0,0,2.2h2.21l2.13,4.2-2.51,3.9a13.481,13.481,0,0,0-6.45-1.63,13.675,13.675,0,1,0,13.6,14.78h3.23l-1.26,4.08h-0.72a1.105,1.105,0,0,0,0,2.21h3.96a1.105,1.105,0,0,0,0-2.21h-0.94l1.45-4.71,9.15-14.15,1.06,2.07A13.629,13.629,0,1,0,5813.37,7167.66Zm-26.62,0,6.4,12.57h-2.92a13.661,13.661,0,0,0-5.3-9.74Zm1.27,12.57h-9.37l5.08-7.88A11.4,11.4,0,0,1,5788.02,7180.23Zm-11.39,12.58a11.475,11.475,0,1,1,5.26-21.66l-6.18,9.59a1.1,1.1,0,0,0-.04,1.12,1.084,1.084,0,0,0,.96.58h11.39A11.466,11.466,0,0,1,5776.63,7192.81Zm18.43-13.68-6.41-12.59h14.55Zm18.31,13.68a11.472,11.472,0,0,1-6.2-21.11l5.22,10.14a1.1,1.1,0,0,0,.98.6,1.009,1.009,0,0,0,.5-0.13,1.093,1.093,0,0,0,.47-1.48l-5.21-10.15A11.466,11.466,0,1,1,5813.37,7192.81Z" transform="translate(-5718 -7100)"/>
+</svg>

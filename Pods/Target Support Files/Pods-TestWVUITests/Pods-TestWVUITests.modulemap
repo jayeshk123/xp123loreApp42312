@@ -1,0 +1,6 @@
+framework module Pods_TestWVUITests {
+  umbrella header "Pods-TestWVUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
