@@ -36,6 +36,11 @@
 		B97F08181F20AF93002A475D /* DealsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97F08171F20AF93002A475D /* DealsWebViewController.swift */; };
 		B97F081A1F20BC68002A475D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B97F08191F20BC68002A475D /* MapKit.framework */; };
 		B97F081E1F20EC9C002A475D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97F081D1F20EC9C002A475D /* MapViewController.swift */; };
+		B98594C71F457DAB001DB616 /* formPlaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594C61F457DAB001DB616 /* formPlaceTableViewController.swift */; };
+		B98594C91F457DC4001DB616 /* saveFormPlaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594C81F457DC4001DB616 /* saveFormPlaceTableViewController.swift */; };
+		B98594CB1F45B125001DB616 /* showInnerListViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CA1F45B125001DB616 /* showInnerListViewTableViewController.swift */; };
+		B98594CD1F45B222001DB616 /* nativeExpListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */; };
+		B98594D01F45CA14001DB616 /* placeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CF1F45CA14001DB616 /* placeProfileViewController.swift */; };
 		B98AF79A1F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98AF7991F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift */; };
 		B98D35481F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98D35461F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift */; };
 		B98D35491F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B98D35471F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib */; };
@@ -116,6 +121,11 @@
 		B97F08171F20AF93002A475D /* DealsWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealsWebViewController.swift; sourceTree = "<group>"; };
 		B97F08191F20BC68002A475D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B97F081D1F20EC9C002A475D /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B98594C61F457DAB001DB616 /* formPlaceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = formPlaceTableViewController.swift; sourceTree = "<group>"; };
+		B98594C81F457DC4001DB616 /* saveFormPlaceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = saveFormPlaceTableViewController.swift; sourceTree = "<group>"; };
+		B98594CA1F45B125001DB616 /* showInnerListViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showInnerListViewTableViewController.swift; sourceTree = "<group>"; };
+		B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nativeExpListTableViewController.swift; sourceTree = "<group>"; };
+		B98594CF1F45CA14001DB616 /* placeProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = placeProfileViewController.swift; sourceTree = "<group>"; };
 		B98AF7991F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nativeDiscoverInnerTableViewController.swift; sourceTree = "<group>"; };
 		B98D35461F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowListSubSectionsTableViewCell.swift; sourceTree = "<group>"; };
 		B98D35471F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowListSubSectionsTableViewCell.xib; sourceTree = "<group>"; };
@@ -257,6 +267,8 @@
 		B97322D21F17BDC900F64D86 /* TestWV */ = {
 			isa = PBXGroup;
 			children = (
+				B98594CE1F45C9F5001DB616 /* Place-profile */,
+				B98594C51F457D7E001DB616 /* Place-Form */,
 				B9D96AC71F3DC1F3004EE147 /* Experience-Form */,
 				B95D20901F3C94E2008DF047 /* TestWV.entitlements */,
 				B97660C31F2A06CC009BD239 /* sqliteDB.sqlite3 */,
@@ -304,6 +316,23 @@
 			path = TestWVUITests;
 			sourceTree = "<group>";
 		};
+		B98594C51F457D7E001DB616 /* Place-Form */ = {
+			isa = PBXGroup;
+			children = (
+				B98594C61F457DAB001DB616 /* formPlaceTableViewController.swift */,
+				B98594C81F457DC4001DB616 /* saveFormPlaceTableViewController.swift */,
+			);
+			name = "Place-Form";
+			sourceTree = "<group>";
+		};
+		B98594CE1F45C9F5001DB616 /* Place-profile */ = {
+			isa = PBXGroup;
+			children = (
+				B98594CF1F45CA14001DB616 /* placeProfileViewController.swift */,
+			);
+			name = "Place-profile";
+			sourceTree = "<group>";
+		};
 		B99C753A1F28A59B001ACED4 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +342,7 @@
 				B99C75411F28A5F9001ACED4 /* watchListTableViewController.swift */,
 				B99C75431F28A609001ACED4 /* doListTableViewController.swift */,
 				B99EFEDE1F2B20330084AF0E /* showListViewTableViewController.swift */,
+				B98594CA1F45B125001DB616 /* showInnerListViewTableViewController.swift */,
 				B9059D311F345F0D007947CE /* nativeListTableViewController.swift */,
 				B98D35461F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift */,
 				B98D35471F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib */,
@@ -321,6 +351,7 @@
 				B9059D331F349588007947CE /* fullScreenTableViewCell.swift */,
 				B9059D341F349588007947CE /* fullScreenTableViewCell.xib */,
 				B99EFEE61F2B28E10084AF0E /* nativeListViewController.swift */,
+				B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */,
 			);
 			name = Lists;
 			sourceTree = "<group>";
@@ -656,6 +687,7 @@
 				B9059D351F349588007947CE /* fullScreenTableViewCell.swift in Sources */,
 				B98AF79A1F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift in Sources */,
 				B99C75441F28A609001ACED4 /* doListTableViewController.swift in Sources */,
+				B98594CD1F45B222001DB616 /* nativeExpListTableViewController.swift in Sources */,
 				B976BF161F41844300C50199 /* Business.swift in Sources */,
 				B9A49D6C1F2F0EC50086F755 /* showListTableViewCell.swift in Sources */,
 				B9FEB1041F1F885A009D2E20 /* NewsWebViewController.swift in Sources */,
@@ -663,11 +695,14 @@
 				B99C75421F28A5F9001ACED4 /* watchListTableViewController.swift in Sources */,
 				B97322D61F17BDC900F64D86 /* ViewController.swift in Sources */,
 				B971A1FB1F2601D800E35DF1 /* nativeEventsController.swift in Sources */,
+				B98594CB1F45B125001DB616 /* showInnerListViewTableViewController.swift in Sources */,
 				B99EFEDF1F2B20330084AF0E /* showListViewTableViewController.swift in Sources */,
 				B9A3D0FF1F4426B5006DCA04 /* CatListTableViewCell.swift in Sources */,
 				B97F08161F20AF71002A475D /* DealsViewController.swift in Sources */,
+				B98594D01F45CA14001DB616 /* placeProfileViewController.swift in Sources */,
 				B9AAAF751F1E1F300023FFC3 /* WebViewController.swift in Sources */,
 				B99EFEE71F2B28E10084AF0E /* nativeListViewController.swift in Sources */,
+				B98594C91F457DC4001DB616 /* saveFormPlaceTableViewController.swift in Sources */,
 				B99C75401F28A5E7001ACED4 /* listenListTableViewController.swift in Sources */,
 				B9FEB1061F1F8B45009D2E20 /* NewsViewController.swift in Sources */,
 				B99C753E1F28A5D8001ACED4 /* drinkListTableViewController.swift in Sources */,
@@ -683,6 +718,7 @@
 				B971A2001F260E3500E35DF1 /* nativeEventsTableViewCell.swift in Sources */,
 				B96CB7DB1F33310100C9296C /* experienceListTableViewController.swift in Sources */,
 				B96CB7D71F332CD800C9296C /* experienceTableTableViewController.swift in Sources */,
+				B98594C71F457DAB001DB616 /* formPlaceTableViewController.swift in Sources */,
 				B99C753C1F28A5C6001ACED4 /* eatListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

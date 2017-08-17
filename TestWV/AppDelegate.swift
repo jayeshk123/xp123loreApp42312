@@ -95,6 +95,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
+                try db.create(table: "selectList") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("sectionName", .text).notNull()
+                    t.column("sectionURL", .text).notNull()
+                    //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
+                }
+                
                 try db.create(table: "locations") { t in
                     t.column("id", .integer).primaryKey()
                     t.column("name", .text).notNull()

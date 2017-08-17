@@ -1,20 +1,15 @@
 //
-//  formExpTableViewController.swift
+//  saveFormPlaceTableViewController.swift
 //  TestWV
 //
-//  Created by earth on 11/08/17.
+//  Created by earth on 17/08/17.
 //  Copyright © 2017 earth. All rights reserved.
 //
 
 import UIKit
 
-class formExpTableViewController: UITableViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class saveFormPlaceTableViewController: UITableViewController {
 
-    @IBOutlet var imageSelect: UIImageView!
-    
-    @IBOutlet var selectImageBtn: UIButton!
-    var imagePicker = UIImagePickerController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
@@ -25,26 +20,6 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    @IBAction func selectImageBtnClicked(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
-    
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
-        
-        imageSelect.image = image
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -59,7 +34,7 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11
+        return 2
     }
 
     /*
@@ -116,5 +91,23 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func viewWillLayoutSubviews() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        
+        self.navigationItem.titleView = imageView
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header_bg")!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "header_bg")!)
+        /* var rect = self.tabBar.frame
+         //CGRect(x: 0, y: 0, width: 100, height: 100)
+         //self.TabBar is IBOutlet of your TabBar
+         rect.size.height = 500;
+         rect.origin.y = self.view.frame.size.height - 80;
+         self.tabBar.frame = rect;*/
+    }
 
 }

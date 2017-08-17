@@ -205,8 +205,8 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
                     //print(silentString)
                     let trimmedString = silentString.replacingOccurrences(of: " ", with: "")
                     //print(trimmedString)
-                    let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
-                    NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+                    //let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
+                    //NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
                     i = i+1
                     positionArray.append(1)
                     cell1Array.append(i)
@@ -252,6 +252,43 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
         }
         
     }
+    
+    public func addToDB(Name:String, Index:String){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.inDatabase { db in
+                
+                try db.execute(
+                    "delete from selectList")
+                
+                try db.execute(
+                    "INSERT INTO selectList (sectionName, sectionURL) " +
+                    "VALUES (?, ?)",
+                    arguments: [Name, Index])
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    public func deleteFromDB(){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.inDatabase { db in
+                
+                try db.execute(
+                    "delete from selectList")
+                
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -271,7 +308,7 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.sections.count + self.subsections.count
+        return self.sections.count
     }
 
     
@@ -297,59 +334,6 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
                 return cell
             }
         }
-        
-        for j in 0..<cell2Array.count{
-            if(cell2Array[j] ==  indexPath.row){
-                let cell = Bundle.main.loadNibNamed("ShowListSubSectionsTableViewCell", owner: self, options: nil)?.first as! ShowListSubSectionsTableViewCell
-                
-                cell.backgroundColor = UIColor.black
-                let imageUrl = NSURL(string: "https://s3.amazonaws.com/retail-safari/"+subsections[0].image)! as URL
-                print("Download Started")
-                getDataFromUrl(url: imageUrl) { (data, response, error)  in
-                    guard let data = data, error == nil else { return }
-                    print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
-                    print("Download Finished")
-                    DispatchQueue.main.async() { () -> Void in
-                        cell.leftImage.image = UIImage(data: data)
-                        cell.leftImage.contentMode = .scaleAspectFit
-                    }
-                }
-                print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
-                cell.rightImage.image = nil
-                cell.titleLabel.text = subsections[0].title
-                cell.locationLabel.text = subsections[0].location
-                cell.distanceLabel.text = subsections[0].distance
-                cell.statusLabel.text = subsections[0].status
-                
-                return cell
-
-            }
-            
-        }
-        /*if(self.positionArray[indexPath.row] == 1){
-            let cell = Bundle.main.loadNibNamed("ShowListSubSectionsTableViewCell", owner: self, options: nil)?.first as! ShowListSubSectionsTableViewCell
-            
-            cell.backgroundColor = UIColor.black
-            let imageUrl = NSURL(string: "https://s3.amazonaws.com/retail-safari/"+subsections[0].image)! as URL
-            print("Download Started")
-            getDataFromUrl(url: imageUrl) { (data, response, error)  in
-                guard let data = data, error == nil else { return }
-                print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
-                print("Download Finished")
-                DispatchQueue.main.async() { () -> Void in
-                    cell.leftImage.image = UIImage(data: data)
-                    cell.leftImage.contentMode = .scaleAspectFit
-                }
-            }
-            print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
-            cell.rightImage.image = nil
-            cell.titleLabel.text = subsections[0].title
-            cell.locationLabel.text = subsections[0].location
-            cell.distanceLabel.text = subsections[0].distance
-            cell.statusLabel.text = subsections[0].status
-            
-            return cell
-        }*/
         let cell = Bundle.main.loadNibNamed("showListTableViewCell", owner: self, options: nil)?.first as! showListTableViewCell
         
         cell.backgroundColor = UIColor.black
@@ -373,30 +357,12 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
             print(silentString)
             let trimmedString = silentString.replacingOccurrences(of: " ", with: "")
             print(trimmedString)
-            let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
-            NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
-
-            Alamofire.request(URL+"/site/getSelectedPlaceNative?Category="+trimmedString+"&page_num=1").responseJSON { response in
-                print("Request: \(String(describing: response.request))")   // original url request
-                print("Response: \(String(describing: response.response))") // http url response
-                print("Result: \(response.result)")                         // response serialization result
             
-                if let json = response.data {
-                    let data = JSON(data: json)
-                
-                    if(data.count > 0){
-                        let json1 = data[0]["Detail"]
-                        print("data \(json1["name"])")
-                        self.positionArray.insert(2, at: indexPath.row+1)
-                        self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: "1 mi away", status: "OPEN", image : json1["Path"].string!))
-                        tableView.reloadData()
-                    }
-                    //let data1 = JSON(String: json1)
-                    //print("data1 \(data1)")
-                }
+            addToDB(Name: sections[indexPath.row], Index: URL+"/site/getSelectedPlaceNative?Category="+trimmedString+"&page_num=1")
             
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            }
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewController = storyBoard.instantiateViewController(withIdentifier: "nativeExpListTableViewController")
+            self.present(newViewController, animated: true, completion: nil)
         }
         
         

@@ -1,20 +1,15 @@
 //
-//  formExpTableViewController.swift
+//  nativeExpListTableViewController.swift
 //  TestWV
 //
-//  Created by earth on 11/08/17.
+//  Created by earth on 17/08/17.
 //  Copyright © 2017 earth. All rights reserved.
 //
 
 import UIKit
 
-class formExpTableViewController: UITableViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class nativeExpListTableViewController: UITableViewController {
 
-    @IBOutlet var imageSelect: UIImageView!
-    
-    @IBOutlet var selectImageBtn: UIButton!
-    var imagePicker = UIImagePickerController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
@@ -25,26 +20,6 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    @IBAction func selectImageBtnClicked(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
-    
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
-        
-        imageSelect.image = image
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -59,7 +34,7 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11
+        return 4
     }
 
     /*

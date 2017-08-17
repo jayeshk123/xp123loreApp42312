@@ -428,6 +428,11 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     
     @IBAction func btnChangeLocationClicked(_ sender: UIButton) {
         setupDistanceBtn.backgroundColor = .clear
+        
+        setupDistanceBtn.backgroundColor = UIColor.black
+        setupDistanceBtn.layer.borderWidth = 2
+        setupDistanceBtn.layer.borderColor = UIColor(red:0.27, green:0.28, blue:0.35, alpha:1).cgColor
+        
         changeLocationBtn.backgroundColor = UIColor.red
         ChangeLocationCell.frame.size.height = 64
         changeLocationVisible = true
