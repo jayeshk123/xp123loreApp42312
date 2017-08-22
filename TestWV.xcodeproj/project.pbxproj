@@ -41,6 +41,7 @@
 		B98594CB1F45B125001DB616 /* showInnerListViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CA1F45B125001DB616 /* showInnerListViewTableViewController.swift */; };
 		B98594CD1F45B222001DB616 /* nativeExpListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */; };
 		B98594D01F45CA14001DB616 /* placeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98594CF1F45CA14001DB616 /* placeProfileViewController.swift */; };
+		B98992031F46F35800EBFA1A /* profileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98992021F46F35800EBFA1A /* profileViewController.swift */; };
 		B98AF79A1F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98AF7991F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift */; };
 		B98D35481F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98D35461F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift */; };
 		B98D35491F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B98D35471F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib */; };
@@ -51,6 +52,10 @@
 		B99C75441F28A609001ACED4 /* doListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99C75431F28A609001ACED4 /* doListTableViewController.swift */; };
 		B99EFEDF1F2B20330084AF0E /* showListViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EFEDE1F2B20330084AF0E /* showListViewTableViewController.swift */; };
 		B99EFEE71F2B28E10084AF0E /* nativeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99EFEE61F2B28E10084AF0E /* nativeListViewController.swift */; };
+		B9A2F6721F4AF83000D6CEDD /* ViewExpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2F6701F4AF83000D6CEDD /* ViewExpTableViewCell.swift */; };
+		B9A2F6731F4AF83000D6CEDD /* ViewExpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9A2F6711F4AF83000D6CEDD /* ViewExpTableViewCell.xib */; };
+		B9A2F6751F4AFF7600D6CEDD /* ViewExpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2F6741F4AFF7600D6CEDD /* ViewExpTableViewController.swift */; };
+		B9A2F6771F4AFF8700D6CEDD /* ViewExpInnerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A2F6761F4AFF8700D6CEDD /* ViewExpInnerTableViewController.swift */; };
 		B9A3D0FF1F4426B5006DCA04 /* CatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A3D0FD1F4426B5006DCA04 /* CatListTableViewCell.swift */; };
 		B9A3D1001F4426B5006DCA04 /* CatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9A3D0FE1F4426B5006DCA04 /* CatListTableViewCell.xib */; };
 		B9A49D6C1F2F0EC50086F755 /* showListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A49D6A1F2F0EC50086F755 /* showListTableViewCell.swift */; };
@@ -126,6 +131,7 @@
 		B98594CA1F45B125001DB616 /* showInnerListViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showInnerListViewTableViewController.swift; sourceTree = "<group>"; };
 		B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nativeExpListTableViewController.swift; sourceTree = "<group>"; };
 		B98594CF1F45CA14001DB616 /* placeProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = placeProfileViewController.swift; sourceTree = "<group>"; };
+		B98992021F46F35800EBFA1A /* profileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profileViewController.swift; sourceTree = "<group>"; };
 		B98AF7991F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nativeDiscoverInnerTableViewController.swift; sourceTree = "<group>"; };
 		B98D35461F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowListSubSectionsTableViewCell.swift; sourceTree = "<group>"; };
 		B98D35471F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowListSubSectionsTableViewCell.xib; sourceTree = "<group>"; };
@@ -136,6 +142,10 @@
 		B99C75431F28A609001ACED4 /* doListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = doListTableViewController.swift; sourceTree = "<group>"; };
 		B99EFEDE1F2B20330084AF0E /* showListViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = showListViewTableViewController.swift; path = ../showListViewTableViewController.swift; sourceTree = "<group>"; };
 		B99EFEE61F2B28E10084AF0E /* nativeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = nativeListViewController.swift; sourceTree = "<group>"; };
+		B9A2F6701F4AF83000D6CEDD /* ViewExpTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExpTableViewCell.swift; sourceTree = "<group>"; };
+		B9A2F6711F4AF83000D6CEDD /* ViewExpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewExpTableViewCell.xib; sourceTree = "<group>"; };
+		B9A2F6741F4AFF7600D6CEDD /* ViewExpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExpTableViewController.swift; sourceTree = "<group>"; };
+		B9A2F6761F4AFF8700D6CEDD /* ViewExpInnerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExpInnerTableViewController.swift; sourceTree = "<group>"; };
 		B9A3D0FD1F4426B5006DCA04 /* CatListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatListTableViewCell.swift; sourceTree = "<group>"; };
 		B9A3D0FE1F4426B5006DCA04 /* CatListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatListTableViewCell.xib; sourceTree = "<group>"; };
 		B9A49D6A1F2F0EC50086F755 /* showListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = showListTableViewCell.swift; sourceTree = "<group>"; };
@@ -267,6 +277,7 @@
 		B97322D21F17BDC900F64D86 /* TestWV */ = {
 			isa = PBXGroup;
 			children = (
+				B9A2F66F1F4AF7E400D6CEDD /* View-Experience */,
 				B98594CE1F45C9F5001DB616 /* Place-profile */,
 				B98594C51F457D7E001DB616 /* Place-Form */,
 				B9D96AC71F3DC1F3004EE147 /* Experience-Form */,
@@ -282,6 +293,7 @@
 				B95A9A8A1F2201EB009D0F25 /* Events */,
 				B97322D31F17BDC900F64D86 /* AppDelegate.swift */,
 				B97322D71F17BDC900F64D86 /* Main.storyboard */,
+				B98992021F46F35800EBFA1A /* profileViewController.swift */,
 				B97322DA1F17BDC900F64D86 /* Assets.xcassets */,
 				B97322DC1F17BDC900F64D86 /* LaunchScreen.storyboard */,
 				B97322DF1F17BDC900F64D86 /* Info.plist */,
@@ -354,6 +366,17 @@
 				B98594CC1F45B222001DB616 /* nativeExpListTableViewController.swift */,
 			);
 			name = Lists;
+			sourceTree = "<group>";
+		};
+		B9A2F66F1F4AF7E400D6CEDD /* View-Experience */ = {
+			isa = PBXGroup;
+			children = (
+				B9A2F6701F4AF83000D6CEDD /* ViewExpTableViewCell.swift */,
+				B9A2F6711F4AF83000D6CEDD /* ViewExpTableViewCell.xib */,
+				B9A2F6741F4AFF7600D6CEDD /* ViewExpTableViewController.swift */,
+				B9A2F6761F4AFF8700D6CEDD /* ViewExpInnerTableViewController.swift */,
+			);
+			name = "View-Experience";
 			sourceTree = "<group>";
 		};
 		B9D96AC71F3DC1F3004EE147 /* Experience-Form */ = {
@@ -510,6 +533,7 @@
 			files = (
 				B97322DE1F17BDC900F64D86 /* LaunchScreen.storyboard in Resources */,
 				B97322DB1F17BDC900F64D86 /* Assets.xcassets in Resources */,
+				B9A2F6731F4AF83000D6CEDD /* ViewExpTableViewCell.xib in Resources */,
 				B97322D91F17BDC900F64D86 /* Main.storyboard in Resources */,
 				B949C4611F25D1A600371CD5 /* third_party_vector_style.json in Resources */,
 				B97660C41F2A06CC009BD239 /* sqliteDB.sqlite3 in Resources */,
@@ -683,7 +707,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B98992031F46F35800EBFA1A /* profileViewController.swift in Sources */,
 				B976BF181F41848B00C50199 /* YelpClient.swift in Sources */,
+				B9A2F6771F4AFF8700D6CEDD /* ViewExpInnerTableViewController.swift in Sources */,
 				B9059D351F349588007947CE /* fullScreenTableViewCell.swift in Sources */,
 				B98AF79A1F2786A40069B3A1 /* nativeDiscoverInnerTableViewController.swift in Sources */,
 				B99C75441F28A609001ACED4 /* doListTableViewController.swift in Sources */,
@@ -712,11 +738,13 @@
 				B9059D321F345F0D007947CE /* nativeListTableViewController.swift in Sources */,
 				B98D35481F30A16B00D5A4C1 /* ShowListSubSectionsTableViewCell.swift in Sources */,
 				B97F081E1F20EC9C002A475D /* MapViewController.swift in Sources */,
+				B9A2F6721F4AF83000D6CEDD /* ViewExpTableViewCell.swift in Sources */,
 				B9D96ACB1F3DC275004EE147 /* saveFormExpTableViewController.swift in Sources */,
 				B9D96AC91F3DC250004EE147 /* formExpTableViewController.swift in Sources */,
 				B96CB7DD1F336AC800C9296C /* navigationInnerTableViewController.swift in Sources */,
 				B971A2001F260E3500E35DF1 /* nativeEventsTableViewCell.swift in Sources */,
 				B96CB7DB1F33310100C9296C /* experienceListTableViewController.swift in Sources */,
+				B9A2F6751F4AFF7600D6CEDD /* ViewExpTableViewController.swift in Sources */,
 				B96CB7D71F332CD800C9296C /* experienceTableTableViewController.swift in Sources */,
 				B98594C71F457DAB001DB616 /* formPlaceTableViewController.swift in Sources */,
 				B99C753C1F28A5C6001ACED4 /* eatListTableViewController.swift in Sources */,

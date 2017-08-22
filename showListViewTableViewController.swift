@@ -44,9 +44,7 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
         super.viewDidLoad()
         setUpDatabasePath()
         getSections()
-        self.tableView.backgroundColor = UIColor.black
-        
-        
+        self.tableView.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

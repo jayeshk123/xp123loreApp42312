@@ -140,9 +140,9 @@ class experienceInnerTableViewController: UITableViewController {
         do {
             try dbQueue.inDatabase { db in
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    arguments: [Name, Location, "1 mi away", "OPEN", String(describing: Coordinates["latitude"]),String(describing: Coordinates["longitude"]),"Test Desc","default.png","0"])
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    arguments: [Name, Location, "1 mi away", "OPEN", String(describing: Coordinates["latitude"]),String(describing: Coordinates["longitude"]),"Test Desc","default.png","0",0])
                 
                 let rows = try Row.fetchCursor(db, "SELECT * FROM drinkList")
                 

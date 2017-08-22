@@ -149,6 +149,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UICircularProgressRing.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>XLPagerTabStrip-XLPagerTabStrip.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -242,11 +247,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0023238721FC8A8856EC0C44CE9E6E42</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>04C4774BDA73C219BE4D3F6B898553EA</key>
 		<dict>
 			<key>primary</key>
@@ -257,12 +257,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1087B1655E6D8DD5BE4AB348FCB586A0</key>
+		<key>0AB9F1B3787147EE81F647863AAC3489</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>14C23D77E918AFDC3ABC42E4976A1F91</key>
+		<key>1087B1655E6D8DD5BE4AB348FCB586A0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -297,22 +297,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>42D975823A21EE96A94A487B65870CDC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4493A40DCEDFEAE64DD58D04CAC67357</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>44CAD6CE523055ED339E87154473A254</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>4BC9ED24BE692B2F38FA0F22E734A043</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4CF7FECF3D590D9C1AB7279EF22FA0C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -332,7 +327,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5FE92D900611069155E2D82A09797AB7</key>
+		<key>5DA1732F95D2314532429173F4788A1C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>647BEC167C191A1D4F56336F7410C8FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -357,12 +357,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>81A4399E25A4AC2B56A9F86658379708</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8D4E014DA56E674518D1D016B7D77504</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -392,6 +392,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B4E7DAB886AC4772913CB7053F3F1734</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B5FE7C837450F6590E46835D808532E5</key>
 		<dict>
 			<key>primary</key>
@@ -412,7 +417,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC4FB6204705AE0A683E0AF5B38E1F4C</key>
+		<key>C3BE4883BB66316092AAEEF0045C4444</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CFA08D20840587101E21700F7042008A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -447,17 +457,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>EE07C3C1D1C517F303E018FC4D1F3FDE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EEC0738E64FBA0ACDC50BCEEF3F68883</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>F3B0D303D1E2FEEE382F99CB69B2053C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F4941E4F15BD5D8F959CC82B409BD356</key>
 		<dict>
 			<key>primary</key>
 			<true/>

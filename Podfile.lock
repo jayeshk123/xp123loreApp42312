@@ -120,6 +120,7 @@ PODS:
   - SearchTextField (1.1.4)
   - SwiftyJSON (3.1.4)
   - Toaster (2.0.4)
+  - UICircularProgressRing (1.7.0)
   - XLPagerTabStrip (5.0.0)
   - YelpAPI (2.0.0)
 
@@ -159,6 +160,7 @@ DEPENDENCIES:
   - SearchTextField
   - SwiftyJSON
   - Toaster
+  - UICircularProgressRing
   - XLPagerTabStrip (from `https://github.com/KelvinJin/XLPagerTabStrip`, branch `swift3`)
   - YelpAPI
 
@@ -218,9 +220,10 @@ SPEC CHECKSUMS:
   SearchTextField: a8fe694213036c0c9c681dae049b6cc57ebbbea1
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Toaster: f13031c636ef065281bc11857be9a16c7659e04f
+  UICircularProgressRing: 35c3d291b679161ea27fb6216fee58c40a4bb597
   XLPagerTabStrip: 87b8b705f9a7178e76a063ffaa2d70045944a965
   YelpAPI: a0475cf4a7b6f9fe81f1bb7b8a8492770f21e3c7
 
-PODFILE CHECKSUM: 461ac9b295bed9cb4f11c73db8afe586dd25eb3f
+PODFILE CHECKSUM: 412163593fc454f0ea9bd10ef1cd10a48a5ab80a
 
 COCOAPODS: 1.2.1

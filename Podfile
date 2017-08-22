@@ -40,6 +40,8 @@ pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'MapboxGeocoder.swift', '~> 0.6'
 pod 'SearchTextField'
+pod 'UICircularProgressRing'
+
 #Tab layout
   pod 'XLPagerTabStrip', :git => 'https://github.com/KelvinJin/XLPagerTabStrip', :branch => 'swift3'
   pod 'Mapbox-iOS-SDK', '~> 3.6'

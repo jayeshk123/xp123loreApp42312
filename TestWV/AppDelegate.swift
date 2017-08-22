@@ -102,6 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
+                try db.create(table: "selectedPlaces") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("uniqueID", .integer).notNull()
+                }
+                
                 try db.create(table: "locations") { t in
                     t.column("id", .integer).primaryKey()
                     t.column("name", .text).notNull()
@@ -117,6 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 try db.create(table: "experience") { t in
                     t.column("id", .integer).primaryKey()
+                    t.column("uniqueId", .integer).notNull()
                     t.column("name", .text).notNull()
                     t.column("location", .text).notNull()
                     t.column("distance", .text).notNull()
@@ -129,29 +135,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
+                try db.create(table: "placeProfile") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("uniqueId", .integer).notNull()
+                    t.column("name", .text).notNull()
+                    t.column("address", .text).notNull()
+                    t.column("distance", .text).notNull()
+                    t.column("website", .text).notNull()
+                    t.column("lattitude", .text).notNull()
+                    t.column("longitude", .text).notNull()
+                    t.column("description", .text).notNull()
+                    t.column("image", .text).notNull()
+                    t.column("phone", .text).notNull()
+                    t.column("foursquareRating", .text).notNull()
+                    t.column("yelpRating", .text).notNull()
+                    t.column("quality", .text).notNull()
+                    t.column("totalReviews", .text).notNull()
+                    t.column("avgRating", .text).notNull()
+                }
+                
                 
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " +
-                    "VALUES ('AGORA Figures', '104-116 E Roosevelt Rd, Chicago, IL 60605, USA', '1 mi away', 'Open', '41.86767352','-87.6236742', 'Test Desc', 'default.jpg', '0')")
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
+                    "VALUES ('AGORA Figures', '104-116 E Roosevelt Rd, Chicago, IL 60605, USA', '1 mi away', 'Open', '41.86767352','-87.6236742', 'Test Desc', 'default.jpg', '0',0)")
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " +
-                    "VALUES ('Stage and chess at dearborn park', '32-48 W 9th St, Chicago, IL 60605, USA', '1 mi away', 'Open', '41.8707446','-87.620911', 'Test Desc', 'default.jpg', '0')")
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
+                    "VALUES ('Stage and chess at dearborn park', '32-48 W 9th St, Chicago, IL 60605, USA', '1 mi away', 'Open', '41.8707446','-87.620911', 'Test Desc', 'default.jpg', '0', 0)")
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " +
-                    "VALUES ('Blue Cross and Ble Shield of Illinois Great Lawn', '5 S Columbus Dr, Chicago, IL 60601, USA', '1 mi away', 'Open', '41.88150033','-87.620911', 'Test Desc', 'default.jpg', '0')")
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
+                    "VALUES ('Blue Cross and Ble Shield of Illinois Great Lawn', '5 S Columbus Dr, Chicago, IL 60601, USA', '1 mi away', 'Open', '41.88150033','-87.620911', 'Test Desc', 'default.jpg', '0', 0)")
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " +
-                    "VALUES ('Private Seating in back of Adler Planetarium', '1300 S Lake Shore Dr, Chicago, Illinois 60605, United States', '1 mi away', 'Open', '41.8657909','-87.606281', 'Test Desc', 'default.jpg', '0')")
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
+                    "VALUES ('Private Seating in back of Adler Planetarium', '1300 S Lake Shore Dr, Chicago, Illinois 60605, United States', '1 mi away', 'Open', '41.8657909','-87.606281', 'Test Desc', 'default.jpg', '0', 0)")
                 
-                try db.execute("INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected) " + "VALUES ('Americas Courtyard','Near the Adler Planetarium','1 mi away', 'Open', '41.86334671','-87.6079373', 'Test Desc', 'default.jpg', '0')")
+                try db.execute("INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " + "VALUES ('Americas Courtyard','Near the Adler Planetarium','1 mi away', 'Open', '41.86334671','-87.6079373', 'Test Desc', 'default.jpg', '0', 0)")
             }
         } catch {
             print(error.localizedDescription)
         }
         
-        
+        UIApplication.shared.statusBarStyle = .lightContent
                 return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
     }
     
     var dbQueue: DatabaseQueue!

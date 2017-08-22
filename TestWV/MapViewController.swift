@@ -13,12 +13,17 @@ import GRDB
 import NVActivityIndicatorView
 import MapboxDirections
 import MapboxNavigation
+import Alamofire
+import SwiftyJSON
+import Toaster
+
 //import AZTabBar
 
 class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, NVActivityIndicatorViewable {
     
     @IBOutlet var mainFrameMapView: UIView!
-    
+    var unId = 0
+    var URL = "http://34.231.31.72/xplore/index.php"
    // @IBOutlet weak var mapView: MGLMapView!
     
     let locationManager = CLLocationManager()
@@ -187,14 +192,15 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
                         let latitude: String = row.value(named: "lattitude")
                         let longitude: String = row.value(named: "longitude")
                         let name: String = row.value(named: "name")
-                        let desc: String = row.value(named: "description")
+                        let desc: String = row.value(named: "location")
+                        let unid: String = row.value(named: "uniqueId")
                         
                         let lat = (latitude as NSString).floatValue
                         let long = (longitude as NSString).floatValue
                         let hello = MGLPointAnnotation()
                         hello.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat) , longitude: CLLocationDegrees(long))
                         hello.title = name
-                        hello.subtitle = desc
+                        hello.subtitle = desc+"__"+String(unid)
                         
                         mapView.addAnnotation(hello)
                     }
@@ -237,6 +243,119 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
         //mainFrameMapView.addSubview(mapView)
         self.locationManager.stopUpdatingLocation()
     }
+    
+    public func getUniqueId(lat:String, long:String){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.inDatabase { db in
+                let rows = try Row.fetchCursor(db, "SELECT * FROM experience where lattitude = ? and longitude = ?" , arguments:[lat, long])
+                while let row = try rows.next() {
+                    let uniqueId: String = row.value(named: "uniqueId")
+                    print(uniqueId)
+                    unId = Int(uniqueId)!
+                }
+                
+                let elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience where lattitude = ? and longitude = ?",arguments:[lat, long])! // Int
+                print("Count : \(elCount)")
+                if elCount == 0{
+                    unId = 0
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+
+    
+    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
+        print("tap on callout")
+        print(annotation)
+        print(annotation.title as Any)
+        print(annotation.coordinate)
+        
+        var myStringArr = annotation.subtitle??.components(separatedBy: "__")
+        
+        
+        
+            //getUniqueId(lat: String(annotation.coordinate.latitude), long: String(annotation.coordinate.longitude))
+            let newURL = "/site/getPlaceProfileNative?SrNumber="+(myStringArr?[1])!
+            if(unId == 0){
+                let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
+                NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+            Alamofire.request(self.URL + newURL).responseString { response in
+                print("Request: \(String(describing: response.request))")   // original url request
+                print("Response: \(String(describing: response.response))") // http url response
+                print("Result: \(response.result)")
+                // response serialization result
+                
+                if let json = response.data {
+                    let data = JSON(data: json)
+                    print(data)
+                    let id : Int = data["SrNumber"].intValue
+                    let title : String = data["Detail"]["name"].stringValue
+                    let address : String = data["Detail"]["address"].stringValue
+                    let distance : String = ""
+                    let website : String = data["Detail"]["Website"].stringValue
+                    let latitude : String = data["Detail"]["Website"].stringValue
+                    let longitude : String = data["Detail"]["Website"].stringValue
+                    let description : String = data["Detail"]["about"].stringValue
+                    let image : String = data["Detail"]["profileimage"].stringValue
+                    let phone : String = data["Detail"]["Phone"].stringValue
+                    let foursquareRating : String = "4.5"
+                    let yelpRating : String = "4.2"
+                    let quality : String = "4"
+                    let totalReviews : String = "24"
+                    let avgRating : String = "4.1"
+                    
+                    print("Image \(image)")
+                    
+                    self.savePlaceProfile(Index: id, title: title, address: address, distance: distance, website: website, lattitude: latitude, longitude: longitude, description: description, image: image, phone: phone, foursquareRating: foursquareRating, yelpRating: yelpRating, quality: quality, totalReviews: totalReviews, avgRating: avgRating)
+                }
+            }
+            
+        }else{
+            Toast(text: "Unable to fetch id for the place")
+        }
+        
+        
+    }
+    
+    public func savePlaceProfile(Index:Int, title:String, address:String, distance:String, website:String, lattitude:String, longitude:String, description:String, image:String, phone:String, foursquareRating:String, yelpRating:String, quality:String, totalReviews:String, avgRating:String){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.inDatabase { db in
+                try db.execute(
+                    "delete from placeProfile")
+                
+                try db.execute(
+                    "INSERT INTO placeProfile (uniqueID, name, address, distance, website, lattitude, longitude, description, image, phone, foursquareRating, yelpRating, quality, totalReviews, avgRating) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    arguments: [Index, title, address, distance, website, lattitude, longitude, description, image, phone, foursquareRating, yelpRating, quality, totalReviews, avgRating])
+                
+                let rows = try Row.fetchCursor(db, "SELECT * FROM placeProfile")
+                while let row = try rows.next() {
+                    let sectionIndex: String = row.value(named: "uniqueID")
+                    print(sectionIndex)
+                }
+                
+                let elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM placeProfile")! // Int
+                let elSectionNames = try String.fetchAll(db, "SELECT uniqueID FROM placeProfile")
+                print("Count : \(elCount)")
+                
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let newViewController = storyBoard.instantiateViewController(withIdentifier: "placeProfile")
+                self.present(newViewController, animated: true, completion: nil)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+
     
     func  locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {

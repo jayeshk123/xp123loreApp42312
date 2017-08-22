@@ -75,7 +75,8 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         getSections()
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         
-        
+        self.tableView.isEditing = true
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         /*let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
         tableView.addGestureRecognizer(longpress)*/
         
@@ -328,7 +329,8 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         cell.locationLabel.text = sections[indexPath.row].location
         cell.distanceLabel.text = sections[indexPath.row].distance
         cell.statusLabel.text = sections[indexPath.row].status
-        
+        cell.leftImage.layer.cornerRadius = 10.0
+        cell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         /*let lpGestureRecognizer: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressCell))
         cell.contentView.addGestureRecognizer(lpGestureRecognizer)*/
         
@@ -371,6 +373,28 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         return true
     }
     
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        //let movedObject = self.fruits[sourceIndexPath.row]
+        //fruits.remove(at: sourceIndexPath.row)
+        //fruits.insert(movedObject, at: destinationIndexPath.row)
+        print(sourceIndexPath.row)
+        print(destinationIndexPath.row)
+        // To check for correctness enable: self.tableView.reloadData()
+    }
+    
+   /* override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        //let rowData = fruits[indexPath.row]
+        return rowData.hasPrefix("A")
+    }*/
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             
@@ -379,7 +403,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        var delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+        let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\u{274C}\n Delete" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             //Do something
             print("DELETE TEST")
             print(indexPath.row)
@@ -387,15 +411,28 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         
         delete.backgroundColor = UIColor.red
         
-        var more = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Mark Visited" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+        let more = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\u{2714}\n Mark Visited" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             //Do something
             print("Mark as Visited TEST")
             print(indexPath.row)
         })
-        more.backgroundColor = UIColor.blue
+        more.backgroundColor = UIColor.green
         //more.backgroundColor = UIColor(patternImage: UIImage(named: "up")!)
         
-        return [delete, more]
+        let move = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\nMove" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+            //Do something
+            print("Mark as Visited TEST")
+            print(indexPath.row)
+        })
+        let img: UIImage = UIImage(named: "up")!
+        let imgSize: CGSize = tableView.frame.size
+        UIGraphicsBeginImageContext(imgSize)
+        img.draw(in: CGRect(x: 20, y: 0, width: 20, height: 20))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        move.backgroundColor = UIColor(patternImage: newImage)
+        return [delete, more, move]
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
@@ -406,7 +443,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        return 105.0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
