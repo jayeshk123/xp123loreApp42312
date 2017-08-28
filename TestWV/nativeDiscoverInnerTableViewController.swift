@@ -16,12 +16,28 @@ import SearchTextField
 
 class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityIndicatorViewable, CLLocationManagerDelegate {
     
+    @IBOutlet weak var sliderValLabel: UILabel!
+    
     var suggestions = [String]()
     let locManager = CLLocationManager()
     var locationManager = CLLocationManager()
     
+    @IBOutlet weak var silderView: UISlider!
     var latCenter:Double? = nil
     var longCenter:Double? = nil
+    
+    @IBAction func sliderValChanged(_ sender: UISlider) {
+        let sliderVal = NSString(format: "%.2f mi", sender.value)
+        sliderValLabel.text = sliderVal as String
+        
+        
+    }
+    
+    
+    
+    @IBAction func sliderValChangeComplete(_ sender: Any) {
+        print("Complete")
+    }
     
     func determineMyCurrentLocation() {
         locationManager = CLLocationManager()
@@ -43,11 +59,11 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         
         // manager.stopUpdatingLocation()
         
-        print("user latitude = \(userLocation.coordinate.latitude)")
-        print("user longitude = \(userLocation.coordinate.longitude)")
+        //print("user latitude = \(userLocation.coordinate.latitude)")
+        //print("user longitude = \(userLocation.coordinate.longitude)")
         latCenter = userLocation.coordinate.latitude
         longCenter = userLocation.coordinate.longitude
-        
+        defaultLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
@@ -109,6 +125,31 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
                 print(suggestions)
     }
     
+    func defaultLocation(){
+        let geocoder = Geocoder(accessToken: "pk.eyJ1IjoiYXl1c2hnZWhhbG90IiwiYSI6ImNpbDUwbmlhcTQ3dWh2eW0zaXN1cTExZjgifQ.RXW6tJJo4F2MSY-qoDRmFg")
+        let options = ReverseGeocodeOptions(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latCenter!), longitude: CLLocationDegrees(longCenter!)))
+        // Or perhaps: ReverseGeocodeOptions(location: locationManager.location)
+        
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
+            guard let placemark = placemarks?.first else {
+                return
+            }
+            
+            //print(placemark.imageName ?? "")
+            // telephone
+            //print(placemark.genres?.joined(separator: ", ") ?? "")
+            // computer, electronic
+            //print(placemark.administrativeRegion?.name ?? "")
+            // New York
+            //print(placemark.administrativeRegion?.code ?? "")
+            // US-NY
+            //print(placemark.place?.wikidataItemIdentifier ?? "")
+            // Q60
+            //print(placemark.qualifiedName)
+            self.iAmHereLabel.text = placemark.qualifiedName
+        }
+    }
+    
 
     @IBAction func getCurrLocationClicked(_ sender: UIButton) {
         print("Current Location :")
@@ -148,8 +189,11 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     @IBOutlet var hideDistanceBtn: UIButton!
     @IBOutlet var hideLocationBtn: UIButton!
     
+    @IBOutlet weak var BottomBtnCell: UITableViewCell!
+    @IBOutlet weak var CircleBtnCell: UITableViewCell!
     @IBOutlet var SetupDistanceCell: UITableViewCell!
     @IBOutlet var ChangeLocationCell: UITableViewCell!
+    @IBOutlet weak var TopBtnCell: UITableViewCell!
     
     @IBOutlet var eatCircleBtn: UIButton!
     @IBOutlet var drinkCircleBtn: UIButton!
@@ -205,6 +249,10 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         setUpDatabasePath()
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         
+        silderView.maximumTrackTintColor = UIColor.red
+        silderView.minimumTrackTintColor = UIColor.red
+        
+        
         SetupDistanceCell.frame.size.height = 0
         clearCategoryBtn.backgroundColor = .clear
         clearCategoryBtn.layer.cornerRadius = 10
@@ -215,6 +263,7 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         guideBtn.layer.cornerRadius = 10
         guideBtn.layer.borderWidth = 1
         guideBtn.layer.borderColor = UIColor.white.cgColor
+        
         
         /*let greyColor = UIColor(red: 70.0/255.0, green: 71.0/255.0, blue: 90.0/255.0, alpha: 1.0) as! CGColor*/
         
@@ -232,6 +281,24 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestWhenInUseAuthorization()
         locManager.startMonitoringSignificantLocationChanges()
+        
+        SetupDistanceCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        ChangeLocationCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        
+        CircleBtnCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        BottomBtnCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        TopBtnCell.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.18, alpha:1)
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        }
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

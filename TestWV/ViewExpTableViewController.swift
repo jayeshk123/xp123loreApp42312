@@ -7,17 +7,42 @@
 //
 
 import UIKit
+import GRDB
+import NVActivityIndicatorView
+import Alamofire
+import SwiftyJSON
+import CoreLocation
+
 
 class ViewExpTableViewController: UITableViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.setNeedsStatusBarAppearanceUpdate()
+        tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        
+        navigationItem.titleView = imageView
+        //bottomBtnCell.backgroundColor =  UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+        
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,5 +116,16 @@ class ViewExpTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func viewWillLayoutSubviews() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        
+        navigationItem.titleView = imageView
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header_bg")!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
+    }
 
 }

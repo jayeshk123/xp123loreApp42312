@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 import Alamofire
 import SwiftyJSON
 import Toaster
+import CoreLocation
 
 struct Sections{
     var name:String
@@ -22,9 +23,10 @@ struct Sections{
     var lattitude:String
     var longitude:String
     var description:String
+    var index:String
 }
 
-class experienceListTableViewController: UITableViewController, NVActivityIndicatorViewable {
+class experienceListTableViewController: UITableViewController, NVActivityIndicatorViewable, CLLocationManagerDelegate {
 
     var URL = "http://34.231.31.72/xplore/index.php"
     var sections:[Sections] = []
@@ -32,6 +34,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     @IBOutlet weak var dropZone: UIView!
     
     var dbQueue: DatabaseQueue!
+    
     
     func setUpDatabasePath()
     {
@@ -70,106 +73,73 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         setUpDatabasePath()
-        getSections()
+        
+        self.getSections()
+        
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         
-        self.tableView.isEditing = true
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        /*let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
-        tableView.addGestureRecognizer(longpress)*/
+        //self.tableView.isEditing = true
+        //self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-   /* func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
-        let longPress = gestureRecognizer as! UILongPressGestureRecognizer
-        let state = longPress.state
-        var locationInView = longPress.location(in: tableView)
-        var indexPath = tableView.indexPathForRow(at: locationInView)
-        
-        struct My {
-            static var cellSnapshot : UIView? = nil
-        }
-        struct Path {
-            static var initialIndexPath : NSIndexPath? = nil
-        }
-        
-        switch state {
-        case UIGestureRecognizerState.began:
-            if indexPath != nil {
-                Path.initialIndexPath = tableView.indexPathForRow(at: locationInView) as! NSIndexPath
-                let cell = self.tableView.cellForRow(at: indexPath!) as UITableViewCell!
-                My.cellSnapshot  = snapshopOfCell(inputView: cell!)
-                var center = cell?.center
-                My.cellSnapshot!.center = center!
-                My.cellSnapshot!.alpha = 0.0
-                self.tableView.addSubview(My.cellSnapshot!)
-                
-                UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                    center?.y = locationInView.y
-                    My.cellSnapshot!.center = center!
-                    My.cellSnapshot!.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-                    My.cellSnapshot!.alpha = 0.98
-                    cell?.alpha = 0.0
-                    
-                }, completion: { (finished) -> Void in
-                    if finished {
-                        cell?.isHidden = true
-                    }
-                })
-            }
-        case UIGestureRecognizerState.changed:
-            var center = My.cellSnapshot!.center
-            center.y = locationInView.y
-            My.cellSnapshot!.center = center
-            if ((indexPath != nil) && (indexPath != Path.initialIndexPath)) {
-                swap(&itemsArray[indexPath!.row], &itemsArray[Path.initialIndexPath?.row])
-                tableView.moveRow(at: Path.initialIndexPath! as IndexPath, to: indexPath!)
-                Path.initialIndexPath = indexPath as? IndexPath as! NSIndexPath
-            }
-            
-        default:
-            let cell = tableView.cellForRow(at: Path.initialIndexPath! as IndexPath) as UITableViewCell!
-            cell?.isHidden = false
-            cell?.alpha = 0.0
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                My.cellSnapshot!.center = (cell?.center)!
-                My.cellSnapshot!.transform = .identity
-                My.cellSnapshot!.alpha = 0.0
-                cell?.alpha = 1.0
-            }, completion: { (finished) -> Void in
-                if finished {
-                    Path.initialIndexPath = nil
-                    My.cellSnapshot!.removeFromSuperview()
-                    My.cellSnapshot = nil
-                }
-            })
-        }
-    }*/
-
-    /*func snapshopOfCell(inputView: UIView) -> UIView {
-        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
-        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        let cellSnapshot : UIView = UIImageView(image: image)
-        cellSnapshot.layer.masksToBounds = false
-        cellSnapshot.layer.cornerRadius = 0.0
-        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
-        cellSnapshot.layer.shadowRadius = 5.0
-        cellSnapshot.layer.shadowOpacity = 0.4
-        return cellSnapshot
-    }*/
+   
     
     public func getSections(){
+        do {
+            var elCount:Int
+            elCount = 0
+            try dbQueue.inDatabase { db  in
+                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience")! // Int
+                
+                print("Count : \(elCount)")
+                
+            }
+            
+            
+            if elCount > 0{
+                try dbQueue.inDatabase { db  in
+                    let rows = try Row.fetchCursor(db, "SELECT * FROM experience")
+                    while let row = try rows.next() {
+                        let name: String = row.value(named: "name")
+                        let location: String = row.value(named: "location")
+                        let distance: String = row.value(named: "distance")
+                        let status: String = row.value(named: "status")
+                        let lattitude: String = row.value(named: "lattitude")
+                        let longitude: String = row.value(named: "longitude")
+                        let description: String = row.value(named: "description")
+                        let image: String = row.value(named: "image")
+                        let index: String = row.value(named: "uniqueId")
+                        
+                        
+                        
+                       /* let latt : Double = Double(lattitude)!
+                        let longg : Double = Double(longitude)!
+                        let coordinate₀ = CLLocation(latitude: latt, longitude: longg)
+                        let coordinate₁ = CLLocation(latitude: self.latCenter!, longitude: self.longCenter!)
+                        
+                        let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+                        let distInMiles = distanceInMeters / 1609
+                        let dist:String = String(format:"%.2f mi away", distInMiles)*/
+                        
+                        sections.append(Sections(name: name, location: location, distance: distance, status: status, image : image,lattitude:lattitude, longitude:longitude,description:description,index:index))
+                    }
+                    
+                }
+            }
+            
+            print(sections)
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    public func getSections(index:Int){
         do {
             //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
             //let dbQueue = try DatabaseQueue(path: databasePath)
@@ -195,8 +165,18 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
                         let longitude: String = row.value(named: "longitude")
                         let description: String = row.value(named: "description")
                         let image: String = row.value(named: "image")
+                        let index: String = row.value(named: "uniqueId")
                         
-                        sections.append(Sections(name: name, location: location, distance: distance, status: status, image : image,lattitude:lattitude, longitude:longitude,description:description))
+                       /* let latt : Double = Double(lattitude)!
+                        let longg : Double = Double(longitude)!
+                        let coordinate₀ = CLLocation(latitude: latt, longitude: longg)
+                        let coordinate₁ = CLLocation(latitude: self.latCenter!, longitude: self.longCenter!)
+                        
+                        let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+                        let distInMiles = distanceInMeters / 1609
+                        let dist:String = String(format:"%.2f mi away", distInMiles)*/
+                        
+                        sections.append(Sections(name: name, location: location, distance: distance, status: status, image : image,lattitude:lattitude, longitude:longitude,description:description, index:index))
                     }
                     
                 }
@@ -235,7 +215,26 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
             //let dbQueue = try DatabaseQueue(path: databasePath)
             try dbQueue.inDatabase { db in
                 try db.execute(
-                    "update experience set selected = '1' where id = ?",
+                    "update experience set selected = '1' where uniqueId = ?",
+                    arguments: [index])
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func removeExpPoint(index:String){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.inDatabase { db in
+                try db.execute(
+                    "delete from experience where uniqueId = ?",
+                    arguments: [index])
+                
+                try db.execute(
+                    "delete from selectedPlaces where uniqueId = ?",
                     arguments: [index])
             }
             
@@ -249,7 +248,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
             var sections = [String]()
             try dbQueue.inDatabase { db in
                 
-                let rows = try Row.fetchCursor(db, "SELECT * FROM experience where id = ?", arguments:[index])
+                let rows = try Row.fetchCursor(db, "SELECT * FROM experience where uniqueId = ?", arguments:[index])
                 
                 while let row = try rows.next() {
                     let sectionName: String = row.value(named: "selected")
@@ -318,7 +317,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
             }
         }
         print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
-        let verify = checkIfAdded(index: "\(indexPath.row + 1)")
+        let verify = checkIfAdded(index: "\(sections[indexPath.row].index)")
         if verify == true {
             cell.rightImage.image = UIImage(named: "tick-list")
         }else{
@@ -338,43 +337,16 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
 
     }
     
-    /*func didLongPressCell (recognizer: UILongPressGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            if let cellView: UIView = recognizer.view {
-                cellView.frame.origin = CGPoint.zero
-                dragView = cellView
-                view.addSubview(dragView!)
-            }
-        case .changed:
-            dragView?.center = recognizer.location(in: view)
-        case .ended:
-            if (dragView == nil) {return}
-            
-            if (dragView!.frame.intersects(dropZone.frame)) {
-                if let cellView: UIView = (dragView?.subviews[0])! as UIView {
-                    cellView.frame.origin = CGPoint.zero
-                    dropZone.addSubview(cellView)
-                }
-                
-                dragView?.removeFromSuperview()
-                dragView = nil
-                
-                //Delete row from UITableView if needed...
-            } else {
-                //DragView was not dropped in dropszone... Rewind animation...
-            }
-        default:
-            print("Any other action?")
-        }
-    }*/
-    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .none
+        if self.tableView.isEditing == true{
+            return .none
+        }else{
+            return .delete
+        }
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
@@ -405,21 +377,38 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\u{274C}\n Delete" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             //Do something
-            print("DELETE TEST")
-            print(indexPath.row)
+            let refreshAlert = UIAlertController(title: "Delete", message: "Are you sure you want to remove this place from experience?+.", preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+                print("DELETE TEST")
+                print(indexPath.row)
+                //self.tableView.isEditing = true
+                self.removeExpPoint(index: "\(self.sections[indexPath.row].index)")
+                self.sections.remove(at: indexPath.row)
+                self.tableView.reloadData()
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                print("Handle Cancel Logic here")
+            }))
+            
+            self.present(refreshAlert, animated: true, completion: nil)
+            
+            
         })
         
-        delete.backgroundColor = UIColor.red
+        delete.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         
         let more = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\u{2714}\n Mark Visited" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             //Do something
             print("Mark as Visited TEST")
             print(indexPath.row)
         })
-        more.backgroundColor = UIColor.green
+        more.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        
         //more.backgroundColor = UIColor(patternImage: UIImage(named: "up")!)
         
-        let move = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\nMove" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+       /* let move = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "\nMove" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
             //Do something
             print("Mark as Visited TEST")
             print(indexPath.row)
@@ -431,8 +420,9 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        move.backgroundColor = UIColor(patternImage: newImage)
-        return [delete, more, move]
+        move.backgroundColor = UIColor(patternImage: newImage)*/
+        
+        return [delete, more/*, move*/]
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
@@ -449,7 +439,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let verify = checkIfAdded(index: "\(indexPath.row + 1)")
+        let verify = checkIfAdded(index: "\(sections[indexPath.row].index)")
         if verify == true {
             removeAdded(index: "\(indexPath.row + 1)")
             tableView.reloadData()
@@ -458,7 +448,7 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
             if count >= 2 {
                 Toast(text: "You have already selected two points to navigate").show()
             }else if count < 2{
-                addNavigationPoint(index: "\(indexPath.row + 1)")
+                addNavigationPoint(index: "\(sections[indexPath.row].index)")
                 tableView.reloadData()
             }else{
                 print("count is exact \(count)")
@@ -466,60 +456,5 @@ class experienceListTableViewController: UITableViewController, NVActivityIndica
         }
         
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

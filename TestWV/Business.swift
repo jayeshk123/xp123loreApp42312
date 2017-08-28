@@ -11,6 +11,7 @@ import UIKit
 class Business: NSObject {
     let name: String?
     let address: String?
+    let id: String?
     let imageURL: URL?
     let categories: String?
     let distance: String?
@@ -27,6 +28,8 @@ class Business: NSObject {
         } else {
             imageURL = nil
         }
+        
+        id = dictionary["id"] as? String
         
         let location = dictionary["location"] as? NSDictionary
         var address = ""

@@ -22,6 +22,19 @@ class nativeListTableViewController: UITableViewController {
         navigationItem.titleView = imageView
         UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header_bg")!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
 
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+        
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

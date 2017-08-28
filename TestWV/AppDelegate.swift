@@ -102,6 +102,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
+                try db.create(table: "selectedDistance") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("distanceInMiles", .text).notNull()
+                }
+                
+                try db.create(table: "appUser") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("fbId", .text).notNull()
+                }
+                /*try db.execute(
+                    "INSERT INTO selectedDistance (distanceInMiles) " +
+                    "VALUES ('2.5')")*/
+                
                 try db.create(table: "selectedPlaces") { t in
                     t.column("id", .integer).primaryKey()
                     t.column("uniqueID", .integer).notNull()
@@ -122,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 try db.create(table: "experience") { t in
                     t.column("id", .integer).primaryKey()
-                    t.column("uniqueId", .integer).notNull()
+                    t.column("uniqueId", .text).notNull()
                     t.column("name", .text).notNull()
                     t.column("location", .text).notNull()
                     t.column("distance", .text).notNull()
@@ -132,6 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     t.column("description", .text).notNull()
                     t.column("image", .text).notNull()
                     t.column("selected", .text).notNull()
+                    t.column("visited", .text)
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
@@ -155,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 
-                try db.execute(
+               /* try db.execute(
                     "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
                     "VALUES ('AGORA Figures', '104-116 E Roosevelt Rd, Chicago, IL 60605, USA', '1 mi away', 'Open', '41.86767352','-87.6236742', 'Test Desc', 'default.jpg', '0',0)")
                 try db.execute(
@@ -168,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
                     "VALUES ('Private Seating in back of Adler Planetarium', '1300 S Lake Shore Dr, Chicago, Illinois 60605, United States', '1 mi away', 'Open', '41.8657909','-87.606281', 'Test Desc', 'default.jpg', '0', 0)")
                 
-                try db.execute("INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " + "VALUES ('Americas Courtyard','Near the Adler Planetarium','1 mi away', 'Open', '41.86334671','-87.6079373', 'Test Desc', 'default.jpg', '0', 0)")
+                try db.execute("INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " + "VALUES ('Americas Courtyard','Near the Adler Planetarium','1 mi away', 'Open', '41.86334671','-87.6079373', 'Test Desc', 'default.jpg', '0', 0)")*/
             }
         } catch {
             print(error.localizedDescription)

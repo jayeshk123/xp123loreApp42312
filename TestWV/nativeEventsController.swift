@@ -18,10 +18,48 @@ class nativeEventsController: UITableViewController , UITabBarDelegate {
     
 
     
+    @IBOutlet weak var bottomBtnCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.definesPresentationContext = true
+        self.setNeedsStatusBarAppearanceUpdate()
+        tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        
+        navigationItem.titleView = imageView
+        bottomBtnCell.backgroundColor =  UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
+    }
+    
+    func callMethod() {
+        //do stuff here
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //Code to increase height of navigation bar
+        //Commented because it sets same height to every navigation item
+        
+       /* let height: CGFloat = 20.0 //whatever height you want
+        let bounds = self.navigationController!.navigationBar.bounds
+        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height + height)*/
         
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
@@ -31,12 +69,7 @@ class nativeEventsController: UITableViewController , UITabBarDelegate {
         imageView.image = image
         
         navigationItem.titleView = imageView
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        
+        bottomBtnCell.backgroundColor =  UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,36 +81,6 @@ class nativeEventsController: UITableViewController , UITabBarDelegate {
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "nativeListViewController")
         self.present(newViewController, animated: true, completion: nil)
     }
-    
-    /*override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }*/
-    
-    /*override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        code
-    }*/
-    
-    /*override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == self.innerTableView {
-            let cell = Bundle.main.loadNibNamed("nativeEventsTableViewCell", owner: self, options: nil)?.first as! nativeEventsTableViewCell
-            //self.tableView.dequeueReusableCell(withIdentifier: "eventsCell", for: indexPath) as! nativeEventsTableViewCell
-            
-            //Bundle.main.loadNibNamed("nativeEventsTableViewCell", owner: self, options: nil)?.first as! nativeEventsTableViewCell
-            
-            _ = indexPath.row
-            cell.eventTitle.text = "Title"
-            cell.eventCost.text = "FREE"
-            cell.eventLocation.text = "India"
-            cell.eventDesc.text = "Short Description"
-            cell.eventImage = nil
-            return cell
-        }
-        else{
-            let cell = UITableViewCell()
-            return cell
-
-        }
-    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -132,7 +132,8 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             self.getWaypoints()
            waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latCenter!), longitude: CLLocationDegrees(longCenter!)), name: "Waypoint"))
             for i in 0 ..< self.lats.count {
-                
+                print(CLLocationDegrees(self.lats[i]))
+                print(CLLocationDegrees(self.longs[i]))
                 waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(self.lats[i]), longitude: CLLocationDegrees(self.longs[i])), name: "Waypoint"+String(i)))
                 
             }
@@ -163,14 +164,13 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
         let count = getSelectedCount()
         
         
-        let latitude = locManager.location?.coordinate.latitude
-        let longitude = locManager.location?.coordinate.longitude
         if count >= 1 {
             var waypoints1:[Waypoint] = []
             self.getWaypoints()
             waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latCenter!), longitude: CLLocationDegrees(longCenter!)), name: "Waypoint"))
             for i in 0 ..< self.lats.count {
-                
+                print(CLLocationDegrees(self.lats[i]))
+                print(CLLocationDegrees(self.longs[i]))
                 waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(self.lats[i]), longitude: CLLocationDegrees(self.longs[i])), name: "Waypoint"+String(i)))
                 
             }
@@ -203,12 +203,10 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
         let count = getSelectedCount()
         
         
-        let latitude = locManager.location?.coordinate.latitude
-        let longitude = locManager.location?.coordinate.longitude
         if count >= 1 {
             var waypoints1:[Waypoint] = []
             self.getWaypoints()
-            //waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!)), name: "Waypoint"))
+            waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latCenter!), longitude: CLLocationDegrees(longCenter!)), name: "Waypoint"))
             for i in 0 ..< self.lats.count {
                 
                 waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(self.lats[i]), longitude: CLLocationDegrees(self.longs[i])), name: "Waypoint"+String(i)))
@@ -244,7 +242,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             self.getWaypoints()
             
             
-            //waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!)), name: "Waypoint"))
+            waypoints1.append(Waypoint(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latCenter!), longitude: CLLocationDegrees(longCenter!)), name: "Waypoint"))
             
             for i in 0 ..< self.lats.count {
                 
@@ -255,6 +253,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             print(waypoints1)
             let options = RouteOptions(waypoints: waypoints1, profileIdentifier: .automobile)
             //options.routeShapeResolution = .full
+            options.routeShapeResolution = .full
             options.includesSteps = true
             waypoints1.removeAll()
             Directions.shared.calculate(options) { (waypoints, routes, error) in
@@ -266,9 +265,6 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
         }else{
             Toast(text: "Please select two points to navigate").show()
         }
-        
-        
-
     }
 
     var dbQueue: DatabaseQueue!
@@ -329,11 +325,19 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
         locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestWhenInUseAuthorization()
         locManager.startMonitoringSignificantLocationChanges()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+        
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -40,6 +40,7 @@ class experienceTableTableViewController: UITableViewController {
                     self.dict = result as! [String : AnyObject]
                     print(result!)
                     print(self.dict)
+                    self.saveFBID(id: self.dict["id"] as! String)
                     let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
                     NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
                     let when = DispatchTime.now() + 0.5 // change 2 to desired number of seconds
@@ -64,6 +65,34 @@ class experienceTableTableViewController: UITableViewController {
     }
     
     @IBAction func shareClicked(_ sender: UIButton) {
+        
+    }
+    
+    public func saveFBID(id:String){
+        do {
+            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+            //let dbQueue = try DatabaseQueue(path: databasePath)
+            var elCount:Int
+            elCount = 0
+            try dbQueue.inDatabase { db  in
+                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM appUser")! // Int
+                
+                print("Count : \(elCount)")
+                
+                try db.execute("delete from appUser")
+                
+                try db.execute(
+                    "INSERT INTO appUser (fbId) " +
+                    "VALUES (?)",
+                    arguments: [id])
+                
+            }
+            
+            
+            
+        }catch {
+            print(error.localizedDescription)
+        }
         
     }
     
@@ -107,6 +136,19 @@ class experienceTableTableViewController: UITableViewController {
         setUpDatabasePath()
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+        
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
         
         /* Example of Yelp search with more search options specified
          Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in

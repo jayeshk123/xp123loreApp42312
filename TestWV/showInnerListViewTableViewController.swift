@@ -27,6 +27,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         var long:Double
     }
     
+    
     var sec_URL = String()
     var sections = [String]()
     var subsections:[SubSections] = []
@@ -35,6 +36,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
     var cell1Array = [Int]()
     var cell2Array = [Int]()
     var selectedArray = [Int]()
+    var imageArray = [UIImage]()
     
     let locManager = CLLocationManager()
     var locationManager = CLLocationManager()
@@ -58,14 +60,14 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         
         // manager.stopUpdatingLocation()
         
-        print("user latitude = \(userLocation.coordinate.latitude)")
-        print("user longitude = \(userLocation.coordinate.longitude)")
+       // print("user latitude = \(userLocation.coordinate.latitude)")
+       // print("user longitude = \(userLocation.coordinate.longitude)")
         
         latCenter = userLocation.coordinate.latitude
         longCenter = userLocation.coordinate.longitude
         
-        print(latCenter)
-        print(longCenter)
+     //   print(latCenter)
+      //  print(longCenter)
         
     }
     
@@ -207,14 +209,18 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
                             let distInMiles = distanceInMeters / 1609
                             var dist:String = String(format:"%.2f mi away", distInMiles)
                             
-                            print(id)
-                            print(coordinates)
-                            print(latt)
-                            print(longg)
+                            //print(id)
+                            //print(coordinates)
+                            //print(latt)
+                            //print(longg)
                             let json1 = data[k]["Detail"]
-                            print("data \(json1["name"])")
+                            //print("data \(json1["name"])")
                             //self.positionArray.insert(2, at: indexPath.row+1)
-                            self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: dist, status: "OPEN", image : json1["Path"].string!, uniqueID : id, lat : latt, long : longg))
+                            self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: dist, status: "OPEN", image : json1["profileimage"].string!, uniqueID : id, lat : latt, long : longg))
+                            /*if k == (data.count-1){
+                                print(k)
+                                self.downloadAllImages()
+                            }*/
                             
                         }
                         
@@ -247,7 +253,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         locManager.startMonitoringSignificantLocationChanges()
         setUpDatabasePath()
         getSections()
-        
+        //downloadAllImages()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -276,7 +282,20 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         let cell = Bundle.main.loadNibNamed("ShowListSubSectionsTableViewCell", owner: self, options: nil)?.first as! ShowListSubSectionsTableViewCell
         
         cell.backgroundColor = UIColor.black
-        let imageUrl = NSURL(string: "https://s3.amazonaws.com/retail-safari/"+subsections[indexPath.row].image)! as URL
+        
+        if selectedArray.contains(subsections[indexPath.row].uniqueID) {
+            cell.rightImage.image = UIImage(named:"tick-list")
+        }else{
+            cell.rightImage.image = UIImage(named:"add")
+        }
+        cell.rightImage.isUserInteractionEnabled = true
+        cell.rightImage.tag = subsections[indexPath.row].uniqueID
+        
+        
+        let trimmedString = subsections[indexPath.row].image.replacingOccurrences(of: " ", with: "%20")
+        let img = "https://s3.amazonaws.com/retail-safari/resize_image/" + trimmedString
+        print(img)
+        let imageUrl = NSURL(string: img)! as URL
         print("Download Started")
         print(imageUrl);
         getDataFromUrl(url: imageUrl) { (data, response, error)  in
@@ -284,19 +303,19 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
             print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
             print("Download Finished")
             DispatchQueue.main.async() { () -> Void in
-                cell.leftImage.image = UIImage(data: data)
-                cell.leftImage.contentMode = .scaleAspectFit
+                
+                if(UIImage(data:data) != nil){
+                    cell.leftImage.image = UIImage(data: data)
+                    cell.leftImage.contentMode = .scaleAspectFit
+                }else{
+                    self.imageArray.append(UIImage(named: "nature")!)
+                    cell.leftImage.contentMode = .scaleAspectFit
+                }
             }
         }
         print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
-            if selectedArray.contains(subsections[indexPath.row].uniqueID) {
-                cell.rightImage.image = UIImage(named:"tick-list")
-            }else{
-                cell.rightImage.image = UIImage(named:"add")
-            }
         
-        cell.rightImage.isUserInteractionEnabled = true
-        cell.rightImage.tag = subsections[indexPath.row].uniqueID
+        
         
         var tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TappedOnImage(_recognizer:)))
         tapped.numberOfTapsRequired = 1
@@ -310,6 +329,38 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         cell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         return cell
     }
+    
+    /*func downloadAllImages(){
+        print(subsections.count)
+        for i in 0..<subsections.count{
+            print(i)
+            print(subsections[i].image)
+            let trimmedString = subsections[i].image.replacingOccurrences(of: " ", with: "%20")
+            let img = "https://s3.amazonaws.com/retail-safari/" + trimmedString
+            print(img)
+            let imageUrl = NSURL(string: img)! as URL
+            print("Download Started")
+            print(imageUrl);
+            getDataFromUrl(url: imageUrl) { (data, response, error)  in
+                guard let data = data, error == nil else { return }
+                print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
+                print("Download Finished")
+                DispatchQueue.main.async() { () -> Void in
+                   
+                    if(UIImage(data:data) != nil){
+                        self.imageArray.append(UIImage(data: data)!)
+                    }else{
+                        self.imageArray.append(UIImage(named: "nature")!)
+                    }
+                    self.tableView.reloadData()
+                    print(i)
+                }
+            }
+            print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
+        }
+        
+        
+    }*/
     
     func TappedOnImage(_recognizer:UITapGestureRecognizer){
         
@@ -495,59 +546,5 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         return 105.0
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
