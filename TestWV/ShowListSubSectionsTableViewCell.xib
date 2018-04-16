@@ -16,10 +16,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="104.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CaC-Qs-MdL">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="CaC-Qs-MdL">
                         <rect key="frame" x="8" y="8" width="79" height="89"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -37,7 +37,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmH-lj-Igu">
-                        <rect key="frame" x="95" y="37" width="158" height="21"/>
+                        <rect key="frame" x="95" y="31" width="158" height="21"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -51,7 +51,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7L-hK-KJh">
-                        <rect key="frame" x="95" y="66" width="88" height="18"/>
+                        <rect key="frame" x="95" y="60" width="88" height="18"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="88" id="3eH-9X-L0o"/>
@@ -62,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kyD-Jz-qTo">
-                        <rect key="frame" x="188" y="66" width="88" height="18"/>
+                        <rect key="frame" x="188" y="60" width="88" height="18"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.072316958012898197" green="0.83671081852791884" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -71,7 +71,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="lmH-lj-Igu" firstAttribute="top" secondItem="m3E-9E-Xqt" secondAttribute="bottom" constant="8" symbolic="YES" id="BZJ-42-y4K"/>
+                    <constraint firstItem="lmH-lj-Igu" firstAttribute="top" secondItem="m3E-9E-Xqt" secondAttribute="bottom" constant="2" id="BZJ-42-y4K"/>
                     <constraint firstItem="Q7L-hK-KJh" firstAttribute="firstBaseline" secondItem="kyD-Jz-qTo" secondAttribute="firstBaseline" id="EoT-WU-5Wu"/>
                     <constraint firstItem="m3E-9E-Xqt" firstAttribute="trailing" secondItem="lmH-lj-Igu" secondAttribute="trailing" id="Hes-5V-5x3"/>
                     <constraint firstItem="m3E-9E-Xqt" firstAttribute="leading" secondItem="lmH-lj-Igu" secondAttribute="leading" id="RmW-m9-jjH"/>
@@ -84,7 +84,7 @@
                     <constraint firstItem="CaC-Qs-MdL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="kKv-QG-ZVr"/>
                     <constraint firstItem="lmH-lj-Igu" firstAttribute="leading" secondItem="Q7L-hK-KJh" secondAttribute="leading" id="oKF-Zc-M2p"/>
                     <constraint firstItem="Iu9-MJ-lbr" firstAttribute="leading" secondItem="m3E-9E-Xqt" secondAttribute="trailing" constant="31" id="pxr-IB-Syc"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Q7L-hK-KJh" secondAttribute="bottom" constant="12.5" id="qgE-U8-7zj"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Q7L-hK-KJh" secondAttribute="bottom" constant="18.5" id="qgE-U8-7zj"/>
                     <constraint firstItem="CaC-Qs-MdL" firstAttribute="top" secondItem="m3E-9E-Xqt" secondAttribute="top" id="r9h-iY-z7X"/>
                     <constraint firstItem="kyD-Jz-qTo" firstAttribute="leading" secondItem="Q7L-hK-KJh" secondAttribute="trailing" constant="5" id="rXi-3a-BL4"/>
                     <constraint firstItem="CaC-Qs-MdL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vew-nS-HXF"/>
@@ -105,6 +105,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="default" width="500" height="200"/>
         <image name="remove_from_list_icon" width="300" height="300"/>
     </resources>
 </document>

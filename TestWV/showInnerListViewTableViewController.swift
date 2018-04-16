@@ -12,6 +12,9 @@ import NVActivityIndicatorView
 import Alamofire
 import SwiftyJSON
 import CoreLocation
+import Foundation
+import Toaster
+import RZTransitions
 
 class showInnerListViewTableViewController: UITableViewController,NVActivityIndicatorViewable, CLLocationManagerDelegate {
 
@@ -25,6 +28,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         var uniqueID:Int
         var lat:Double
         var long:Double
+        var resized:Int
     }
     
     
@@ -184,53 +188,227 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
             
             let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
             NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
-            Alamofire.request(self.sec_URL).responseString { response in
-                print("Request: \(String(describing: response.request))")   // original url request
-                print("Response: \(String(describing: response.response))") // http url response
-                print("Result: \(response.result)")                         // response serialization result
-                
-                if let json = response.data {
-                    let data = JSON(data: json)
-                    self.countArray.append(data.count)
-                    
-                    if(data.count > 0){
-                        for k in 0..<data.count{
-                            i = i+1
-                            self.positionArray.append(2)
-                            self.cell2Array.append(i)
-                            let id : Int = data[k]["SrNumber"].intValue
-                            let coordinates = data[k]["LatLng"]
-                            let latt : Double = coordinates["H"].doubleValue
-                            let longg : Double = coordinates["L"].doubleValue
-                            let coordinate₀ = CLLocation(latitude: latt, longitude: longg)
-                            let coordinate₁ = CLLocation(latitude: self.latCenter!, longitude: self.longCenter!)
+            
+            if(self.latCenter == nil && self.longCenter == nil){
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+                    Alamofire.request(self.sec_URL).responseString { response in
+                        print("Request: \(String(describing: response.request))")   // original url request
+                        print("Response: \(String(describing: response.response))") // http url response
+                        print("Result: \(response.result)")                         // response serialization result
+                        do{
+                            if (response.data != nil){
+                                if let json = try response.data {
+                                    let data = JSON(data: json)
+                                    self.countArray.append(data.count)
+                                    
+                                    if(data.count > 0){
+                                        for k in 0..<data.count{
+                                            i = i+1
+                                            self.positionArray.append(2)
+                                            self.cell2Array.append(i)
+                                            if(data[k]["SrNumber"] == JSON.null){
+                                                print("SrNumber is null")
+                                            }
+                                            if(data[k]["LatLng"] == JSON.null){
+                                                print("LatLng is null")
+                                            }
+                                            if(data[k]["Detail"] == JSON.null){
+                                                print("Detail is null")
+                                            }
+                                            
+                                            if(data[k]["SrNumber"] != JSON.null && data[k]["LatLng"] != JSON.null && data[k]["Detail"] != JSON.null ){
+                                                let id : Int = data[k]["SrNumber"].intValue
+                                                
+                                                let coordinates = data[k]["LatLng"]
+                                                let latt : Double = coordinates["H"].doubleValue
+                                                let longg : Double = coordinates["L"].doubleValue
+                                                
+                                                if(self.latCenter != nil && self.longCenter != nil){
+                                                    let coordinate₀ = CLLocation(latitude: latt, longitude: longg)
+                                                    let coordinate₁ = CLLocation(latitude: self.latCenter!, longitude: self.longCenter!)
+                                                    
+                                                    let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+                                                    let distInMiles = distanceInMeters / 1609
+                                                    var dist:String = String(format:"%.2f mi away", distInMiles)
+                                                    //print(id)
+                                                    //print(coordinates)
+                                                    //print(latt)
+                                                    //print(longg)
+                                                    let json1 = data[k]["Detail"]
+                                                    //print("data \(json1["name"])")
+                                                    //self.positionArray.insert(2, at: indexPath.row+1)
+                                                    
+                                                    var image1 = "resize_image/" + json1["profileimage"].string!
+                                                    if image1.contains(" "){
+                                                        image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                    }
+                                                    var resize = 1
+                                                    if image1 == "resize_image/"{
+                                                        image1 = json1["Path"].string!
+                                                        resize = 0
+                                                        if image1 != ""{
+                                                            if image1.contains(","){
+                                                                let imageArray = image1.components(separatedBy: ",")
+                                                                image1 = imageArray[0]
+                                                                if image1.contains(" "){
+                                                                    image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                                }
+                                                            }else{
+                                                                image1 = json1["Path"].string!
+                                                                if image1.contains(" "){
+                                                                    image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                                }
+                                                            }
+                                                        }else{
+                                                            image1 = "None"
+                                                        }
+                                                    }
+                                                    
+                                                    self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: dist, status: "OPEN", image : image1, uniqueID : id, lat : latt, long : longg, resized: resize))
+                                                    /*if k == (data.count-1){
+                                                     print(k)
+                                                     self.downloadAllImages()
+                                                     }*/
+                                                    
+                                                }else{
+                                                    ToastCenter.default.cancelAll()
+
+                                                    Toast(text: "It seems your network connection is weak.. Please try again later...").show()
+
+                                                    print("location data is nil")
+                                                    
+                                                }
+                                            }else{
+                                                ToastCenter.default.cancelAll()
+
+                                                //Toast(text: "It seems your network connection is weak.. Please try again later...").show()
+
+                                                print("Error data is nil")
+                                            }
+                                        }
+                                    }
+                                }
+                            }else{
+                                ToastCenter.default.cancelAll()
+
+                                Toast(text: "It seems your network connection is weak.. Please try again later...").show()
+
+                                print("Error response is nil")
+                            }
                             
-                            let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
-                            let distInMiles = distanceInMeters / 1609
-                            var dist:String = String(format:"%.2f mi away", distInMiles)
-                            
-                            //print(id)
-                            //print(coordinates)
-                            //print(latt)
-                            //print(longg)
-                            let json1 = data[k]["Detail"]
-                            //print("data \(json1["name"])")
-                            //self.positionArray.insert(2, at: indexPath.row+1)
-                            self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: dist, status: "OPEN", image : json1["profileimage"].string!, uniqueID : id, lat : latt, long : longg))
-                            /*if k == (data.count-1){
-                                print(k)
-                                self.downloadAllImages()
-                            }*/
-                            
+                        }catch{
+                            print(error.localizedDescription)
                         }
                         
+                        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                        self.tableView.reloadData()
                     }
-                    //let data1 = JSON(String: json1)
-                    //print("data1 \(data1)")
+                })
+                
+
+            }else{
+                Alamofire.request(self.sec_URL).responseString { response in
+                    print("Request: \(String(describing: response.request))")   // original url request
+                    print("Response: \(String(describing: response.response))") // http url response
+                    print("Result: \(response.result)")                         // response serialization result
+                    do{
+                        if (response.data != nil){
+                            if let json = try response.data {
+                                let data = JSON(data: json)
+                                self.countArray.append(data.count)
+                                
+                                if(data.count > 0){
+                                    for k in 0..<data.count{
+                                        i = i+1
+                                        self.positionArray.append(2)
+                                        self.cell2Array.append(i)
+                                        if(data[k]["SrNumber"] == JSON.null){
+                                            print("SrNumber is null")
+                                        }
+                                        if(data[k]["LatLng"] == JSON.null){
+                                            print("LatLng is null")
+                                        }
+                                        if(data[k]["Detail"] == JSON.null){
+                                            print("Detail is null")
+                                        }
+                                        
+                                        if(data[k]["SrNumber"] != JSON.null && data[k]["LatLng"] != JSON.null && data[k]["Detail"] != JSON.null ){
+                                            let id : Int = data[k]["SrNumber"].intValue
+                                            
+                                            let coordinates = data[k]["LatLng"]
+                                            let latt : Double = coordinates["H"].doubleValue
+                                            let longg : Double = coordinates["L"].doubleValue
+                                            
+                                            if(self.latCenter != nil && self.longCenter != nil){
+                                                let coordinate₀ = CLLocation(latitude: latt, longitude: longg)
+                                                let coordinate₁ = CLLocation(latitude: self.latCenter!, longitude: self.longCenter!)
+                                                
+                                                let distanceInMeters = coordinate₀.distance(from: coordinate₁) // result is in meters
+                                                let distInMiles = distanceInMeters / 1609
+                                                var dist:String = String(format:"%.2f mi away", distInMiles)
+                                                //print(id)
+                                                //print(coordinates)
+                                                //print(latt)
+                                                //print(longg)
+                                                let json1 = data[k]["Detail"]
+                                                //print("data \(json1["name"])")
+                                                //self.positionArray.insert(2, at: indexPath.row+1)
+                                                
+                                                var image1 = "resize_image/" + json1["profileimage"].string!
+                                                if image1.contains(" "){
+                                                    image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                }
+                                                var resize = 1
+                                                if image1 == "resize_image/"{
+                                                    image1 = json1["Path"].string!
+                                                    resize = 0
+                                                    if image1 != ""{
+                                                        if image1.contains(","){
+                                                            let imageArray = image1.components(separatedBy: ",")
+                                                            image1 = imageArray[0]
+                                                            if image1.contains(" "){
+                                                                image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                            }
+                                                        }else{
+                                                            image1 = json1["Path"].string!
+                                                            if image1.contains(" "){
+                                                                image1 = image1.replacingOccurrences(of: " ", with: "%20")
+                                                            }
+                                                        }
+                                                    }else{
+                                                        image1 = json1["Path"].string!
+                                                    }
+                                                }
+                                                
+                                                self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: dist, status: "OPEN", image : image1, uniqueID : id, lat : latt, long : longg, resized: resize))
+                                                /*if k == (data.count-1){
+                                                 print(k)
+                                                 self.downloadAllImages()
+                                                 }*/
+                                                
+                                            }else{
+                                                print("location data is nil")
+                                                
+                                            }
+                                        }else{
+                                            print("Error data is nil")
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            print("Error response is nil")
+                        }
+                        
+                    }catch{
+                        print(error.localizedDescription)
+                    }
+                    
+                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                    self.tableView.reloadData()
                 }
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                self.tableView.reloadData()
             }
+            
             
         } catch {
             print(error.localizedDescription)
@@ -251,6 +429,12 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestWhenInUseAuthorization()
         locManager.startMonitoringSignificantLocationChanges()
+        ToastView.appearance().backgroundColor = .white
+        ToastView.appearance().textColor = .black
+        ToastView.appearance().font = .boldSystemFont(ofSize: 15)
+        ToastView.appearance().bottomOffsetPortrait = 500.0
+        
+
         setUpDatabasePath()
         getSections()
         //downloadAllImages()
@@ -282,7 +466,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         let cell = Bundle.main.loadNibNamed("ShowListSubSectionsTableViewCell", owner: self, options: nil)?.first as! ShowListSubSectionsTableViewCell
         
         cell.backgroundColor = UIColor.black
-        
+        cell.leftImage.layer.cornerRadius = 15
         if selectedArray.contains(subsections[indexPath.row].uniqueID) {
             cell.rightImage.image = UIImage(named:"tick-list")
         }else{
@@ -291,29 +475,44 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         cell.rightImage.isUserInteractionEnabled = true
         cell.rightImage.tag = subsections[indexPath.row].uniqueID
         
-        
-        let trimmedString = subsections[indexPath.row].image.replacingOccurrences(of: " ", with: "%20")
-        let img = "https://s3.amazonaws.com/retail-safari/resize_image/" + trimmedString
-        print(img)
-        let imageUrl = NSURL(string: img)! as URL
-        print("Download Started")
-        print(imageUrl);
-        getDataFromUrl(url: imageUrl) { (data, response, error)  in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
-            print("Download Finished")
-            DispatchQueue.main.async() { () -> Void in
+        if cell.leftImage.image == nil || cell.leftImage.image == UIImage(named: "default") {
+            if subsections[indexPath.row].image != ""{
+                let trimmedString = subsections[indexPath.row].image.replacingOccurrences(of: " ", with: "%20")
                 
-                if(UIImage(data:data) != nil){
-                    cell.leftImage.image = UIImage(data: data)
-                    cell.leftImage.contentMode = .scaleAspectFit
-                }else{
-                    self.imageArray.append(UIImage(named: "nature")!)
-                    cell.leftImage.contentMode = .scaleAspectFit
+                
+                var img = "https://s3.amazonaws.com/retail-safari/" + trimmedString
+                
+                if subsections[indexPath.row].resized == 0{
+                    img = "https://s3.amazonaws.com/retail-safari/" + trimmedString
                 }
+                print(img)
+                let imageUrl = NSURL(string: img)! as URL
+                print("Download Started")
+                print(imageUrl);
+                getDataFromUrl(url: imageUrl) { (data, response, error)  in
+                    guard let data = data, error == nil else { return }
+                    print(response?.suggestedFilename ?? imageUrl.lastPathComponent)
+                    print("Download Finished")
+                    DispatchQueue.main.async() { () -> Void in
+                        
+                        if(UIImage(data:data) != nil){
+                            cell.leftImage.image = UIImage(data: data)
+                            cell.leftImage.contentMode = .scaleAspectFit
+                            cell.leftImage.layer.cornerRadius = 15.0
+                            cell.leftImage.clipsToBounds = true
+
+                        }else{
+                            //self.imageArray.append(UIImage(named: "nature")!)
+                            //cell.leftImage.contentMode = .scaleAspectFit
+                        }
+                    }
+                }
+                print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
+                
+            }else{
+                cell.leftImage.image = UIImage(named: "default")
             }
         }
-        print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
         
         
         
@@ -325,8 +524,9 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         cell.locationLabel.text = subsections[indexPath.row].location
         cell.distanceLabel.text = subsections[indexPath.row].distance
         cell.statusLabel.text = subsections[indexPath.row].status
-        cell.leftImage.layer.cornerRadius = 10.0
-        cell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        cell.leftImage.layer.cornerRadius = 15.0
+        cell.leftImage.clipsToBounds = true
+        cell.backgroundColor = UIColor.black //UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         return cell
     }
     
@@ -399,21 +599,28 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
                 let long = subsections[(indexPath?.row)!].long
                 let image = subsections[(indexPath?.row)!].image
                 let uniqueId = subsections[(indexPath?.row)!].uniqueID
-                addToExp(Name: title, Location: location, lat: lat, long: long, image: image, index: uniqueId)
+                let distance = subsections[(indexPath?.row)!].distance
+                addToExp(Name: title, Location: location, lat: lat, long: long, image: image, index: uniqueId,dist: distance)
             }
             
         }
+        var indexPaths : Array<IndexPath> = []
+        
+        if let current = indexPath {
+            indexPaths += [current]
+        }
         print(selectedArray)
-        tableView.reloadData()
+        tableView.reloadRows(at: indexPaths, with: .automatic)
     }
     
-    public func addToExp(Name:String, Location:String, lat:Double, long:Double, image:String, index:Int){
+    public func addToExp(Name:String, Location:String, lat:Double, long:Double, image:String, index:Int, dist: String){
         do {
             try dbQueue.inDatabase { db in
+                
                 try db.execute(
-                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    arguments: [Name, Location, "1 mi away", "OPEN", String(describing: lat),String(describing: long),"Test Desc",image,"0", index])
+                    "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId,visited, position) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    arguments: [Name, Location, dist, "OPEN", String(describing: lat),String(describing: long),"Test Desc",image,"0", index, "0", "0"])
                 print(index)
             }
         } catch {
@@ -484,6 +691,14 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
                 let elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM placeProfile")! // Int
                 let elSectionNames = try String.fetchAll(db, "SELECT uniqueID FROM placeProfile")
                 //print("Count : \(elCount)")
+                
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let newViewController = storyBoard.instantiateViewController(withIdentifier: "placeProfile")
+                //newViewController.transitioningDelegate = RZTransitionsManager.shared()
+
+                self.present(newViewController, animated: true, completion: nil)
             }
         } catch {
             print(error.localizedDescription)
@@ -506,15 +721,21 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
             if let json = response.data {
                 let data = JSON(data: json)
                 print(data)
+                let coords = data["LatLng"]
+                
+                print(coords)
+                print(coords["H"])
+                print(coords["L"])
+                
                 let id : Int = data["SrNumber"].intValue
                 let title : String = data["Detail"]["name"].stringValue
                 let address : String = data["Detail"]["address"].stringValue
                 let distance : String = ""
                 let website : String = data["Detail"]["Website"].stringValue
-                let latitude : String = data["Detail"]["Website"].stringValue
-                let longitude : String = data["Detail"]["Website"].stringValue
+                let latitude : String = coords["H"].stringValue
+                let longitude : String = coords["L"].stringValue
                 let description : String = data["Detail"]["about"].stringValue
-                let image : String = data["Detail"]["profileimage"].stringValue
+                let image : String = data["Detail"]["Path"].stringValue
                 let phone : String = data["Detail"]["Phone"].stringValue
                 let foursquareRating : String = "4.5"
                 let yelpRating : String = "4.2"
@@ -530,9 +751,7 @@ class showInnerListViewTableViewController: UITableViewController,NVActivityIndi
         
         
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "placeProfile")
-        self.present(newViewController, animated: true, completion: nil)
+        
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {

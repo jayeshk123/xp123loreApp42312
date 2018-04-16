@@ -14,6 +14,10 @@ import FBSDKLoginKit
 
 class experienceTableTableViewController: UITableViewController {
 
+    @IBOutlet weak var shareBtn: UIButton!
+    @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var startExploringBtn: UIButton!
+    
     var dict : [String : AnyObject]!
     var dbQueue: DatabaseQueue!
     
@@ -65,7 +69,7 @@ class experienceTableTableViewController: UITableViewController {
     }
     
     @IBAction func shareClicked(_ sender: UIButton) {
-        
+        print("Share clicked")
     }
     
     public func saveFBID(id:String){
@@ -131,9 +135,20 @@ class experienceTableTableViewController: UITableViewController {
         }
     }
     
+   /* func hideKeyboard() {
+        tableView.endEditing(true)
+    }
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDatabasePath()
+        
+        startExploringBtn.layer.cornerRadius = 10
+        
+        /*let tapGesture = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard"))
+        tapGesture.cancelsTouchesInView = true
+        tableView.addGestureRecognizer(tapGesture)*/
+        
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
         
         let button = UIButton.init(type: .custom)

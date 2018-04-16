@@ -93,5 +93,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>To capture places&apos; photos</string>
 </dict>
 </plist>

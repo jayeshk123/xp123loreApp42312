@@ -34,7 +34,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             var elCount:Int
             elCount = 0
             try dbQueue.inDatabase { db in
-                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience where selected = '1'")! // Int
+                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience where visited = '0'")! // Int
                 
                 print("Count : \(elCount)")
                 
@@ -67,8 +67,8 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
         
         // manager.stopUpdatingLocation()
         
-        print("user latitude = \(userLocation.coordinate.latitude)")
-        print("user longitude = \(userLocation.coordinate.longitude)")
+        //print("user latitude = \(userLocation.coordinate.latitude)")
+        //print("user longitude = \(userLocation.coordinate.longitude)")
         
         latCenter = userLocation.coordinate.latitude
         longCenter = userLocation.coordinate.longitude
@@ -87,7 +87,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             var elCount:Int
             elCount = 0
             try dbQueue.inDatabase { db  in
-                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience where selected = '1'")! // Int
+                elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience where visited = '0' and position = '0'")! // Int
                 print("Count : \(elCount)")
                 
             }
@@ -95,7 +95,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
             
             if elCount > 0{
                 try dbQueue.inDatabase { db  in
-                    let rows = try Row.fetchCursor(db, "SELECT * FROM experience where selected = '1'")
+                    let rows = try Row.fetchCursor(db, "SELECT * FROM experience where visited = '0' and position = '0' limit 1")
                     while let row = try rows.next() {
                         let latitude: String = row.value(named: "lattitude")
                         let longitude: String = row.value(named: "longitude")
@@ -342,7 +342,7 @@ class navigationInnerTableViewController: UITableViewController,MGLMapViewDelega
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        //print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 
     override func didReceiveMemoryWarning() {

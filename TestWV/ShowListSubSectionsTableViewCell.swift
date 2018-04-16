@@ -19,6 +19,7 @@ class ShowListSubSectionsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        leftImage.layer.cornerRadius = 15
         // Initialization code
     }
 

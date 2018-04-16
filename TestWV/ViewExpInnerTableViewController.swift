@@ -82,12 +82,12 @@ class ViewExpInnerTableViewController: UITableViewController {
             //let dbQueue = try DatabaseQueue(path: databasePath)
             var elCount:Int
             elCount = 0
-            var i = -1;
+            //var i = -1;
             
             try dbQueue.inDatabase { db  in
                 elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM selectList")! // Int
                 
-                //print("Count : \(elCount)")
+                print("Count : \(elCount)")
                 
             }
             

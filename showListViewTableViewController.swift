@@ -44,7 +44,8 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
         super.viewDidLoad()
         setUpDatabasePath()
         getSections()
-        self.tableView.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)        
+        self.tableView.backgroundColor = UIColor.black
+        //UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -209,34 +210,42 @@ class showListViewTableViewController: UITableViewController, NVActivityIndicato
                     positionArray.append(1)
                     cell1Array.append(i)
                     dispatchGroup.enter()
-                    Alamofire.request(URL+"/site/getSelectedPlaceNative?Category="+trimmedString+"&page_num=1").responseString { response in
-                        print("Request: \(String(describing: response.request))")   // original url request
-                        print("Response: \(String(describing: response.response))") // http url response
-                        print("Result: \(response.result)")                         // response serialization result
-                        
-                        if let json = response.data {
-                            let data = JSON(data: json)
-                            self.countArray.append(data.count)
-                            
-                            if(data.count > 0){
-                                for k in 0..<data.count{
-                                    i = i+1
-                                    self.positionArray.append(2)
-                                    self.cell2Array.append(i)
-                                    let json1 = data[k]["Detail"]
-                                    print("data \(json1["name"])")
-                                    //self.positionArray.insert(2, at: indexPath.row+1)
-                                    self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: "1 mi away", status: "OPEN", image : json1["Path"].string!))
-                                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                                    self.tableView.reloadData()
+                    do{
+                        try Alamofire.request(URL+"/site/getSelectedPlaceNative?Category="+trimmedString+"&page_num=1").responseString { response in
+                            print("Request: \(String(describing: response.request))")   // original url request
+                            print("Response: \(String(describing: response.response))") // http url response
+                            print("Result: \(response.result)")                         // response serialization result
+                            if response.data != nil{
+                                if let json = response.data {
+                                    let data = JSON(data: json)
+                                    self.countArray.append(data.count)
+                                    
+                                    if(data.count > 0){
+                                        for k in 0..<data.count{
+                                            i = i+1
+                                            self.positionArray.append(2)
+                                            self.cell2Array.append(i)
+                                            let json1 = data[k]["Detail"]
+                                            print("data \(json1["name"])")
+                                            
+                                            //self.positionArray.insert(2, at: indexPath.row+1)
+                                            /*self.subsections.append(SubSections(title: json1["name"].string!, location: json1["address"].string!, distance: "1 mi away", status: "OPEN", image : json1["Path"].string!))*/
+                                            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                                            self.tableView.reloadData()
+                                        }
+                                        
+                                    }
+                                    //let data1 = JSON(String: json1)
+                                    //print("data1 \(data1)")
                                 }
-                                
+
                             }
-                            //let data1 = JSON(String: json1)
-                            //print("data1 \(data1)")
+                            
                         }
-                        
+                    }catch{
+                        print(error.localizedDescription)
                     }
+                    
                     dispatchGroup.leave()
 
                 }

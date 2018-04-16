@@ -38,6 +38,9 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
     @IBOutlet weak var saveBtn: UIButton!
     
     @IBOutlet weak var removeBtn: UIButton!
+    @IBOutlet weak var addmoreBtn: UIButton!
+    
+    //var total
     
     var ids:[String] = []
     
@@ -69,7 +72,7 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
                  
                     var formatter = DateFormatter()
                     formatter.dateFormat = "dd-MM-yyyy"
-                    let stringDate: String = formatter.string(from: dTPicker.date)
+                    let stringDate: String = ""//formatter.string(from: dTPicker.date)
                     var privateExp = 0
                     if privateExpSwitch.isOn == true{
                         privateExp = 1
@@ -87,9 +90,9 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
                         
                         "title": titleTF.text!,
                         "desc": descTV.text as String,
-                        "tags": tagsTF.text!,
-                        "identifier": identifierTF.text!,
-                        "dateT": stringDate,
+                        "tags": "",
+                        "identifier": "",
+                        "dateT": "",
                         "privateExp": String(privateExp),
                         "fbId": fbId,
                         "SrNumber" : self.ids
@@ -104,8 +107,7 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
                             Toast(text: "Experience saved successfully").show()
                             self.titleTF.text = ""
                             self.descTV.text = ""
-                            self.tagsTF.text = ""
-                            self.identifierTF.text = ""
+                            
                             
                         case .failure(let error):
                             print("Error \(error)")
@@ -135,17 +137,9 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         {
             if let desc = descTV.text, !desc.isEmpty
             {
-                if let identi = identifierTF.text, !identi.isEmpty
-                {
-                    if let tags = tagsTF.text, !tags.isEmpty
-                    {
+                
                         getIds()
-                    }else{
-                        Toast(text: "Please provide some value for Tags").show()
-                    }
-                }else{
-                    Toast(text: "Please provide some value for Identifier").show()
-                }
+                    
             }else{
                 Toast(text: "Please provide some value for Description").show()
             }
@@ -163,6 +157,11 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         setUpDatabasePath()
 
         tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        
+        ToastView.appearance().backgroundColor = .white
+        ToastView.appearance().textColor = .black
+        ToastView.appearance().font = .boldSystemFont(ofSize: 15)
+        ToastView.appearance().bottomOffsetPortrait = 500.0
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -204,14 +203,15 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
         }
     }
 
+    @IBAction func addBtnClicked(_ sender: UIButton) {
+        
+    }
+    
     @IBAction func selectImageBtnClicked(_ sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
-            
             imagePicker.delegate = self
             imagePicker.sourceType = .savedPhotosAlbum;
             imagePicker.allowsEditing = false
-            
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
@@ -238,7 +238,7 @@ class formExpTableViewController: UITableViewController,UINavigationControllerDe
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 11
+        return 22
     }
 
     /*

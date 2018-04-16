@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cordova
 import Mapbox
 import GRDB
 import NVActivityIndicatorView
@@ -21,6 +20,7 @@ import Toaster
 
 class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate, NVActivityIndicatorViewable {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet var mainFrameMapView: UIView!
     var unId = 0
     var URL = "http://34.231.31.72/xplore/index.php"
@@ -32,6 +32,13 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
     
     var lats:[Float] = []
     var longs:[Float] = []
+    
+    var latCent:Float = 0.0
+    var longCent:Float = 0.0
+    
+    var expCount:Int = 0
+    
+    var isTransformed:Bool = false
     
     var dbQueue: DatabaseQueue!
     
@@ -69,6 +76,10 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
         }
     }
     
+    @IBAction func backClicked(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func startNavigationClicked(_ sender: Any) {
         print("TEST")
         
@@ -88,7 +99,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
                 guard let route = routes?.first else { return }
                 
                 let viewController = NavigationViewController(for: route)
-                self.present(viewController, animated: true, completion: nil)
+                self.present(viewController, animated: false, completion: nil)
             }
 
         }))
@@ -130,7 +141,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
             elCount = 0
             try dbQueue.inDatabase { db  in
                 elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience")! // Int
-                
+                expCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM experience")!
                 print("Count : \(elCount)")
                 
             }
@@ -159,18 +170,48 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
 
     }
     
+    func togglelayer(sender:Any){
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "experienceTableTableViewController")
+        self.present(newViewController, animated: true, completion: nil)
+
+        
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        /*let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .scaleAspectFit
+        
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        
+        navigationItem.titleView = imageView*/
+        
         setUpDatabasePath()
-        //view.backgroundColor = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        
         mapView = MGLMapView(frame: view.bounds, styleURL: MGLStyle.lightStyleURL())
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         //mapView.tintColor = .gray
         mapView.delegate = self
+        mapView.logoView.isHidden = true
+        mapView.attributionButton.isHidden = true
         //mainFrameMapView.addSubview(mapView)
         view.addSubview(mapView)
+        //view.addSubview(containerView)
+        let button = UIButton(type: .system)
+        button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        button.setTitle("Toggle Layout", for: .normal)
+        button.isSelected = true
+        button.sizeToFit()
+        button.center.x = self.view.center.x
+        button.frame = CGRect(origin: CGPoint(x: button.frame.origin.x, y: self.view.frame.size.height - button.frame.size.height - 5), size: button.frame.size)
+        button.addTarget(self, action: #selector(togglelayer(sender:)), for: .touchUpInside)
         
+        mapView.addSubview(button)
         
         do {
             //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
@@ -203,6 +244,11 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
                         hello.subtitle = desc+"__"+String(unid)
                         
                         mapView.addAnnotation(hello)
+                        
+                        if latCent == 0.0 && longCent == 0.0 {
+                            latCent = lat
+                            longCent = long
+                        }
                     }
                     
                 }
@@ -211,13 +257,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
             print(error.localizedDescription)
         }
         
-       /* // Setup offline pack notification handlers.
-        NotificationCenter.default.addObserver(self, selector: #selector(offlinePackProgressDidChange), name: NSNotification.Name.MGLOfflinePackProgressChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(offlinePackDidReceiveError), name: NSNotification.Name.MGLOfflinePackError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(offlinePackDidReceiveMaximumAllowedMapboxTiles), name: NSNotification.Name.MGLOfflinePackMaximumMapboxTilesReached, object: nil)
-        */
         
-        
+        if latCent != 0.0 && longCent != 0.0 {
+            let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latCent), longitude: CLLocationDegrees(longCent))
+            mapView.setCenter(center, zoomLevel: 12, animated: false)
+            view.addSubview(mapView)
+        }
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
@@ -229,25 +274,25 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        let location = locations.last
-        //let mapView = MGLMapView(frame: view.bounds)
-        mapView.userTrackingMode = .follow
-        let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
-        mapView.setCenter(center, zoomLevel: 18, animated: true)
-        view.addSubview(mapView)
-        //mainFrameMapView.addSubview(mapView)
+        //let location = locations.last
+        
+        if latCent != 0.0 && longCent != 0.0 {
+            mapView.userTrackingMode = .follow
+            let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latCent), longitude: CLLocationDegrees(longCent))
+            mapView.setCenter(center, zoomLevel: 12, animated: true)
+            view.addSubview(mapView)
+        }
+        
+        
         self.locationManager.stopUpdatingLocation()
     }
     
     public func getUniqueId(lat:String, long:String){
         do {
-            //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
-            //let dbQueue = try DatabaseQueue(path: databasePath)
             try dbQueue.inDatabase { db in
                 let rows = try Row.fetchCursor(db, "SELECT * FROM experience where lattitude = ? and longitude = ?" , arguments:[lat, long])
                 while let row = try rows.next() {
@@ -293,15 +338,21 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
                 if let json = response.data {
                     let data = JSON(data: json)
                     print(data)
+                    let coords = data["LatLng"]
+                    
+                    print(coords)
+                    print(coords["H"])
+                    print(coords["L"])
+                    
                     let id : Int = data["SrNumber"].intValue
                     let title : String = data["Detail"]["name"].stringValue
                     let address : String = data["Detail"]["address"].stringValue
                     let distance : String = ""
                     let website : String = data["Detail"]["Website"].stringValue
-                    let latitude : String = data["Detail"]["Website"].stringValue
-                    let longitude : String = data["Detail"]["Website"].stringValue
+                    let latitude : String = coords["H"].stringValue
+                    let longitude : String = coords["L"].stringValue
                     let description : String = data["Detail"]["about"].stringValue
-                    let image : String = data["Detail"]["profileimage"].stringValue
+                    let image : String = data["Detail"]["Path"].stringValue
                     let phone : String = data["Detail"]["Phone"].stringValue
                     let foursquareRating : String = "4.5"
                     let yelpRating : String = "4.2"
@@ -348,7 +399,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let newViewController = storyBoard.instantiateViewController(withIdentifier: "placeProfile")
-                self.present(newViewController, animated: true, completion: nil)
+                self.present(newViewController, animated: false, completion: nil)
             }
         } catch {
             print(error.localizedDescription)
@@ -363,39 +414,52 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        
+        
+        
         // Start downloading tiles and resources for z13-16.
         //startOfflinePackDownload()
+        
+        /*if latCent != 0.0 && longCent != 0.0 {
+            //let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latCent) , longitude: CLLocationDegrees(longCent))
+            
+            //let camera = MGLMapCamera(lookingAtCenter: coordinate, fromEyeCoordinate: coordinate, eyeAltitude: 15000)
+            
+            
+                
+               /* MGLMapCamera(lookingAtCenter: coordinate, fromDistance: 4500, pitch: 13, heading: 0)*/
+            //let camera1 = MGLMapCamera(lookingAtCenter: coordinate, fromDistance: 4500, pitch: 15, heading: 0)
+            
+            // Animate the camera movement over 5 seconds.
+            
+            //mapView.fly(to: camera)
+            //mapView.fly(to: camera, withDuration: 3.5)
+            
+           /* let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latCent), longitude: CLLocationDegrees(longCent))
+            mapView.setCenter(center, zoomLevel: 12, animated: false)*/
+            //view.addSubview(mapView)
+
+            
+            //mapView.setCamera(camera, withDuration: 2, animationTimingFunction: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+            
+            /*let when = DispatchTime.now() + 3 // change 2 to desired number of seconds
+            DispatchQueue.main.asyncAfter(deadline: when) {
+                // Your code with delay
+                 mapView.setCamera(camera1, withDuration: 2, animationTimingFunction: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+            }*/
+           
+        }*/
+        
     }
+ 
     
     deinit {
         // Remove offline pack observers.
         NotificationCenter.default.removeObserver(self)
     }
     
-    func startOfflinePackDownload() {
-        
-        // Create a region that includes the current viewport and any tiles needed to view it when zoomed further in.
-        // Because tile count grows exponentially with the maximum zoom level, you should be conservative with your `toZoomLevel` setting.
-        let region = MGLTilePyramidOfflineRegion(styleURL: mapView.styleURL, bounds: mapView.visibleCoordinateBounds, fromZoomLevel: mapView.zoomLevel, toZoomLevel: 16)
-        
-        // Store some data for identification purposes alongside the downloaded resources.
-        let userInfo = ["name": "My Offline Pack"]
-        let context = NSKeyedArchiver.archivedData(withRootObject: userInfo)
-        
-        // Create and register an offline pack with the shared offline storage object.
-        
-        MGLOfflineStorage.shared().addPack(for: region, withContext: context) { (pack, error) in
-            guard error == nil else {
-                // The pack couldn’t be created for some reason.
-                print("Error: \(error?.localizedDescription ?? "unknown error")")
-                return
-            }
-            
-            // Start downloading.
-            pack!.resume()
-        }
-        
-    }
     
     // Use the default marker. See also: our view annotation or custom marker examples.
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
@@ -407,55 +471,50 @@ class MapViewController: UIViewController, MGLMapViewDelegate, CLLocationManager
         return true
     }
     
-    // MARK: - MGLOfflinePack notification handlers
     
-    func offlinePackProgressDidChange(notification: NSNotification) {
-        // Get the offline pack this notification is regarding,
-        // and the associated user info for the pack; in this case, `name = My Offline Pack`
-        if let pack = notification.object as? MGLOfflinePack,
-            let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String] {
-            let progress = pack.progress
-            // or notification.userInfo![MGLOfflinePackProgressUserInfoKey]!.MGLOfflinePackProgressValue
-            let completedResources = progress.countOfResourcesCompleted
-            let expectedResources = progress.countOfResourcesExpected
-            
-            // Calculate current progress percentage.
-            let progressPercentage = Float(completedResources) / Float(expectedResources)
-            
-            // Setup the progress bar.
-            /*if progressView == nil {
-                progressView = UIProgressView(progressViewStyle: .default)
-                let frame = view.bounds.size
-                progressView.frame = CGRect(x: frame.width / 4, y: frame.height * 0.75, width: frame.width / 2, height: 10)
-                view.addSubview(progressView)
-            }
-            
-            progressView.progress = progressPercentage*/
-            
-            // If this pack has finished, print its size and resource count.
-            if completedResources == expectedResources {
-                let byteCount = ByteCountFormatter.string(fromByteCount: Int64(pack.progress.countOfBytesCompleted), countStyle: ByteCountFormatter.CountStyle.memory)
-                print("Offline pack “\(userInfo["name"] ?? "unknown")” completed: \(byteCount), \(completedResources) resources")
-            } else {
-                // Otherwise, print download/verification progress.
-                print("Offline pack “\(userInfo["name"] ?? "unknown")” has \(completedResources) of \(expectedResources) resources — \(progressPercentage * 100)%.")
-            }
-        }
-    }
+    /*var top = CGAffineTransform(translationX: 0, y: -100)
+     
+     if expCount <= 0{
+     
+     }else if expCount == 1{
+     top = CGAffineTransform(translationX: 0, y: -100)
+     }else if expCount == 2{
+     top = CGAffineTransform(translationX: 0, y: -200)
+     }else if expCount == 3{
+     top = CGAffineTransform(translationX: 0, y: -300)
+     }else{
+     top = CGAffineTransform(translationX: 0, y: -300)
+     }
+     //Uncomment next line to make this dynamic. Some changes might be required
+     top = CGAffineTransform(translationX: 0, y: -300)
+     let bottom = CGAffineTransform(translationX: 0, y: 0)
+     
+     
+     if isTransformed == false{
+     isTransformed = true
+     //let left = CGAffineTransform(translationX: -300, y: 0)
+     //let right = CGAffineTransform(translationX: 300, y: 0)
+     
+     
+     UIView.animate(withDuration: 0.4, delay: 0.0, options: [], animations: {
+     // Add the transformation in this block
+     // self.container is your view that you want to animate
+     self.mapView.transform = top
+     }, completion: nil)
+     
+     }else{
+     isTransformed = false
+     //let left = CGAffineTransform(translationX: -300, y: 0)
+     //let right = CGAffineTransform(translationX: 300, y: 0)
+     
+     
+     UIView.animate(withDuration: 0.4, delay: 0.0, options: [], animations: {
+     // Add the transformation in this block
+     // self.container is your view that you want to animate
+     self.mapView.transform = bottom
+     }, completion: nil)
+     
+     }*/
+
     
-    func offlinePackDidReceiveError(notification: NSNotification) {
-        if let pack = notification.object as? MGLOfflinePack,
-            let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String],
-            let error = notification.userInfo?[MGLOfflinePackUserInfoKey.error] as? NSError {
-            print("Offline pack “\(userInfo["name"] ?? "unknown")” received error: \(error.localizedFailureReason ?? "unknown error")")
-        }
-    }
-    
-    func offlinePackDidReceiveMaximumAllowedMapboxTiles(notification: NSNotification) {
-        if let pack = notification.object as? MGLOfflinePack,
-            let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String],
-            let maximumCount = (notification.userInfo?[MGLOfflinePackUserInfoKey.maximumCount] as AnyObject).uint64Value {
-            print("Offline pack “\(userInfo["name"] ?? "unknown")” reached limit of \(maximumCount) tiles.")
-        }
-    }
 }

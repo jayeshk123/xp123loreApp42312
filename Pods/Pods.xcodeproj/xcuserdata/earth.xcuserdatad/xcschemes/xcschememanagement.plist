@@ -34,12 +34,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Cordova.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>CordovaPlugin-console.xcscheme</key>
+		<key>Cosmos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -50,6 +45,11 @@
 			<false/>
 		</dict>
 		<key>FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FSPagerView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -129,6 +129,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RZTransitions.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -169,100 +174,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>cordova-plugin-camera.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-contacts.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-device-motion.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-device-orientation.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-device.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-file-transfer.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-file.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-geolocation.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-globalization.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-inappbrowser.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-media-capture.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-network-information.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-splashscreen.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-statusbar.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>cordova-plugin-vibration.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04C4774BDA73C219BE4D3F6B898553EA</key>
+		<key>00B525084CC32EF44D4F8F03AEB8FC7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>064EF0ADB8F620A46140DF68566D6E3D</key>
+		<key>09C091CCAE077C15F3F41A35DC2F5A0C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0AB9F1B3787147EE81F647863AAC3489</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1087B1655E6D8DD5BE4AB348FCB586A0</key>
+		<key>1E99476323A753B3B52E6D904F21F18D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -272,17 +197,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2FE79EF8CEA269720384CC79B64801C9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3479B4B551868D09C9A685010D9966ED</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3C09E6358CBDEFEC1D5B0725E2C2B08F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -302,17 +217,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4BC9ED24BE692B2F38FA0F22E734A043</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4CF7FECF3D590D9C1AB7279EF22FA0C8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5505852EC1378FB0CFF03CED3F7BB741</key>
+		<key>4FDC533A4360A68ABDCE852F04B30927</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -323,16 +228,6 @@
 			<true/>
 		</dict>
 		<key>5B5AC3C06B783F8674FDB4C0F900B56A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5DA1732F95D2314532429173F4788A1C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>647BEC167C191A1D4F56336F7410C8FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -357,11 +252,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>81A4399E25A4AC2B56A9F86658379708</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
@@ -372,37 +262,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>98A9EDDA455CF90B41A08A249EA55BAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9C8CFB17693C4802830E87D0D9B36531</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A2A28CA6B64AE1F55F1BE0376CD2E373</key>
+		<key>A31751DB7B228254E2B6715E904EDBFC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AABE552F9280EEDF710D2F3813D7BCC4</key>
+		<key>AF12939D90108589B5F7B04CF3D9761A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B3FAF269F904D2D2FF3A8275EB20FA84</key>
+		<key>AFF730BFA6369CFAD29937245B8A2451</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B4E7DAB886AC4772913CB7053F3F1734</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B5FE7C837450F6590E46835D808532E5</key>
+		<key>B242974D7B9688FE3734BEE865344430</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B85FB6462AC3B3AD302936FAB24A8AF0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B9D5FC1059C85FCB0CCAE454B17E45E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -417,22 +312,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C3BE4883BB66316092AAEEF0045C4444</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CFA08D20840587101E21700F7042008A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>CFCFBE96EEBF3640AF624CD0A32637CE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D418698AE649BB814FCC1C98E998F60E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -452,17 +332,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E4AE02B3DEB7291182F152A58128CFE0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EE07C3C1D1C517F303E018FC4D1F3FDE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EEC0738E64FBA0ACDC50BCEEF3F68883</key>
+		<key>ED279AFE7EA745A57B7B9F35AD5F2C9F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -472,17 +342,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F78F607FA111F3BA767F02C583412509</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F9DD9ED860C8F2C7B6DACE690572AF83</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FC58F41DB0DCB4AE7140CB0595BCAF43</key>
+		<key>F3B55E113CB4816CE39C1DF1471B51E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

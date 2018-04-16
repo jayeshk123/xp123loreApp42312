@@ -14,6 +14,10 @@ import NVActivityIndicatorView
 import MapboxGeocoder
 import SearchTextField
 
+struct GlobalLocation {
+    static var location : String = ""
+}
+
 class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityIndicatorViewable, CLLocationManagerDelegate {
     
     @IBOutlet weak var sliderValLabel: UILabel!
@@ -64,6 +68,7 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         latCenter = userLocation.coordinate.latitude
         longCenter = userLocation.coordinate.longitude
         defaultLocation()
+        manager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
@@ -104,7 +109,16 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
                     self.locationTFNew.filterStrings(self.suggestions)
                     // 200 Queen St, Saint John, New Brunswick E2L 2X1, Canada
                     self.locationTF.maxNumberOfResults = 5
-                    
+                    self.locationTF.itemSelectionHandler = { filteredResults, itemPosition in
+                        // Just in case you need the item position
+                        //print(self.items)
+                        
+                        let item = filteredResults[itemPosition]
+                        print("Item at position \(itemPosition): \(item.title)")
+                        self.locationTF.text = item.title.uppercased()
+                        self.iAmHereLabel.text = item.title.uppercased()
+                        GlobalLocation.location = item.title.uppercased()
+                        }
                     
                     
                     #if !os(tvOS)
@@ -146,7 +160,10 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             //print(placemark.place?.wikidataItemIdentifier ?? "")
             // Q60
             //print(placemark.qualifiedName)
-            self.iAmHereLabel.text = placemark.qualifiedName
+            if (GlobalLocation.location == ""){
+                GlobalLocation.location = placemark.qualifiedName.uppercased()
+            }
+            self.iAmHereLabel.text = GlobalLocation.location.uppercased()
         }
     }
     
@@ -182,7 +199,7 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     
     @IBOutlet weak var locationTF: SearchTextField!
     @IBOutlet var clearCategoryBtn: UIButton!
-    @IBOutlet var guideBtn: UIButton!
+    //@IBOutlet var guideBtn: UIButton!
     @IBOutlet var changeLocationBtn: UIButton!
     @IBOutlet var setupDistanceBtn: UIButton!
     @IBOutlet var getLocationBtn: UIButton!
@@ -255,26 +272,70 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         
         SetupDistanceCell.frame.size.height = 0
         clearCategoryBtn.backgroundColor = .clear
-        clearCategoryBtn.layer.cornerRadius = 10
+        clearCategoryBtn.layer.cornerRadius = 20
         clearCategoryBtn.layer.borderWidth = 1
-        clearCategoryBtn.layer.borderColor = UIColor.white.cgColor
+        clearCategoryBtn.layer.borderColor = UIColor.gray.cgColor
         
-        guideBtn.backgroundColor = .clear
-        guideBtn.layer.cornerRadius = 10
-        guideBtn.layer.borderWidth = 1
-        guideBtn.layer.borderColor = UIColor.white.cgColor
+       // eatCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*eatCircleBtn.layer.cornerRadius = 0.5 * eatCircleBtn.bounds.size.width
+        eatCircleBtn.clipsToBounds = true
+        eatCircleBtn.backgroundColor = .clear
+        //eatCircleBtn.layer.cornerRadius = 100
+        eatCircleBtn.layer.borderWidth = 1
+        eatCircleBtn.layer.borderColor = UIColor.red.cgColor*/
+        
+        //drinkCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*drinkCircleBtn.layer.cornerRadius = 0.5 * drinkCircleBtn.bounds.size.width
+        drinkCircleBtn.clipsToBounds = true
+        drinkCircleBtn.backgroundColor = .clear
+        //drinkCircleBtn = 100
+        drinkCircleBtn.layer.borderWidth = 1
+        drinkCircleBtn.layer.borderColor = UIColor.red.cgColor*/
+        
+        //watchCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*watchCircleBtn.layer.cornerRadius = 0.5 * watchCircleBtn.bounds.size.width
+        watchCircleBtn.clipsToBounds = true
+        watchCircleBtn.backgroundColor = .clear
+        //watchCircleBtn = 100
+        watchCircleBtn.layer.borderWidth = 1
+        watchCircleBtn.layer.borderColor = UIColor.red.cgColor*/
+        
+        //doCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*doCircleBtn.layer.cornerRadius = 0.5 * doCircleBtn.bounds.size.width
+        doCircleBtn.clipsToBounds = true
+        doCircleBtn.backgroundColor = .clear
+        //doCircleBtn = 100
+        doCircleBtn.layer.borderWidth = 1
+        doCircleBtn.layer.borderColor = UIColor.red.cgColor*/
+        
+        //listenCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*listenCircleBtn.layer.cornerRadius = 0.5 * listenCircleBtn.bounds.size.width
+        listenCircleBtn.clipsToBounds = true
+        listenCircleBtn.backgroundColor = .clear
+        //listenCircleBtn = 100
+        listenCircleBtn.layer.borderWidth = 1
+        listenCircleBtn.layer.borderColor = UIColor.red.cgColor*/
+        
+        //experienceCircleBtn.frame = CGRect(x: 160, y: 100, width: 50, height: 50)
+        /*experienceCircleBtn.layer.cornerRadius = 0.5 * experienceCircleBtn.bounds.size.width
+        experienceCircleBtn.clipsToBounds = true
+        experienceCircleBtn.backgroundColor = .clear
+        //experienceCircleBtn = 100
+        experienceCircleBtn.layer.borderWidth = 1
+        experienceCircleBtn.layer.borderColor = UIColor.red.cgColor*/
         
         
         /*let greyColor = UIColor(red: 70.0/255.0, green: 71.0/255.0, blue: 90.0/255.0, alpha: 1.0) as! CGColor*/
         
-        changeLocationBtn.layer.cornerRadius = 10
+        changeLocationBtn.layer.cornerRadius = 20
         changeLocationBtn.layer.borderWidth = 1
         changeLocationBtn.layer.borderColor = UIColor.gray.cgColor
         
-        setupDistanceBtn.layer.cornerRadius = 10
+        setupDistanceBtn.layer.cornerRadius = 20
         setupDistanceBtn.layer.borderWidth = 1
         setupDistanceBtn.layer.borderColor = UIColor.gray.cgColor
         
+        locationTF.text = GlobalLocation.location.uppercased()
         locationTF.addTarget(self, action: "TFDidChange", for: UIControlEvents.editingChanged)
         
         locManager.delegate = self
@@ -285,8 +346,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         SetupDistanceCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         ChangeLocationCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         
-        CircleBtnCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
-        BottomBtnCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        CircleBtnCell.backgroundColor = UIColor.black //UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        BottomBtnCell.backgroundColor = UIColor.black //UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         TopBtnCell.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.18, alpha:1)
         
         locationManager = CLLocationManager()
@@ -337,7 +398,54 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     }
     
     @IBAction func clearCategoryClicked(_ sender: UIButton) {
-        let refreshAlert = UIAlertController(title: "Clear Selected Categories", message: "All selections will be lost.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        SweetAlert().showAlert("Are you sure?", subTitle: "All selections will be lost.!", style: AlertStyle.warning, buttonTitle:"No, cancel!", buttonColor:UIColor.gray
+        , otherButtonTitle:  "Yes, clear it!", otherButtonColor: UIColor.red) { (isOtherButton) -> Void in
+            if isOtherButton == true {
+                
+                SweetAlert().showAlert("Cancelled!", subTitle: "Your selections are safe", style: AlertStyle.error)
+            }
+            else {
+                do {
+                    //let databasePath = Bundle(for: type(of: self)).path(forResource: "sqliteDB", ofType: "sqlite")!
+                    //let dbQueue = try DatabaseQueue(path: databasePath)
+                    
+                    try self.dbQueue.inDatabase { db in
+                        try db.execute(
+                            "DELETE FROM doList")
+                        
+                        try db.execute(
+                            "DELETE FROM watchList")
+                        
+                        try db.execute(
+                            "DELETE FROM listenList")
+                        
+                        try db.execute(
+                            "DELETE FROM eatList")
+                        
+                        try db.execute(
+                            "DELETE FROM drinkList")
+                        
+                        try db.execute(
+                            "DELETE FROM experience")
+                        
+                        try db.execute(
+                            "DELETE FROM placeProfile")
+                        
+                        try db.execute(
+                            "DELETE FROM selectList")
+                        
+                        try db.execute(
+                            "DELETE FROM selectedPlaces")
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+                SweetAlert().showAlert("Deleted!", subTitle: "All selections cleared!", style: AlertStyle.success)
+            }
+        }
+        
+        /*let refreshAlert = UIAlertController(title: "Clear Selected Categories", message: "All selections will be lost.", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             do {
@@ -359,6 +467,18 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
                     
                     try db.execute(
                         "DELETE FROM drinkList")
+                    
+                    try db.execute(
+                        "DELETE FROM experience")
+                    
+                    try db.execute(
+                        "DELETE FROM placeProfile")
+                    
+                    try db.execute(
+                        "DELETE FROM selectList")
+                    
+                    try db.execute(
+                        "DELETE FROM selectedPlaces")
                 }
             } catch {
                 print(error.localizedDescription)
@@ -370,6 +490,7 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
         }))
         
         present(refreshAlert, animated: true, completion: nil)
+         */
     }
     
     @IBAction func eatClicked(_ sender: UIButton) {
@@ -386,7 +507,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "eatList")
             self.addChildViewController(controller)
-            controller.view.frame = self.view.frame
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
             self.view.addSubview(controller.view)
             
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -409,7 +531,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "drinkList")
             self.addChildViewController(controller)
-            controller.view.frame = self.view.frame
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
             self.view.addSubview(controller.view)
             
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -427,7 +550,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "listenList")
             self.addChildViewController(controller)
-            controller.view.frame = self.view.frame
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
             self.view.addSubview(controller.view)
             
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -445,7 +569,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "watchList")
             self.addChildViewController(controller)
-            controller.view.frame = self.view.frame
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
             self.view.addSubview(controller.view)
             
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -463,7 +588,8 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
             
             let controller = self.storyboard!.instantiateViewController(withIdentifier: "doList")
             self.addChildViewController(controller)
-            controller.view.frame = self.view.frame
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
             self.view.addSubview(controller.view)
             
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -473,7 +599,22 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     }
     
     @IBAction func expClicked(_ sender: UIButton) {
-        
+        let activityData = ActivityData(type: NVActivityIndicatorType.ballSpinFadeLoader)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        let when = DispatchTime.now() + 0.5 // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            // Your code with delay
+            
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "contributeList")
+            self.addChildViewController(controller)
+            controller.view.frame = CGRect(x:0 ,y: 0,width: self.view.frame.width,height: self.view.frame.height + self.view.frame.height * 0.1)
+            //self.view.frame
+            self.view.addSubview(controller.view)
+            
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            
+            controller.didMove(toParentViewController: self)
+        }
     }
     
     
@@ -495,7 +636,6 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     
     @IBAction func btnChangeLocationClicked(_ sender: UIButton) {
         setupDistanceBtn.backgroundColor = .clear
-        
         setupDistanceBtn.backgroundColor = UIColor.black
         setupDistanceBtn.layer.borderWidth = 2
         setupDistanceBtn.layer.borderColor = UIColor(red:0.27, green:0.28, blue:0.35, alpha:1).cgColor
@@ -528,7 +668,7 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -540,9 +680,9 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row >= 0 && indexPath.row < 6 {
+        if indexPath.row >= 0 && indexPath.row < 4 {
             if indexPath.row == 0 {
-                return 63.0
+                return 70.0
             }
             if indexPath.row == 1 && changeLocationVisible == false {
                 return 0.0
@@ -557,15 +697,15 @@ class nativeDiscoverInnerTableViewController: UITableViewController, NVActivityI
                 return 94.0
             }
             if indexPath.row == 3 {
-                return 260.0
+                return 455.0
             }
-            if indexPath.row == 4 {
-                return 84.0
-            }
+            /*if indexPath.row == 4 {
+                return 42.0
+            }*/
         }else{
             return 0.0
         }
-        return 260
+        return 455.0
     }
 
     

@@ -12,6 +12,7 @@ import GooglePlaces
 import GoogleMaps
 import Alamofire
 import FBSDKLoginKit
+import RZTransitions
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -146,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     t.column("image", .text).notNull()
                     t.column("selected", .text).notNull()
                     t.column("visited", .text)
+                    t.column("position", .text)
                     //t.column("sectioIndex", .boolean).notNull().defaults(to: false)
                 }
                 
@@ -168,6 +170,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     t.column("avgRating", .text).notNull()
                 }
                 
+                try db.create(table: "showSelected") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("isSelected", .integer).notNull()
+                }
+
+                try db.execute("delete from showSelected")
+                
+                try db.execute(
+                    "INSERT INTO showSelected (id,isSelected) " +
+                    "VALUES (1,'0')")
+                
+                try db.create(table: "backClicked") { t in
+                    t.column("id", .integer).primaryKey()
+                    t.column("redirectTo", .text).notNull()
+                }
+                
+                try db.execute(
+                    "INSERT INTO showSelected (id,isSelected) " +
+                    "VALUES (1,'default')")
                 
                /* try db.execute(
                     "INSERT INTO experience (name, location, distance, status, lattitude, longitude, description, image, selected, uniqueId) " +
@@ -187,6 +208,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print(error.localizedDescription)
         }
+        
+        RZTransitionsManager.shared().defaultPushPopAnimationController = RZCardSlideAnimationController()
+        //RZTransitionsManager.shared().defaultPresentDismissAnimationController = RZZoomPushAnimationController()
         
         UIApplication.shared.statusBarStyle = .lightContent
                 return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

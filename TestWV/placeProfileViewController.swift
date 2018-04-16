@@ -39,7 +39,7 @@ class placeProfileViewController: UITableViewController {
     
     @IBOutlet weak var detailsTextView: UITextView!
     
-    @IBOutlet weak var mapBoxView: UIView!
+  /*  @IBOutlet weak var mapBoxView: UIView!
     
     @IBOutlet weak var addressLabel: UILabel!
     
@@ -59,7 +59,7 @@ class placeProfileViewController: UITableViewController {
     @IBOutlet weak var infoCell: UITableViewCell!
     @IBOutlet weak var topCell: UITableViewCell!
     @IBOutlet weak var ratinView: UIView!
-    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var infoView: UIView!*/
     var dbQueue: DatabaseQueue!
     
     override func viewDidLoad() {
@@ -72,6 +72,22 @@ class placeProfileViewController: UITableViewController {
         
         navigationItem.titleView = imageView
         UINavigationBar.appearance().setBackgroundImage(UIImage(named: "header_bg")!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
+        
+        
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage.init(named: "hamburger_menu"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton = UIBarButtonItem.init(customView: button)
+        self.navigationItem.leftBarButtonItem = barButton
+        
+        let button1 = UIButton.init(type: .custom)
+        button1.setImage(UIImage.init(named: "user_top_right"), for: UIControlState.normal)
+        /*button.addTarget(self, action:#selector(ViewController.callMethod), for: UIControlEvents.touchUpInside)*/
+        button1.frame = CGRect.init(x: 0, y: 0, width: 30, height: 30) //CGRectMake(0, 0, 30, 30)
+        let barButton1 = UIBarButtonItem.init(customView: button1)
+        self.navigationItem.rightBarButtonItem = barButton1
+        
         setUpDatabasePath()
         getPlaceDetails()
         renderLayout()
@@ -88,15 +104,31 @@ class placeProfileViewController: UITableViewController {
                 
                 let rows = try Row.fetchCursor(db, "SELECT * FROM placeProfile")
                 while let row = try rows.next() {
-                    let sectionIndex: String = row.value(named: "uniqueID")
+                   /* let sectionIndex: String = row.value(named: "uniqueID")
                     let name: String = row.value(named: "name")
                     let address: String = row.value(named: "address")
                     let distance: String = row.value(named: "distance")
                     let website: String = row.value(named: "website")
                     let lattitude: String = row.value(named: "lattitude")
-                    let longitude: String = row.value(named: "longitude")
+                    let longitude: String = row.value(named: "longitude")*/
                     let description: String = row.value(named: "description")
-                    let image: String = row.value(named: "image")
+                    /*do {
+
+                        let attrStr = try NSAttributedString(
+                            data: description.data(using: String.Encoding.unicode, allowLossyConversion: true)!,
+                            options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSFontAttributeName: UIFont(name: "System", size: 15.0) ],
+                            documentAttributes: nil)
+                        detailsTextView.attributedText = attrStr
+                    } catch let error {
+                        print(error.localizedDescription)
+                        detailsTextView.text = description
+                    }*/
+                    let str = description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+                    print(str)
+                    
+                    detailsTextView.text = str
+                    
+                    /*let image: String = row.value(named: "image")
                     let phone: String = row.value(named: "phone")
                     let foursquareRating: String = row.value(named: "foursquareRating")
                     let yelpRating: String = row.value(named: "yelpRating")
@@ -123,19 +155,21 @@ class placeProfileViewController: UITableViewController {
                     ratingCountLabel.text = avgRating + " / " + totalReviews
                     distanceLabel.text = distance
                     qualityLabel.text = "$$$$"
-                    //headerStatusLabel.text = ""
-                    detailsTextView.text = description
-                    websiteLabel.text = website
+                    //headerStatusLabel.text = ""*/
+                    
+                    /*websiteLabel.text = website
                     phoneNumberLabel.text = phone
-                    addressLabel.text = address
+                    addressLabel.text = address*/
+                    
+                    
                     
 
-                }
+                }/*
                 try db.execute(
                     "delete from placeProfile")
                 let elCount = try Int.fetchOne(db, "SELECT COUNT(*) FROM placeProfile")! // Int
                 let elSectionNames = try String.fetchAll(db, "SELECT uniqueID FROM placeProfile")
-                print("Count : \(elCount)")
+                print("Count : \(elCount)")*/
             }
         } catch {
             print(error.localizedDescription)
@@ -181,6 +215,8 @@ class placeProfileViewController: UITableViewController {
     
     @IBAction func backBtnClicked(_ sender: UIButton) {
         print("Back clicked")
+        self.dismiss(animated: true, completion: nil)
+
     }
     
     func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
@@ -199,18 +235,19 @@ class placeProfileViewController: UITableViewController {
         detailsTextView.frame = newFrame
         print("Size")
         print(newFrame.size)
-        detailsTextView.textColor = UIColor.white
-        imageCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        detailsTextView.textColor = UIColor.black
+       /* imageCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         ratingCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         descCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         mapCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         infoCell.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         ratinView.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
         infoView.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
-        topCell.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
-        tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        topCell.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))*/
         
-        foursquareView.innerRingColor = UIColor(red:0.13, green:0.25, blue:0.86, alpha:1)
+        //tableView.backgroundView = UIImageView(image: UIImage(named: "header_bg")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile))
+        
+        /*foursquareView.innerRingColor = UIColor(red:0.13, green:0.25, blue:0.86, alpha:1)
         yelpView.innerRingColor = UIColor(red:0.83, green:0.14, blue:0.14, alpha:1)
         foursquareView.outerRingColor = UIColor.clear
         yelpView.outerRingColor = UIColor.clear
@@ -222,7 +259,7 @@ class placeProfileViewController: UITableViewController {
         rectShape.position = backBtn.center
         rectShape.path = UIBezierPath(roundedRect: backBtn.bounds, byRoundingCorners: [.bottomRight , .topRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
         backBtn.layer.mask = rectShape
-        backBtn.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)
+        backBtn.backgroundColor = UIColor(red:0.04, green:0.05, blue:0.11, alpha:1)*/
         //yelpView.backgroundColor = UIColor.white
         /*yelpView.setProgress(value: 49, animationDuration: 2.0) {
             print("Done animating!")
@@ -247,43 +284,40 @@ class placeProfileViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 7
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row >= 0 && indexPath.row < 7 {
+        if indexPath.row >= 0 && indexPath.row < 6 {
             if indexPath.row == 0 {
-                return 10.0
+                return 300.0
             }
             
             if indexPath.row == 1 {
-                return 310.0
+                return 220.0
             }
             if indexPath.row == 2 {
-                return 170.0
-            }
-            
-            if indexPath.row == 3 {
                 return 1.0
             }
             
-            if indexPath.row == 4 {
+            
+            if indexPath.row == 3 {
                 // Will change as per size of detail textview
                 let newSize = detailsTextView.sizeThatFits(CGSize(width: detailsTextView.frame.width, height: CGFloat.greatestFiniteMagnitude))
                 return newSize.height + 20.0
             }
             
-            if indexPath.row == 5 {
-                return 150.0
+            if indexPath.row == 4 {
+                return 200.0
             }
             
-            if indexPath.row == 6 {
-                return 150.0
+            if indexPath.row == 5 {
+                return 300.0
             }
         }else{
             return 0.0
         }
-        return 265
+        return 300
     }
     
 

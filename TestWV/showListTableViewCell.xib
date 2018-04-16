@@ -19,26 +19,27 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woy-Jn-y9x">
-                        <rect key="frame" x="8" y="8" width="246" height="28"/>
-                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                        <rect key="frame" x="32" y="8" width="199" height="28"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8hn-gf-WbC">
-                        <rect key="frame" x="262" y="0.0" width="50" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow-black" translatesAutoresizingMaskIntoConstraints="NO" id="8hn-gf-WbC">
+                        <rect key="frame" x="239" y="-1" width="50" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="JiQ-SH-g2F"/>
+                            <constraint firstAttribute="width" constant="50" id="vFT-8A-vwh"/>
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="8hn-gf-WbC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1wV-ht-dBq"/>
-                    <constraint firstItem="woy-Jn-y9x" firstAttribute="centerY" secondItem="8hn-gf-WbC" secondAttribute="centerY" id="5vs-I5-9sD"/>
-                    <constraint firstItem="8hn-gf-WbC" firstAttribute="leading" secondItem="woy-Jn-y9x" secondAttribute="trailing" constant="8" symbolic="YES" id="Fgu-7a-gRl"/>
-                    <constraint firstItem="woy-Jn-y9x" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Jru-e3-X8n"/>
-                    <constraint firstItem="woy-Jn-y9x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Xh5-l5-AV6"/>
-                    <constraint firstItem="woy-Jn-y9x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="bcR-ap-TCQ"/>
-                    <constraint firstItem="8hn-gf-WbC" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="sxo-jn-Hi1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="8hn-gf-WbC" secondAttribute="trailing" constant="23" id="0H3-b8-9aJ"/>
+                    <constraint firstItem="8hn-gf-WbC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GPa-Xb-7pq"/>
+                    <constraint firstItem="8hn-gf-WbC" firstAttribute="leading" secondItem="woy-Jn-y9x" secondAttribute="trailing" constant="8" symbolic="YES" id="IZU-oP-Mbj"/>
+                    <constraint firstItem="woy-Jn-y9x" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NAa-js-3jP"/>
+                    <constraint firstItem="woy-Jn-y9x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="WAZ-Kb-gx7"/>
+                    <constraint firstItem="woy-Jn-y9x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="aWa-66-9ca"/>
+                    <constraint firstItem="8hn-gf-WbC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-9" id="h7J-Fz-jYZ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -47,4 +48,7 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="down-arrow-black" width="37" height="37"/>
+    </resources>
 </document>

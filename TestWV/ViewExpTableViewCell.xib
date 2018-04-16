@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="114.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GnZ-4d-SRg">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-user-2" translatesAutoresizingMaskIntoConstraints="NO" id="GnZ-4d-SRg">
                         <rect key="frame" x="8" y="8" width="80" height="80"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -75,6 +75,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="default-user-2" width="250" height="250"/>
         <image name="like" width="16" height="16"/>
         <image name="share" width="8" height="8"/>
     </resources>
